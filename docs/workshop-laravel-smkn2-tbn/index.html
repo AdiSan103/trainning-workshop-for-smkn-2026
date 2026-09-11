@@ -80,7 +80,7 @@ main{flex:1}
 .divider .rule{flex:1;height:1px;background:linear-gradient(90deg,#ffffff10,#ffffff44,#ffffff10)}
 .divider .tag{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#8fa7c4;white-space:nowrap}
 
-.cards{display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.cards{display:grid;gap:1.5rem;grid-template-columns:1fr}
 .card{
     display:block;text-decoration:none;color:inherit;position:relative;
     background:linear-gradient(180deg,#ffffff14,#ffffff09);border:1px solid #ffffff26;
@@ -121,6 +121,18 @@ main{flex:1}
 }
 .card .go svg{transition:transform .25s ease}
 .card:hover .go svg{transform:translateX(5px)}
+
+.card-wide{grid-column:1/-1}
+.card-wide .card-body{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.card-wide .icon{margin-bottom:0;color:#dbe6f5}
+.card-wide .wide-copy{flex:1 1 240px;min-width:0}
+.card-wide .wide-copy .step{justify-content:flex-start;gap:.75rem;margin-bottom:.55rem}
+.card-wide .wide-meta{display:block;margin-top:.55rem;font-family:var(--mono);font-size:.76rem;letter-spacing:.06em;color:#8fa7c4}
+.card-wide .go{margin-top:0;margin-left:auto}
+
+@media (min-width:820px){
+    .cards{grid-template-columns:repeat(2,1fr)}
+}
 
 .site-foot{padding:3.6rem 0 3rem;text-align:center}
 .foot-rule{width:74px;height:3px;border-radius:2px;margin:0 auto 1.6rem;background:linear-gradient(90deg,var(--amber),var(--cyan))}
@@ -177,7 +189,7 @@ main{flex:1}
     <main>
         <div class="divider" data-hero>
             <span class="rule"></span>
-            <span class="tag">2 modul</span>
+            <span class="tag">2 Modul + Base Project</span>
             <span class="rule"></span>
         </div>
 
@@ -202,6 +214,23 @@ main{flex:1}
                     <p>Panduan langkah demi langkah membangun aplikasi Data Siswa: migration, model, controller, view, sampai testing.</p>
                     <span class="go">Mulai project
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </span>
+                </span>
+            </a>
+
+            <a class="card card-wide" href="https://github.com/AdiSan103/trainning-workshop-smkn2-14-sept" target="_blank" rel="noopener">
+                <span class="card-body" data-scroll>
+                    <span class="icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11 11 0 0 1 6 0C17.7 4.9 18.7 5.2 18.7 5.2c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.9.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+                    </span>
+                    <span class="wide-copy">
+                        <span class="step"><span>Base Project</span><b>Repository</b></span>
+                        <h2>Starter Laravel — Base Project</h2>
+                        <p>Kode awal project Data Siswa yang dipakai selama workshop. Clone repository ini, lalu ikuti Modul 02 langkah demi langkah.</p>
+                        <span class="wide-meta">Laravel · PHP · MySQL · Blade</span>
+                    </span>
+                    <span class="go">Buka di GitHub
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
                     </span>
                 </span>
             </a>
