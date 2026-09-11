@@ -128,7 +128,25 @@ main{flex:1}
 .card-wide .wide-copy{flex:1 1 240px;min-width:0}
 .card-wide .wide-copy .step{justify-content:flex-start;gap:.75rem;margin-bottom:.55rem}
 .card-wide .wide-meta{display:block;margin-top:.55rem;font-family:var(--mono);font-size:.76rem;letter-spacing:.06em;color:#8fa7c4}
-.card-wide .go{margin-top:0;margin-left:auto}
+.card-wide .wide-copy code{font-family:var(--mono);font-size:.85em;background:#ffffff17;border-radius:.3rem;padding:.1em .4em;color:#ffd45e}
+
+.card-wide .wide-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-left:auto}
+.btn{
+    display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;white-space:nowrap;
+    border-radius:999px;padding:.72rem 1.3rem;font-size:.92rem;font-weight:600;
+    border:1px solid #ffffff2e;color:#e7eef9;background:#ffffff12;
+    transition:background .2s ease,border-color .2s ease;
+    will-change:transform;
+}
+.btn:hover,.btn:focus-visible{background:#ffffff22;border-color:#ffffff54;outline:none}
+.btn svg{width:16px;height:16px;flex-shrink:0}
+.btn-primary{
+    color:#2a1f00;border-color:transparent;
+    background:linear-gradient(145deg,#f7d774,var(--amber));
+}
+.btn-primary:hover,.btn-primary:focus-visible{
+    background:linear-gradient(145deg,#ffe9a8,#f0b91a);border-color:transparent;
+}
 
 @media (min-width:820px){
     .cards{grid-template-columns:repeat(2,1fr)}
@@ -189,7 +207,7 @@ main{flex:1}
     <main>
         <div class="divider" data-hero>
             <span class="rule"></span>
-            <span class="tag">2 Modul + Base Project</span>
+            <span class="tag">2 Modul + Starter Project</span>
             <span class="rule"></span>
         </div>
 
@@ -218,22 +236,29 @@ main{flex:1}
                 </span>
             </a>
 
-            <a class="card card-wide" href="https://github.com/AdiSan103/trainning-workshop-smkn2-14-sept" target="_blank" rel="noopener">
-                <span class="card-body" data-scroll>
+            <div class="card card-wide">
+                <div class="card-body" data-scroll>
                     <span class="icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11 11 0 0 1 6 0C17.7 4.9 18.7 5.2 18.7 5.2c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.9.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
                     </span>
-                    <span class="wide-copy">
+                    <div class="wide-copy">
                         <span class="step"><span>Base Project</span><b>Repository</b></span>
                         <h2>Starter Laravel — Base Project</h2>
-                        <p>Kode awal project Data Siswa yang dipakai selama workshop. Clone repository ini, lalu ikuti Modul 02 langkah demi langkah.</p>
+                        <p>Kode awal project Data Siswa yang dipakai selama workshop. Lihat repository-nya, atau langsung download starter project di branch <code>project</code>.</p>
                         <span class="wide-meta">Laravel · PHP · MySQL · Blade</span>
-                    </span>
-                    <span class="go">Buka di GitHub
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
-                    </span>
-                </span>
-            </a>
+                    </div>
+                    <div class="wide-actions">
+                        <a class="btn" href="https://github.com/AdiSan103/trainning-workshop-smkn2-14-sept" target="_blank" rel="noopener">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11 11 0 0 1 6 0C17.7 4.9 18.7 5.2 18.7 5.2c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.9.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+                            Lihat Repository
+                        </a>
+                        <a class="btn btn-primary" href="https://github.com/AdiSan103/trainning-workshop-smkn2-14-sept/tree/project" target="_blank" rel="noopener">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M5 21h14"/></svg>
+                            Download Starter Project
+                        </a>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 
@@ -355,7 +380,7 @@ main{flex:1}
 
             var spring = { easing: window.Motion.spring({ stiffness: 420, damping: 26 }) };
 
-            document.querySelectorAll('.pill').forEach(function (pill) {
+            document.querySelectorAll('.pill, .btn').forEach(function (pill) {
                 function to(scale) { window.Motion.animate(pill, { scale: scale }, spring); }
 
                 pill.addEventListener('pointerenter', function () { to(1.05); });
