@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dunia Kerja, Teknologi, dan Laravel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+    --navy:#0f1e38; --navy-2:#12355b; --blue:#1769aa; --blue-light:#eaf3fb;
+    --amber:#e2a400; --amber-light:#fff8e6; --ink:#1f2937; --muted:#5b6b81;
+    --card:#ffffff; --ring:#dbe6f2;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{
+    background:
+        radial-gradient(circle at 12% 8%, #7c3aed 0, transparent 28%),
+        radial-gradient(circle at 88% 18%, #06b6d4 0, transparent 26%),
+        linear-gradient(135deg, #0b1026 0%, #172554 48%, #312e81 100%) fixed;
+    color:var(--ink); font-family:'Inter',Arial,sans-serif; line-height:1.6; min-height:100vh;
+}
+#particles-bg{position:fixed; inset:0; z-index:10; pointer-events:none; opacity:.42; mix-blend-mode:multiply}
+#particles-bg canvas{display:block; width:100%; height:100%;}
+#deck{position:relative; z-index:1}
+.slide{position:relative; z-index:1}
+h1,h2,h3{font-family:'Poppins','Inter',Arial,sans-serif}
+
+/* progress bar */
+#progress-track{position:fixed;top:0;left:0;width:100%;height:5px;background:#0000002e;z-index:20}
+#progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--amber),var(--blue));transition:width .35s ease}
+
+.slide{
+    display:none;
+    width:min(980px, calc(100% - 2rem));
+    margin:2.75rem auto 1.5rem;
+    min-height:calc(100vh - 10rem);
+    background:var(--card); color:var(--ink);
+    border-radius:1rem; padding:2.75rem 3rem;
+    box-shadow:0 20px 50px #00000055, 0 2px 0 #ffffff10 inset;
+    position:relative; overflow:hidden;
+}
+.slide.active{display:block}
+.slide.hero{display:none;text-align:center; color:#fff; background:none; box-shadow:none; padding:0; align-content:center}
+.slide.hero.active{display:grid}
+.hero-inner{
+    position:relative; z-index:1; border-radius:1rem; overflow:hidden;
+    min-height:calc(100vh - 10rem); display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:3rem; background:linear-gradient(180deg,#0b1830cc,#0b1830e6), center/cover no-repeat;
+    box-shadow:0 20px 50px #00000066;
+}
+.hero-inner p{color:#dbe6f5}
+
+/* entrance animation */
+@keyframes riseIn{from{opacity:0; transform:translateY(26px)} to{opacity:1; transform:translateY(0)}}
+.slide.active > *{animation:riseIn .55s cubic-bezier(.2,.7,.3,1) both}
+.slide.active > *:nth-child(1){animation-delay:.02s}
+.slide.active > *:nth-child(2){animation-delay:.08s}
+.slide.active > *:nth-child(3){animation-delay:.14s}
+.slide.active > *:nth-child(4){animation-delay:.2s}
+.slide.active > *:nth-child(5){animation-delay:.26s}
+.slide.active > *:nth-child(6){animation-delay:.32s}
+.slide.active ul li, .slide.active ol li{animation:riseIn .45s ease both}
+.slide.active .cols .box{animation:riseIn .5s ease both}
+.slide.active .cols .box:nth-child(1){animation-delay:.15s}
+.slide.active .cols .box:nth-child(2){animation-delay:.22s}
+.slide.active .cols .box:nth-child(3){animation-delay:.29s}
+.slide.active .cols .box:nth-child(4){animation-delay:.36s}
+.slide.active .cols .box:nth-child(5){animation-delay:.43s}
+.slide.active .cols .box:nth-child(6){animation-delay:.5s}
+.slide.active .cols .box:nth-child(7){animation-delay:.57s}
+.slide.active .cols .box:nth-child(8){animation-delay:.64s}
+
+.kicker-row{display:flex; align-items:center; gap:.6rem; margin-bottom:.35rem}
+.kicker{color:var(--blue); font-weight:700; letter-spacing:.08em; text-transform:uppercase; font-size:.8rem}
+.icon-badge{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:2.1rem; height:2.1rem; border-radius:50%; font-size:1.1rem;
+    background:linear-gradient(145deg,var(--blue-light),#fff); box-shadow:0 2px 6px #1769aa33, inset 0 0 0 1px var(--ring);
+    flex-shrink:0;
+}
+h1{color:var(--navy-2); font-size:2.4rem; margin:.4rem 0 1rem; line-height:1.18}
+h2{color:var(--navy-2); font-size:1.7rem; margin-bottom:1rem}
+p,li{font-size:1.03rem; color:var(--ink)}
+ul,ol{padding-left:1.4rem; margin:.75rem 0}
+li{margin:.4rem 0}
+code{background:#edf2f7; border-radius:.3rem; color:#0f2440; font-family:Consolas,monospace; padding:.15em .4em; font-size:.92em}
+pre{background:var(--navy); border-radius:.6rem; color:#d7e3f4; overflow-x:auto; padding:1rem 1.15rem; font-size:.92rem; margin:.85rem 0}
+pre code{background:none; color:inherit; padding:0}
+
+.split{display:grid; grid-template-columns:1.1fr .9fr; gap:1.75rem; align-items:center}
+.visual{display:flex; align-items:center; justify-content:center}
+.visual svg{width:100%; max-width:280px; height:auto}
+.photo-frame{border-radius:.85rem; overflow:hidden; box-shadow:0 10px 26px #0f1e3833; aspect-ratio:4/3; background:linear-gradient(135deg,var(--blue-light),var(--ring))}
+.photo-frame img{width:100%; height:100%; object-fit:cover; display:block}
+
+.cols{display:grid; gap:1.1rem; grid-template-columns:repeat(auto-fit,minmax(225px,1fr)); margin-top:.5rem}
+.box{
+    background:var(--blue-light); border-radius:.65rem; padding:1.1rem 1.15rem;
+    border:1px solid var(--ring); transition:transform .2s ease, box-shadow .2s ease;
+    display:flex; gap:.7rem;
+}
+.box:hover{transform:translateY(-3px); box-shadow:0 10px 22px #1769aa26}
+.box .icon-badge{margin-top:.1rem}
+.box h3{color:var(--navy-2); font-size:1.02rem; margin-bottom:.25rem}
+.box p{font-size:.95rem; color:var(--muted); margin:0}
+
+.lesson{
+    background:var(--amber-light); border-left:4px solid var(--amber); border-radius:.5rem;
+    margin-top:1.5rem; padding:.85rem 1.1rem; display:flex; gap:.6rem; align-items:flex-start;
+}
+.lesson strong{color:#8a6100}
+.source{color:var(--muted); font-size:.82rem; margin-top:1rem; overflow-wrap:anywhere}
+.source a{color:var(--blue)}
+
+.navbar{position:fixed; bottom:0; left:0; width:100%; display:flex; gap:1rem; justify-content:center; align-items:center; padding:1rem; background:linear-gradient(0deg,#0f1e38ee,#0f1e3800); z-index:15}
+button{background:var(--blue); border:0; border-radius:.5rem; color:#fff; cursor:pointer; font:inherit; font-weight:600; padding:.6rem 1.2rem; transition:background .2s, transform .15s}
+button:hover:not(:disabled){background:#125e94; transform:translateY(-1px)}
+button:disabled{background:#3f5b80; cursor:not-allowed; opacity:.6}
+#counter{min-width:7ch; text-align:center; color:#cdd8e6; font-variant-numeric:tabular-nums}
+
+@media (max-width:760px){
+    .split{grid-template-columns:1fr}
+    .visual{order:-1}
+    .slide{padding:1.6rem}
+    h1{font-size:1.9rem}
+    .hero-inner{padding:2rem 1.4rem}
+}
+</style>
+</head>
+<body>
+
+<div id="progress-track"><div id="progress-bar"></div></div>
+<div id="particles-bg" aria-hidden="true"></div>
+
+<main id="deck">
+
+<section class="slide hero active">
+    <div class="hero-inner" style="background-image:linear-gradient(180deg,#0b1830cc,#0b1830ee),url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=60')">
+        <span class="icon-badge" style="width:3.2rem;height:3.2rem;font-size:1.7rem;margin-bottom:1rem">🚀</span>
+        <p class="kicker" style="color:#9fd2ff">Career &amp; Technology</p>
+        <h1 style="color:#fff">Dunia Kerja, Programming, Website, dan Laravel</h1>
+        <p>Bekal belajar siswa SMK menuju pekerjaan digital</p>
+        <p style="margin-top:1.25rem; color:#a9bdd8">Gunakan tombol, panah keyboard, atau Space untuk pindah slide.</p>
+    </div>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">💼</span><p class="kicker">Slide 2</p></div>
+    <h2>Dunia Kerja Saat Ini</h2>
+    <p>Dunia kerja berubah cepat. Perusahaan mencari orang yang mampu memecahkan masalah, belajar tools baru, bekerja dalam tim, dan menghasilkan bukti kerja.</p>
+    <div class="cols">
+        <div class="box"><span class="icon-badge">🛠️</span><div><h3>Skill teknis</h3><p>Programming, database, web, cloud, testing, version control.</p></div></div>
+        <div class="box"><span class="icon-badge">🤝</span><div><h3>Skill manusia</h3><p>Komunikasi, disiplin, kolaborasi, berpikir kritis, bahasa Inggris.</p></div></div>
+        <div class="box"><span class="icon-badge">📁</span><div><h3>Bukti kemampuan</h3><p>Portfolio, GitHub, project nyata, dokumentasi, pengalaman praktik.</p></div></div>
+    </div>
+    <div class="lesson"><span>💡</span><div><strong>Pesan:</strong> Ijazah membuka pintu. Skill dan bukti kerja membantu melewati proses seleksi.</div></div>
+</section>
+
+<section class="slide">
+    <div class="split">
+        <div>
+            <div class="kicker-row"><span class="icon-badge">💻</span><p class="kicker">Slide 3</p></div>
+            <h2>Apa Itu Programming?</h2>
+            <p>Programming adalah proses memberi instruksi terstruktur kepada komputer untuk menyelesaikan masalah.</p>
+            <ul>
+                <li>Input: data yang masuk.</li>
+                <li>Process: aturan dan logika.</li>
+                <li>Output: hasil yang diinginkan.</li>
+            </ul>
+            <div class="box"><span class="icon-badge">🎒</span><div><h3>Contoh project sekolah</h3><p>Data siswa masuk melalui form, divalidasi, disimpan di database, lalu ditampilkan dalam tabel.</p></div></div>
+            <div class="lesson"><span>📌</span><div><strong>Pelajaran:</strong> Programmer bukan hanya mengetik kode. Programmer memahami masalah sebelum memilih kode.</div></div>
+        </div>
+        <div class="visual">
+            <svg viewBox="0 0 260 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="130" cy="205" rx="95" ry="10" fill="#eaf3fb"/>
+                <rect x="45" y="40" width="170" height="110" rx="10" fill="#12355b"/>
+                <rect x="55" y="50" width="150" height="80" rx="4" fill="#0f1e38"/>
+                <rect x="65" y="60" width="46" height="6" rx="3" fill="#1769aa"/>
+                <rect x="65" y="72" width="80" height="6" rx="3" fill="#e2a400"/>
+                <rect x="65" y="84" width="60" height="6" rx="3" fill="#4f8fc9"/>
+                <rect x="65" y="96" width="95" height="6" rx="3" fill="#1769aa"/>
+                <rect x="65" y="108" width="40" height="6" rx="3" fill="#e2a400"/>
+                <rect x="110" y="150" width="40" height="10" fill="#12355b"/>
+                <rect x="85" y="160" width="90" height="8" rx="4" fill="#0f1e38"/>
+                <circle cx="205" cy="45" r="18" fill="#e2a400"/>
+                <text x="205" y="51" font-size="18" text-anchor="middle" font-family="monospace" fill="#12355b">&lt;/&gt;</text>
+            </svg>
+        </div>
+    </div>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">🧩</span><p class="kicker">Slide 4</p></div>
+    <h2>Jenis Teknologi Saat Ini</h2>
+    <div class="cols">
+        <div class="box"><span class="icon-badge">🌐</span><div><h3>Web</h3><p>Website, web app, API, e-commerce, sistem sekolah.</p></div></div>
+        <div class="box"><span class="icon-badge">📱</span><div><h3>Mobile</h3><p>Android, iOS, aplikasi layanan dan bisnis.</p></div></div>
+        <div class="box"><span class="icon-badge">🤖</span><div><h3>Data &amp; AI</h3><p>Analisis data, machine learning, automation, AI assistant.</p></div></div>
+        <div class="box"><span class="icon-badge">☁️</span><div><h3>Cloud &amp; DevOps</h3><p>Server, deployment, container, monitoring, CI/CD.</p></div></div>
+        <div class="box"><span class="icon-badge">🔒</span><div><h3>Cybersecurity</h3><p>Proteksi akun, aplikasi, jaringan, dan data.</p></div></div>
+        <div class="box"><span class="icon-badge">📡</span><div><h3>IoT</h3><p>Sensor, perangkat pintar, monitoring fisik.</p></div></div>
+    </div>
+    <div class="lesson"><span>🎯</span><div><strong>Strategi pemula:</strong> Pilih satu jalur utama. Bangun fondasi sebelum mengejar semua teknologi.</div></div>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">🌐</span><p class="kicker">Slide 5</p></div>
+    <h2>Website: Salah Satu Jalur Terbaik untuk Mulai</h2>
+    <div class="cols">
+        <div class="box"><span class="icon-badge">🎨</span><div><h3>Frontend</h3><p>Bagian yang dilihat user: HTML, CSS, JavaScript. Gunakan design token CSS dan layout responsif.</p></div></div>
+        <div class="box"><span class="icon-badge">⚙️</span><div><h3>Backend</h3><p>Logika server, autentikasi, validasi, API, proses bisnis.</p></div></div>
+        <div class="box"><span class="icon-badge">🗄️</span><div><h3>Database</h3><p>Penyimpanan data: MySQL, PostgreSQL, SQLite.</p></div></div>
+    </div>
+    <p>Website cocok untuk belajar karena hasilnya dapat dibuka melalui browser dan mudah dijadikan portfolio.</p>
+    <div class="lesson"><span>🧭</span><div><strong>Urutan belajar:</strong> HTML → CSS → JavaScript dasar → database → backend → deployment.</div></div>
+</section>
+
+<section class="slide">
+    <div class="split">
+        <div>
+            <div class="kicker-row"><span class="icon-badge">📈</span><p class="kicker">Slide 6</p></div>
+            <h2>Trend Web Development</h2>
+            <ul>
+                <li>JavaScript tetap sangat luas digunakan; Node.js dan React menjadi teknologi web populer.</li>
+                <li>HTML/CSS tetap fondasi utama antarmuka.</li>
+                <li>SQL tetap penting karena hampir semua aplikasi menyimpan data.</li>
+                <li>Docker, npm, cloud, dan API semakin umum dalam workflow tim.</li>
+                <li>AI membantu coding, tapi review, testing, dan keamanan tetap tanggung jawab developer.</li>
+            </ul>
+            <p class="source">Data teknologi: <a href="https://survey.stackoverflow.co/2025/technology/" target="_blank" rel="noreferrer">Stack Overflow Developer Survey 2025</a></p>
+            <div class="lesson"><span>✅</span><div><strong>Kesimpulan:</strong> Trend berubah, fondasi web tetap dipakai. Belajar konsep, bukan hanya nama framework.</div></div>
+        </div>
+        <div class="visual">
+            <div class="photo-frame"><img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=900&q=60" alt="Layar kode program" loading="lazy" onerror="this.parentElement.style.display='none'"></div>
+        </div>
+    </div>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">🛠️</span><p class="kicker">Slide 7</p></div>
+    <h2>Kenapa Backend Penting?</h2>
+    <p>Frontend menampilkan form. Backend memastikan prosesnya benar dan aman.</p>
+    <ul>
+        <li>Validasi input dari user.</li>
+        <li>Menyimpan dan mengambil data dari database.</li>
+        <li>Mengatur hak akses.</li>
+        <li>Menyediakan API.</li>
+        <li>Mencatat error dan menjaga performa.</li>
+    </ul>
+    <div class="box"><span class="icon-badge">🎓</span><div><h3>Contoh sistem siswa</h3><p>Backend menolak NIS duplikat, memastikan kelas tersedia, lalu menyimpan siswa ke database.</p></div></div>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge" style="background:linear-gradient(145deg,#fce9e6,#fff)">🔺</span><p class="kicker">Slide 8</p></div>
+    <h2>Apa Itu Laravel?</h2>
+    <p>Laravel adalah framework PHP untuk membangun aplikasi web dengan struktur yang rapi dan tools siap pakai.</p>
+    <div class="cols">
+        <div class="box"><span class="icon-badge">🧱</span><div><h3>Struktur</h3><p>Route, controller, model, migration, view Blade.</p></div></div>
+        <div class="box"><span class="icon-badge">⚡</span><div><h3>Produktivitas</h3><p>Validasi, ORM Eloquent, queue, mail, testing, artisan.</p></div></div>
+        <div class="box"><span class="icon-badge">🧰</span><div><h3>Ekosistem</h3><p>Starter kit, Sanctum, Horizon, Reverb, Scout, Forge, Cloud.</p></div></div>
+    </div>
+    <div class="lesson"><span>🐘</span><div><strong>PHP tetap relevan:</strong> Laravel memberi jalur terstruktur untuk membuat aplikasi web nyata.</div></div>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">🆕</span><p class="kicker">Slide 9</p></div>
+    <h2>Trend Laravel Saat Ini</h2>
+    <ul>
+        <li>Laravel 13 dirilis 17 Maret 2026.</li>
+        <li>Laravel 13 membutuhkan PHP minimum 8.3.</li>
+        <li>Rilis terbaru menonjolkan AI SDK, JSON:API resources, semantic/vector search, queue, cache, dan keamanan.</li>
+        <li>Laravel tetap mengikuti major release tahunan; bug fix 18 bulan, security fix 2 tahun.</li>
+    </ul>
+    <p class="source">Sumber resmi: <a href="https://laravel.com/docs/releases" target="_blank" rel="noreferrer">Laravel Release Notes</a></p>
+    <div class="lesson"><span>📝</span><div><strong>Catatan:</strong> Project ini memakai Laravel 8 untuk pembelajaran. Setelah fondasi kuat, pelajari upgrade dan versi terbaru.</div></div>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">🧪</span><p class="kicker">Slide 10</p></div>
+    <h2>Laravel 8 di Project Ini</h2>
+    <p>Project Sistem Input Data Siswa memakai Laravel 8, Blade, MySQL, HTML, CSS, dan Laravel Mix.</p>
+    <div class="cols">
+        <div class="box"><span class="icon-badge">📚</span><div><h3>Yang dipelajari</h3><p>CRUD, migration, Eloquent, relasi, route, controller, validasi, Blade.</p></div></div>
+        <div class="box"><span class="icon-badge">🌱</span><div><h3>Kenapa mulai dari Laravel 8?</h3><p>Struktur sederhana, cocok untuk memahami konsep backend sebelum fitur modern ditambahkan.</p></div></div>
+    </div>
+    <pre><code>php artisan serve
+php artisan route:list
+php artisan test</code></pre>
+    <div class="lesson"><span>🔑</span><div><strong>Prinsip:</strong> Versi lama bukan sia-sia. Konsep CRUD dan MVC masih menjadi fondasi versi baru.</div></div>
+</section>
+
+<section class="slide">
+    <div class="split">
+        <div>
+            <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Slide 11</p></div>
+            <h2>Hubungan Laravel dengan Siswa SMK</h2>
+            <ul>
+                <li>Mengubah pelajaran database menjadi aplikasi nyata.</li>
+                <li>Melatih logika melalui CRUD.</li>
+                <li>Menghubungkan HTML form dengan backend.</li>
+                <li>Belajar kerja terstruktur melalui Git dan dokumentasi.</li>
+                <li>Membangun portfolio yang dapat didemokan.</li>
+            </ul>
+            <div class="box"><span class="icon-badge">🪜</span><div><h3>Project bertahap</h3><p>Data siswa → perpustakaan → inventaris → kasir → sistem pelayanan sekolah.</p></div></div>
+            <div class="lesson"><span>🎯</span><div><strong>Target belajar:</strong> Tidak harus langsung menjadi ahli. Selesaikan project kecil, pahami, lalu tingkatkan.</div></div>
+        </div>
+        <div class="visual">
+            <svg viewBox="0 0 260 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="130" cy="205" rx="95" ry="10" fill="#eaf3fb"/>
+                <circle cx="90" cy="90" r="34" fill="#1769aa"/>
+                <circle cx="90" cy="66" r="16" fill="#ffd9a8"/>
+                <rect x="68" y="150" width="44" height="34" rx="6" fill="#12355b"/>
+                <circle cx="175" cy="100" r="30" fill="#e2a400"/>
+                <circle cx="175" cy="78" r="14" fill="#ffd9a8"/>
+                <rect x="156" y="150" width="38" height="34" rx="6" fill="#12355b"/>
+                <rect x="110" y="40" width="70" height="46" rx="10" fill="#fff" stroke="#12355b" stroke-width="3"/>
+                <text x="145" y="68" font-size="13" text-anchor="middle" font-family="Poppins,Arial" fill="#12355b">SMK</text>
+            </svg>
+        </div>
+    </div>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">🗺️</span><p class="kicker">Slide 12</p></div>
+    <h2>Roadmap Belajar Laravel</h2>
+    <ol>
+        <li>HTML semantic dan form.</li>
+        <li>CSS layout responsive dengan custom properties/design token.</li>
+        <li>PHP dasar: variable, condition, loop, function, array.</li>
+        <li>SQL: tabel, primary key, foreign key, query.</li>
+        <li>Laravel: route, controller, model, migration, Blade.</li>
+        <li>Validasi, authentication, authorization, testing.</li>
+        <li>Git, API, deployment, keamanan.</li>
+    </ol>
+    <div class="lesson"><span>⏱️</span><div><strong>Rutinitas:</strong> 30–60 menit per hari, satu konsep kecil, satu commit, satu catatan.</div></div>
+</section>
+
+<section class="slide">
+    <div class="split">
+        <div>
+            <div class="kicker-row"><span class="icon-badge">👩‍💻</span><p class="kicker">Slide 13</p></div>
+            <h2>Jenis Pekerjaan yang Bisa Dituju</h2>
+            <div class="cols">
+                <div class="box"><span class="icon-badge">🌐</span><div><h3>Junior Web Developer</h3><p>Membuat dan merawat halaman atau fitur web.</p></div></div>
+                <div class="box"><span class="icon-badge">⚙️</span><div><h3>Backend Developer</h3><p>API, database, business logic, keamanan server.</p></div></div>
+                <div class="box"><span class="icon-badge">🎨</span><div><h3>Frontend Developer</h3><p>UI responsive, interaksi, aksesibilitas.</p></div></div>
+                <div class="box"><span class="icon-badge">🧩</span><div><h3>Full-stack Developer</h3><p>Frontend dan backend dalam satu product.</p></div></div>
+                <div class="box"><span class="icon-badge">🐞</span><div><h3>QA / Software Tester</h3><p>Test manual, automated test, laporan bug.</p></div></div>
+                <div class="box"><span class="icon-badge">🖥️</span><div><h3>Technical Support</h3><p>Instalasi, troubleshooting, deployment dasar.</p></div></div>
+                <div class="box"><span class="icon-badge">🧑‍🔧</span><div><h3>Freelancer</h3><p>Website UMKM, sistem sekolah, landing page, maintenance.</p></div></div>
+                <div class="box"><span class="icon-badge">🚀</span><div><h3>Entrepreneur</h3><p>Membangun produk digital dan layanan sendiri.</p></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide">
+    <div class="split">
+        <div>
+            <div class="kicker-row"><span class="icon-badge">📁</span><p class="kicker">Slide 14</p></div>
+            <h2>Portfolio yang Dicari</h2>
+            <ul>
+                <li>Live demo atau screenshot jelas.</li>
+                <li>README: masalah, fitur, instalasi, teknologi.</li>
+                <li>Database diagram dan penjelasan relasi.</li>
+                <li>Validasi input dan test.</li>
+                <li>Git history yang menunjukkan proses.</li>
+                <li>Video demo 2–3 menit.</li>
+            </ul>
+            <div class="box"><span class="icon-badge">✅</span><div><h3>Project ini sudah punya bahan</h3><p>CRUD siswa/kelas, Laravel, Blade, MySQL, validasi, PHPUnit, dan guidebook proses.</p></div></div>
+            <div class="lesson"><span>⚠️</span><div><strong>Hindari:</strong> Copy-paste tanpa paham. Saat interview, jelaskan keputusan kode dengan kata-kata sendiri.</div></div>
+        </div>
+        <div class="visual">
+            <div class="photo-frame"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=60" alt="Diskusi tim kerja" loading="lazy" onerror="this.parentElement.style.display='none'"></div>
+        </div>
+    </div>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">🤝</span><p class="kicker">Slide 15</p></div>
+    <h2>Skill Kerja di Luar Kode</h2>
+    <div class="cols">
+        <div class="box"><span class="icon-badge">🗣️</span><div><h3>Komunikasi</h3><p>Menjelaskan masalah, bertanya jelas, memberi update.</p></div></div>
+        <div class="box"><span class="icon-badge">🔀</span><div><h3>Kolaborasi</h3><p>Git branch, code review, pembagian tugas.</p></div></div>
+        <div class="box"><span class="icon-badge">⏳</span><div><h3>Disiplin</h3><p>Deadline, catatan kerja, testing sebelum menyerahkan.</p></div></div>
+        <div class="box"><span class="icon-badge">📖</span><div><h3>Belajar mandiri</h3><p>Membaca dokumentasi dan mencari akar masalah.</p></div></div>
+    </div>
+    <div class="lesson"><span>💬</span><div><strong>Realita:</strong> Developer yang mudah diajak bekerja sama sering lebih bernilai daripada developer yang hanya cepat mengetik.</div></div>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">📅</span><p class="kicker">Slide 16</p></div>
+    <h2>Project 5 Hari: Sistem Input Data Siswa</h2>
+    <p>Target akhir: aplikasi Laravel CRUD siswa dan kelas yang dapat dijalankan, diuji, dan dipresentasikan.</p>
+    <div class="cols">
+        <div class="box"><span class="icon-badge">1️⃣</span><div><h3>Hari 1 — Rencana</h3><p>Pahami PRD, siapkan XAMPP dan Laravel, rancang tabel <code>kelas</code> serta <code>siswa</code>.</p></div></div>
+        <div class="box"><span class="icon-badge">2️⃣</span><div><h3>Hari 2 — Database</h3><p>Buat migration, model, relasi Eloquent, lalu jalankan database.</p></div></div>
+        <div class="box"><span class="icon-badge">3️⃣</span><div><h3>Hari 3 — Backend</h3><p>Buat route dan controller CRUD siswa/kelas, validasi NIS unik dan relasi kelas.</p></div></div>
+        <div class="box"><span class="icon-badge">4️⃣</span><div><h3>Hari 4 — Tampilan</h3><p>Buat layout Blade, form, tabel, navigasi, CSS responsif, dan pesan error.</p></div></div>
+        <div class="box"><span class="icon-badge">5️⃣</span><div><h3>Hari 5 — Uji &amp; Presentasi</h3><p>Tambahkan test, uji alur manual, rapikan README, catat log, dan presentasikan project.</p></div></div>
+    </div>
+    <div class="lesson"><span>🎯</span><div><strong>Hasil belajar:</strong> Project selesai dalam scope kecil, punya fitur CRUD, validasi, testing, dokumentasi, dan siap didemokan.</div></div>
+    <p>Ukur kemajuan dari fitur yang selesai dan dapat dijelaskan, bukan jumlah tutorial yang ditonton.</p>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">✅</span><p class="kicker">Slide 17</p></div>
+    <h2>Langkah Setelah Slide Ini</h2>
+    <ol>
+        <li>Jalankan project data siswa.</li>
+        <li>Baca setiap file: route, controller, model, migration, Blade.</li>
+        <li>Tambahkan satu fitur kecil yang masih sesuai scope.</li>
+        <li>Tulis perubahan di <code>development-project-log.md</code>.</li>
+        <li>Commit ke Git.</li>
+        <li>Presentasikan alur project kepada teman atau guru.</li>
+    </ol>
+    <div class="lesson"><span>🏁</span><div><strong>Tantangan:</strong> Jelaskan project tanpa membuka kode. Jika bisa menjelaskan alurnya, berarti konsep mulai dipahami.</div></div>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">🧭</span><p class="kicker">Slide 18</p></div>
+    <h2>Kesimpulan</h2>
+    <ul>
+        <li>Dunia kerja membutuhkan skill teknis dan skill manusia.</li>
+        <li>Website adalah jalur praktis untuk mulai programming.</li>
+        <li>HTML, CSS, JavaScript, SQL, dan backend adalah fondasi.</li>
+        <li>Laravel membantu siswa membangun aplikasi PHP yang terstruktur.</li>
+        <li>Project nyata, testing, dokumentasi, dan portfolio membuka peluang.</li>
+    </ul>
+    <h2 style="margin-top:1.5rem">Mulai kecil. Selesaikan. Jelaskan. Tingkatkan.</h2>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">📚</span><p class="kicker">Sumber Belajar &amp; Data</p></div>
+    <h2>Referensi</h2>
+    <ul>
+        <li><a href="https://laravel.com/docs/releases" target="_blank" rel="noreferrer">Laravel Release Notes</a> — versi, dukungan, dan fitur Laravel.</li>
+        <li><a href="https://survey.stackoverflow.co/2025/technology/" target="_blank" rel="noreferrer">Stack Overflow Developer Survey 2025</a> — data teknologi yang digunakan developer.</li>
+        <li><a href="https://laravel.com/docs" target="_blank" rel="noreferrer">Laravel Documentation</a> — dokumentasi resmi.</li>
+        <li><a href="https://www.php.net/docs.php" target="_blank" rel="noreferrer">PHP Documentation</a> — bahasa pemrograman PHP.</li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web" target="_blank" rel="noreferrer">MDN Web Docs</a> — HTML, CSS, JavaScript, dan Web API.</li>
+    </ul>
+    <p class="source">Foto: Unsplash (Christopher Gower, Markus Spiske, Austin Distel). Ilustrasi vektor dibuat custom (inline SVG), gaya flat seperti undraw.co. Data tren berubah — cek sumber resmi sebelum menjadikannya keputusan karier.</p>
+</section>
+
+<section class="slide hero">
+    <div class="hero-inner" style="background-image:linear-gradient(180deg,#0b1830cc,#0b1830ee),url('https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1600&q=60')">
+        <span class="icon-badge" style="width:3.2rem;height:3.2rem;font-size:1.7rem;margin-bottom:1rem">🌟</span>
+        <p class="kicker" style="color:#9fd2ff">Penutup</p>
+        <h1 style="color:#fff">Karier Dimulai dari Satu Project</h1>
+        <p>Belajar Laravel bukan hanya belajar framework.</p>
+        <p>Belajar memecahkan masalah, bekerja terstruktur, dan menghasilkan sesuatu yang berguna.</p>
+    </div>
+</section>
+
+</main>
+
+<nav class="navbar">
+    <button id="prev" type="button">&larr; Sebelumnya</button>
+    <span id="counter"></span>
+    <button id="next" type="button">Selanjutnya &rarr;</button>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script>
+if (window.particlesJS) {
+    particlesJS('particles-bg', {
+        particles: {
+            number: { value: 55, density: { enable: true, value_area: 900 } },
+            color: { value: ['#1769aa', '#7c3aed', '#0891b2'] },
+            opacity: { value: 0.62, random: true },
+            size: { value: 2.5, random: true },
+            line_linked: { enable: true, distance: 145, color: '#1769aa', opacity: 0.35, width: 1.2 },
+            move: { enable: true, speed: 1.2, direction: 'none', out_mode: 'out' }
+        },
+        interactivity: {
+            detect_on: 'canvas',
+            events: { onhover: { enable: true, mode: 'grab' }, resize: true },
+            modes: { grab: { distance: 150, line_linked: { opacity: 0.45 } } }
+        },
+        retina_detect: true
+    });
+}
+
+var slides = document.querySelectorAll('.slide');
+var current = 0;
+
+function show(index) {
+    current = Math.max(0, Math.min(slides.length - 1, index));
+    slides.forEach(function (slide, i) {
+        if (i === current) {
+            slide.classList.remove('active');
+            void slide.offsetWidth; /* restart entrance animation */
+            slide.classList.add('active');
+        } else {
+            slide.classList.remove('active');
+        }
+    });
+    document.getElementById('counter').textContent = (current + 1) + ' / ' + slides.length;
+    document.getElementById('prev').disabled = current === 0;
+    document.getElementById('next').disabled = current === slides.length - 1;
+    document.getElementById('progress-bar').style.width = ((current + 1) / slides.length * 100) + '%';
+}
+
+document.getElementById('prev').addEventListener('click', function () { show(current - 1); });
+document.getElementById('next').addEventListener('click', function () { show(current + 1); });
+
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') show(current + 1);
+    if (event.key === 'ArrowLeft' || event.key === 'PageUp') show(current - 1);
+    if (event.key === 'Home') show(0);
+    if (event.key === 'End') show(slides.length - 1);
+});
+
+show(0);
+</script>
+
+</body>
+</html>

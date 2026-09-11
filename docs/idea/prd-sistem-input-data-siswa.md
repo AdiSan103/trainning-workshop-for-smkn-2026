@@ -61,7 +61,7 @@ Sekolah butuh cara sederhana catat data siswa per kelas — ganti catatan manual
 
 ## 5. Tech Stack
 
-Sama seperti workshop Todo List sebelumnya — Laravel + Blade + MySQL. Lihat [program-workshop-web-programming.md](program-workshop-web-programming.md) untuk stack detail & alat yang dibutuhkan.
+Sama seperti workshop Todo List sebelumnya — Laravel + Blade + MySQL. Styling memakai native CSS dengan custom properties/design token, tanpa framework CSS eksternal. Lihat [program-workshop-web-programming.md](program-workshop-web-programming.md) untuk stack detail & alat yang dibutuhkan.
 
 ## 6. Kriteria Selesai (Definition of Done)
 

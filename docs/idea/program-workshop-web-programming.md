@@ -62,7 +62,7 @@ Siswa akan membangun **Aplikasi Todo List** secara bertahap — setiap hari mena
 
 | Layer       | Teknologi                               | Versi                              |
 | ----------- | --------------------------------------- | ---------------------------------- |
-| Frontend    | HTML5, CSS3 (native), JavaScript, Blade | HTML5, CSS3, ES2023+, Laravel 12.x |
+| Frontend    | HTML5, CSS3 (native), JavaScript, Blade | HTML5, CSS3, ES2023+, Laravel 12.x; custom properties dan responsive design |
 | Backend     | PHP, Laravel                            | PHP 8.2+, Laravel 12.x             |
 | Database    | MySQL, Eloquent ORM                     | MySQL 8.0+, Laravel 12.x           |
 | Development | Composer, Laragon/XAMPP, VS Code        | Composer 2.x, versi stabil         |
