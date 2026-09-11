@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Shell(git:*)",
+      "Shell(agent-browser:*)"
+    ],
+    "deny": [],
+    "defaultMode": "default"
+  }
+}

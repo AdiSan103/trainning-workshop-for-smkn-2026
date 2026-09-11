@@ -3,14 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Guidebook Project Data Siswa</title>
+<title>Starter Career With Laravel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
 :root{
     --navy:#0f1e38; --navy-2:#12355b; --blue:#1769aa; --blue-light:#eaf3fb;
     --amber:#e2a400; --amber-light:#fff8e6; --ink:#1f2937; --muted:#5b6b81; --ring:#dbe6f2;
+    --deep:#0b1026; --cyan:#22d3ee;
+    --display:'Poppins','Inter',Arial,sans-serif;
+    --body:'Inter',Arial,sans-serif;
+    --mono:'JetBrains Mono',Consolas,monospace;
 }
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth}
@@ -18,992 +22,482 @@ body{
     background:
         radial-gradient(circle at 12% 8%, #7c3aed 0, transparent 28%),
         radial-gradient(circle at 88% 18%, #06b6d4 0, transparent 26%),
-        linear-gradient(135deg, #0b1026 0%, #172554 48%, #312e81 100%) fixed;
-    color:var(--ink); font-family:'Inter',Arial,sans-serif; line-height:1.6; min-height:100vh;
+        linear-gradient(135deg, var(--deep) 0%, #172554 48%, #312e81 100%) fixed;
+    color:#e7eef9; font-family:var(--body); line-height:1.6;
+    min-height:100vh; display:flex; flex-direction:column; overflow-x:hidden;
 }
-h1,h2{font-family:'Poppins','Inter',Arial,sans-serif}
+h1,h2,h3{font-family:var(--display)}
 
-#progress-track{position:fixed;top:0;left:0;width:100%;height:5px;background:#0000002e;z-index:20}
-#progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--amber),var(--blue));transition:width .35s ease}
-
-#particles-bg{position:fixed; inset:0; z-index:10; pointer-events:none; opacity:.42; mix-blend-mode:multiply}
-#particles-bg canvas{display:block; width:100%; height:100%;}
-#deck{position:relative; z-index:1}
-
-.slide {
-    display: none;
-    width: min(960px, calc(100% - 2rem));
-    margin: 2.75rem auto 1.5rem;
-    min-height: calc(100vh - 10rem);
-    background: #fff;
-    color: #1f2937;
-    border-radius: .9rem;
-    padding: 2.5rem 3rem;
-    box-shadow: 0 20px 50px rgba(0,0,0,.4);
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-}
-.slide.active { display: block; }
-
-@keyframes riseIn{from{opacity:0; transform:translateY(24px)} to{opacity:1; transform:translateY(0)}}
-.slide.active > *{animation:riseIn .55s cubic-bezier(.2,.7,.3,1) both}
-.slide.active > *:nth-child(1){animation-delay:.02s}
-.slide.active > *:nth-child(2){animation-delay:.08s}
-.slide.active > *:nth-child(3){animation-delay:.14s}
-.slide.active > *:nth-child(4){animation-delay:.2s}
-.slide.active > *:nth-child(5){animation-delay:.26s}
-.slide.active > *:nth-child(6){animation-delay:.32s}
-
-.kicker-row{display:flex; align-items:center; gap:.6rem; margin-bottom:.35rem}
-.icon-badge{
-    display:inline-flex; align-items:center; justify-content:center;
-    width:2.1rem; height:2.1rem; border-radius:50%; font-size:1.1rem; flex-shrink:0;
-    background:linear-gradient(145deg,var(--blue-light),#fff); box-shadow:0 2px 6px rgba(23,105,170,.2), inset 0 0 0 1px var(--ring);
-}
-.kicker { color: #1769aa; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: .8rem; }
-h1 { color: #12355b; font-size: 2.2rem; margin: .5rem 0 1rem; line-height: 1.2; }
-h2 { color: #12355b; font-size: 1.6rem; margin-bottom: 1rem; }
-p, li { font-size: 1.05rem; }
-ul { padding-left: 1.4rem; margin: .75rem 0; }
-li { margin: .35rem 0; }
-
-code {
-    background: #eef2f7;
-    border-radius: .3rem;
-    color: #0f2440;
-    font-family: Consolas, monospace;
-    font-size: .92em;
-    padding: .1em .35em;
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity 1.4s ease}
+#bg canvas{display:block;width:100%;height:100%}
+#bg::after{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(ellipse 70% 60% at 50% 40%, rgba(11,16,38,.82) 0%, rgba(11,16,38,.42) 48%, transparent 76%);
 }
 
-pre {
-    background: #0f2440;
-    border-radius: .5rem;
-    color: #d7e3f4;
-    overflow-x: auto;
-    padding: 1rem;
-    font-size: .92rem;
-    margin: .75rem 0;
+#progress-track{position:fixed;top:0;left:0;width:100%;height:4px;background:#0000002e;z-index:20}
+#progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--amber),var(--cyan))}
+
+.wrap{width:min(1080px, 100% - 2.5rem);margin-inline:auto;position:relative;z-index:2}
+main{flex:1}
+
+.hero{padding:4.5rem 0 1.5rem}
+.eyebrow{
+    display:inline-flex;align-items:center;gap:.6rem;
+    font-family:var(--mono);font-size:.74rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+    color:#bfe0ff;background:#ffffff12;border:1px solid #ffffff2b;border-radius:999px;
+    padding:.45rem .95rem;backdrop-filter:blur(6px);
 }
-pre code { background: none; color: inherit; padding: 0; }
+.eyebrow i{width:.5rem;height:.5rem;border-radius:50%;background:var(--amber);box-shadow:0 0 0 4px #e2a4002e;animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 
-.code-slide pre {
-    max-height: 52vh;
-    overflow: auto;
-    font-size: .78rem;
-    line-height: 1.35;
-    user-select: text;
+.headline{
+    font-size:clamp(2.6rem, 7.6vw, 5rem);font-weight:800;line-height:.99;
+    letter-spacing:-.025em;color:#fff;margin:1.4rem 0 0;text-shadow:0 6px 40px #00000066;
 }
-.code-slide .copy-note { color: var(--muted); font-size: .9rem; margin-bottom: .6rem; }
-
-.lesson {
-    background: #fff8e6;
-    border-left: 4px solid #e2a400;
-    border-radius: .5rem;
-    margin-top: 1.5rem;
-    padding: .8rem 1.05rem;
-    display:flex; gap:.6rem; align-items:flex-start;
+.headline .line{display:block;overflow:hidden;padding-bottom:.05em}
+.headline .line > span{display:block;will-change:transform}
+.headline .accent{
+    background:linear-gradient(100deg,var(--amber) 0%,#f7d774 45%,var(--amber) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-.lesson strong { color: #8a6100; }
+.lead{color:#c3d3e8;font-size:clamp(1rem,2vw,1.14rem);max-width:60ch;margin-top:1.5rem}
 
-.cols { display: grid; gap: 1.1rem; grid-template-columns: repeat(auto-fit, minmax(225px, 1fr)); margin-top:.5rem }
-.box{
-    background:var(--blue-light); border-radius:.65rem; padding:1rem 1.1rem; border:1px solid var(--ring);
-    transition:transform .2s ease, box-shadow .2s ease;
+.author{
+    display:inline-flex;align-items:center;gap:.75rem;margin-top:1.9rem;
+    background:#ffffff12;border:1px solid #ffffff2b;border-radius:999px;
+    padding:.5rem 1.2rem .5rem .55rem;font-size:.94rem;color:#dbe6f5;backdrop-filter:blur(6px);
 }
-.box:hover{transform:translateY(-3px); box-shadow:0 10px 22px rgba(23,105,170,.15)}
-.box p{font-size:.95rem; color:var(--muted)}
-
-.hero { display:none; text-align: center; z-index:1; position:relative }
-.hero.active{display:flex; flex-direction:column; align-items:center; justify-content:center}
-.hero p { color: #4b5563; margin: .35rem 0; }
-
-.navbar {
-    position:fixed; bottom:0; left:0; width:100%; z-index:15;
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    background:linear-gradient(0deg, rgba(15,30,56,.95), rgba(15,30,56,0));
+.author .avatar{
+    width:2.3rem;height:2.3rem;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
+    font-family:var(--display);font-weight:700;font-size:.86rem;color:#0b1830;
+    background:linear-gradient(145deg,#f7d774,var(--amber));
 }
+.author strong{color:#fff;font-weight:600}
+.author em{font-style:normal;color:#9fb4cf}
 
-button {
-    background: #1769aa;
-    border: 0;
-    border-radius: .5rem;
-    color: #fff;
-    cursor: pointer;
-    font: inherit;
-    font-weight:600;
-    padding: .6rem 1.2rem;
-    transition: background .2s, transform .15s;
+.divider{display:flex;align-items:center;gap:1rem;margin:3.4rem 0 1.6rem}
+.divider .rule{flex:1;height:1px;background:linear-gradient(90deg,#ffffff10,#ffffff44,#ffffff10)}
+.divider .tag{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#8fa7c4;white-space:nowrap}
+
+.cards{display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.card{
+    display:block;text-decoration:none;color:inherit;position:relative;
+    background:linear-gradient(180deg,#ffffff14,#ffffff09);border:1px solid #ffffff26;
+    border-radius:1.15rem;padding:1.9rem 1.7rem;overflow:hidden;
+    transition:border-color .25s ease, box-shadow .25s ease;
+    backdrop-filter:blur(8px);will-change:transform;
 }
-button:hover:not(:disabled){background:#125e94; transform:translateY(-1px)}
-button:disabled { background: #3f5b80; cursor: not-allowed; opacity:.6 }
-#counter { min-width: 7ch; text-align: center; color: #cdd8e6; font-variant-numeric: tabular-nums }
+.card::after{
+    content:"";position:absolute;right:-35%;bottom:-60%;width:240px;height:240px;border-radius:50%;
+    background:radial-gradient(circle,#1769aa66,transparent 70%);pointer-events:none;
+    transform:scale(.9);transition:transform .4s ease;
+}
+.card::before{
+    content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;
+    background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%), #ffffff26, transparent 62%);
+    transition:opacity .3s ease;
+}
+.card:hover,.card:focus-visible{border-color:#ffffff4d;box-shadow:0 26px 52px #00000066;outline:none}
+.card:hover::after{transform:scale(1.25)}
+.card:hover::before{opacity:1}
+.card-body{display:block;position:relative;z-index:1}
 
-@media (max-width: 640px) {
-    .slide { padding: 1.6rem; }
-    h1 { font-size: 1.7rem; }
-    .code-slide pre { max-height: 48vh; font-size: .68rem; }
+.card .step{
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;color:#8fa7c4;
+    display:flex;justify-content:space-between;align-items:center;margin-bottom:1.4rem;
+}
+.card .step b{color:var(--amber);font-weight:600}
+.card .icon{
+    display:inline-flex;align-items:center;justify-content:center;width:3rem;height:3rem;
+    border-radius:.85rem;font-size:1.5rem;margin-bottom:1.1rem;
+    background:linear-gradient(145deg,#ffffff22,#ffffff08);box-shadow:inset 0 0 0 1px #ffffff26;
+}
+.card h2{color:#fff;font-size:1.32rem;line-height:1.25;margin-bottom:.55rem}
+.card p{color:#c3d3e8;font-size:.97rem}
+.card .go{
+    display:inline-flex;align-items:center;gap:.45rem;margin-top:1.4rem;
+    color:#ffd45e;font-weight:600;font-size:.93rem;
+}
+.card .go svg{transition:transform .25s ease}
+.card:hover .go svg{transform:translateX(5px)}
+
+.site-foot{padding:3.6rem 0 3rem;text-align:center}
+.foot-rule{width:74px;height:3px;border-radius:2px;margin:0 auto 1.6rem;background:linear-gradient(90deg,var(--amber),var(--cyan))}
+.site-foot h2{color:#fff;font-size:1.22rem;letter-spacing:.01em}
+.site-foot .sub{color:#a9bdd8;font-size:.96rem;margin-top:.35rem}
+.socials{display:flex;flex-wrap:wrap;justify-content:center;gap:.85rem;margin-top:1.6rem}
+.pill{
+    display:inline-flex;align-items:center;gap:.55rem;text-decoration:none;color:#dbe6f5;
+    background:#ffffff10;border:1px solid #ffffff26;border-radius:999px;padding:.62rem 1.15rem;
+    font-size:.9rem;font-weight:500;transition:background .2s ease, border-color .2s ease;
+    will-change:transform;
+}
+.pill:hover,.pill:focus-visible{background:#ffffff22;border-color:#ffffff4d;outline:none}
+.pill svg{width:18px;height:18px;fill:currentColor}
+.credit{color:#7f93ad;font-size:.8rem;margin-top:2.2rem;font-family:var(--mono)}
+
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+
+@media (max-width:640px){
+    .hero{padding:3rem 0 1rem}
+    .card{padding:1.55rem 1.35rem}
+    .author{font-size:.85rem}
+}
+@media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    #bg{transition:none}
+    .eyebrow i{animation:none}
 }
 </style>
 </head>
 <body>
 
 <div id="progress-track"><div id="progress-bar"></div></div>
-<div id="particles-bg" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div>
 
-<main id="deck">
+<div class="wrap">
 
-    <section class="slide active hero">
-        <span class="icon-badge" style="width:3.2rem;height:3.2rem;font-size:1.7rem;margin-bottom:1rem">📘</span>
-        <p class="kicker">Guidebook</p>
-        <h1>Membuat Project Sistem Input Data Siswa</h1>
-        <p>Laravel 8 &bull; Blade &bull; MySQL &bull; XAMPP</p>
-        <p>Mini Project Workshop &mdash; SMKN 2 Tabanan</p>
-        <p>Tekan tombol <strong>Selanjutnya</strong> atau panah keyboard untuk pindah slide.</p>
-    </section>
+    <header class="hero">
+        <span class="eyebrow" data-hero><i></i>Workshop Web Programming · SMKN 2 Tabanan</span>
 
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🎯</span><p class="kicker">Step 1</p></div>
-        <h2>Pahami Kebutuhan Project</h2>
-        <ul>
-            <li>Kelola data <code>siswa</code> dan data <code>kelas</code>.</li>
-            <li>Setiap siswa terhubung dengan satu kelas.</li>
-            <li>Menerapkan CRUD: Create, Read, Update, Delete.</li>
-            <li>Dibatasi dua tabel sesuai PRD.</li>
-        </ul>
-        <div class="cols">
-            <div class="box">
-                <p><strong>Fitur wajib</strong></p>
-                <ul>
-                    <li>Tambah, lihat, edit, hapus siswa.</li>
-                    <li>Tambah dan lihat kelas.</li>
-                    <li>Pilih kelas saat input siswa.</li>
-                    <li>NIS unik, nama &amp; kelas wajib.</li>
-                </ul>
-            </div>
-            <div class="box">
-                <p><strong>Belum dibuat</strong></p>
-                <ul>
-                    <li>Login.</li>
-                    <li>Nilai &amp; absensi.</li>
-                    <li>Upload foto.</li>
-                    <li>Search &amp; export CSV.</li>
-                </ul>
-            </div>
+        <h1 class="headline">
+            <span class="line"><span>Starter Career</span></span>
+            <span class="line"><span class="accent">With Laravel</span></span>
+        </h1>
+
+        <p class="lead" data-hero>Mulai perjalananmu menjadi web developer. Kenali dunia kerja teknologi, lalu bangun project pertamamu dengan Laravel.</p>
+
+        <span class="author" data-hero>
+            <span class="avatar">PA</span>
+            <span>by <strong>Putu Adi</strong> <em>— Frontend Developer at Timedoor</em></span>
+        </span>
+    </header>
+
+    <main>
+        <div class="divider" data-hero>
+            <span class="rule"></span>
+            <span class="tag">2 modul</span>
+            <span class="rule"></span>
         </div>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> PRD membatasi pekerjaan. Jangan langsung menambah fitur di luar kebutuhan.</div></div>
-    </section>
 
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🧰</span><p class="kicker">Step 2</p></div>
-        <h2>Siapkan Tools</h2>
-        <ul>
-            <li>XAMPP 8.2.x (Apache, MySQL, PHP 8.2.x).</li>
-            <li>PHP minimum 7.3.</li>
-            <li>Composer 2.x.</li>
-            <li>Node.js dan npm.</li>
-            <li>Editor kode, Git (opsional).</li>
-        </ul>
-        <pre><code>php --version
-composer --version
-node --version
-npm --version</code></pre>
-        <p>Start <strong>Apache</strong> dan <strong>MySQL</strong> lewat XAMPP Control Panel.</p>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Pastikan tools siap sebelum debugging kode.</div></div>
-    </section>
+        <section class="cards">
+            <a class="card" href="dunia-kerja-teknologi-laravel.html">
+                <span class="card-body" data-scroll>
+                    <span class="step"><span>Modul 01</span><b>Kenali</b></span>
+                    <span class="icon">💼</span>
+                    <h2>Dunia Kerja, Teknologi &amp; Laravel</h2>
+                    <p>Peluang karier digital, jenis teknologi yang dipakai industri, dan alasan Laravel jadi pilihan untuk membangun website modern.</p>
+                    <span class="go">Buka materi
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </span>
+                </span>
+            </a>
 
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">📦</span><p class="kicker">Step 3</p></div>
-        <h2>Siapkan Project Laravel</h2>
-        <pre><code>cd project
-composer install
-copy .env.example .env
-php artisan key:generate
-npm install</code></pre>
-        <ul>
-            <li><code>composer.json</code> mengatur dependency PHP.</li>
-            <li><code>package.json</code> mengatur dependency frontend.</li>
-            <li><code>.env</code> menyimpan konfigurasi lokal.</li>
-        </ul>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> File konfigurasi environment tidak boleh dibagikan sembarangan.</div></div>
-    </section>
+            <a class="card" href="guide-mini-project.html">
+                <span class="card-body" data-scroll>
+                    <span class="step"><span>Modul 02</span><b>Bangun</b></span>
+                    <span class="icon">🧩</span>
+                    <h2>Guide Mini Project</h2>
+                    <p>Panduan langkah demi langkah membangun aplikasi Data Siswa: migration, model, controller, view, sampai testing.</p>
+                    <span class="go">Mulai project
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </span>
+                </span>
+            </a>
+        </section>
+    </main>
 
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🗄️</span><p class="kicker">Step 4</p></div>
-        <h2>Konfigurasi Database</h2>
-        <p>Buat database bernama <code>laravel</code> lewat phpMyAdmin, lalu cek <code>.env</code>:</p>
-        <pre><code>DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=laravel
-DB_USERNAME=root
-DB_PASSWORD=</code></pre>
-        <div class="lesson"><span>🔒</span><div><strong>Pelajaran:</strong> Jangan simpan password database asli di Git.</div></div>
-    </section>
+    <footer class="site-foot">
+        <div class="foot-rule" data-scroll></div>
+        <h2 data-scroll>Keep in Touch</h2>
+        <p class="sub" data-scroll>Punya pertanyaan atau ingin berdiskusi soal web development? Terhubung dengan saya.</p>
 
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🧩</span><p class="kicker">Step 5</p></div>
-        <h2>Rancang Database dari Relasi</h2>
-        <pre><code>kelas 1 ---- banyak siswa
-siswa banyak ---- 1 kelas</code></pre>
-        <div class="cols">
-            <div class="box">
-                <p><strong>Tabel kelas</strong></p>
-                <ul>
-                    <li><code>id</code></li>
-                    <li><code>nama_kelas</code>, unique</li>
-                    <li><code>created_at</code>, <code>updated_at</code></li>
-                </ul>
-            </div>
-            <div class="box">
-                <p><strong>Tabel siswa</strong></p>
-                <ul>
-                    <li><code>id</code>, <code>nis</code> (unique), <code>nama</code></li>
-                    <li><code>kelas_id</code> FK ke <code>kelas.id</code></li>
-                    <li><code>jenis_kelamin</code> L/P, nullable</li>
-                    <li><code>created_at</code>, <code>updated_at</code></li>
-                </ul>
-            </div>
-        </div>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Rancang tabel dan relasi sebelum membuat form atau controller.</div></div>
-    </section>
+        <nav class="socials" aria-label="Sosial media" data-scroll>
+            <a class="pill" href="https://adisan103.github.io/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11 11 0 0 1 6 0C17.7 4.9 18.7 5.2 18.7 5.2c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.9.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+                GitHub
+            </a>
+            <a class="pill" href="https://adisan103.github.io/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.1-.9 0-1.4.2-1.7.3-.4.2-.7.4-1 .7-.3.3-.5.6-.7 1-.1.3-.3.8-.3 1.7-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c0 .9.2 1.4.3 1.7.2.4.4.7.7 1 .3.3.6.5 1 .7.3.1.8.3 1.7.3 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c.9 0 1.4-.2 1.7-.3.4-.2.7-.4 1-.7.3-.3.5-.6.7-1 .1-.3.3-.8.3-1.7.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c0-.9-.2-1.4-.3-1.7-.2-.4-.4-.7-.7-1-.3-.3-.6-.5-1-.7-.3-.1-.8-.3-1.7-.3-1.2-.1-1.6-.1-4.7-.1zm0 3.1a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4zm5.2-2a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/></svg>
+                Instagram
+            </a>
+            <a class="pill" href="https://adisan103.github.io/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-.9 1.8-1.9 3.6-1.9 3.9 0 4.6 2.5 4.6 5.8V21h-4v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21H9z"/></svg>
+                LinkedIn
+            </a>
+            <a class="pill" href="https://adisan103.github.io/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.2-8 5-8-5V6l8 5 8-5z"/></svg>
+                Email
+            </a>
+        </nav>
 
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🧱</span><p class="kicker">Step 6</p></div>
-        <h2>Buat Migration</h2>
-        <ul>
-            <li><code>2026_09_08_000001_create_kelas_table.php</code> &mdash; <code>nama_kelas</code> unik.</li>
-            <li><code>2026_09_08_000002_create_siswa_table.php</code> &mdash; NIS unik, FK <code>kelas_id</code>, <code>jenis_kelamin</code> nullable, <code>cascadeOnDelete</code>.</li>
-        </ul>
-        <pre><code>php artisan migrate
-php artisan migrate:fresh   # hapus &amp; buat ulang semua tabel (development)</code></pre>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Migration adalah version control untuk struktur database.</div></div>
-    </section>
+        <p class="credit" data-scroll>Starter Career With Laravel · Workshop Web Programming</p>
+    </footer>
 
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🔗</span><p class="kicker">Step 7</p></div>
-        <h2>Buat Model dan Relasi Eloquent</h2>
-        <ul>
-            <li><code>Kelas</code> &mdash; fillable <code>nama_kelas</code>, <code>hasMany(Siswa::class)</code>.</li>
-            <li><code>Siswa</code> &mdash; fillable <code>nis</code>, <code>nama</code>, <code>kelas_id</code>, <code>jenis_kelamin</code>; <code>belongsTo(Kelas::class)</code>.</li>
-        </ul>
-        <pre><code>$siswa-&gt;kelas-&gt;nama_kelas;
-$kelas-&gt;siswa;</code></pre>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Model menerjemahkan tabel menjadi object PHP. Relasi mencegah query manual berulang.</div></div>
-    </section>
+</div>
 
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Step 8</p></div>
-        <h2>Buat Controller Siswa</h2>
-        <p><code>SiswaController</code> memakai pola resource:</p>
-        <ul>
-            <li><code>index</code> &mdash; daftar siswa.</li>
-            <li><code>create</code> / <code>store</code> &mdash; form &amp; simpan siswa baru.</li>
-            <li><code>edit</code> / <code>update</code> &mdash; form &amp; perbarui siswa.</li>
-            <li><code>destroy</code> &mdash; hapus siswa.</li>
-        </ul>
-        <pre><code>Siswa::with('kelas')-&gt;orderBy('nama')-&gt;get();</code></pre>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Eager loading mengambil nama kelas tanpa query berulang (menghindari N+1).</div></div>
-    </section>
-
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🏫</span><p class="kicker">Step 9</p></div>
-        <h2>Buat Controller Kelas</h2>
-        <ul>
-            <li><code>index</code> &mdash; daftar kelas + jumlah siswa.</li>
-            <li><code>store</code> &mdash; validasi &amp; simpan kelas.</li>
-            <li><code>destroy</code> &mdash; hapus kelas hanya jika belum punya siswa.</li>
-        </ul>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Validasi bisnis tetap diperlukan walaupun database sudah punya foreign key.</div></div>
-    </section>
-
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🛣️</span><p class="kicker">Step 10</p></div>
-        <h2>Daftarkan Route</h2>
-        <pre><code>/                    redirect ke daftar siswa
-/siswa               daftar siswa
-/siswa/create        form tambah
-/siswa/{siswa}/edit  form edit
-/kelas               daftar &amp; tambah kelas</code></pre>
-        <pre><code>php artisan route:list</code></pre>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Route menghubungkan URL dengan controller action.</div></div>
-    </section>
-
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🖼️</span><p class="kicker">Step 11</p></div>
-        <h2>Buat Layout Blade</h2>
-        <p><code>resources/views/layouts/app.blade.php</code> berisi navigation, flash message, error validasi, dan <code>@yield('content')</code>.</p>
-        <pre><code>{{ $value }}        // escaping output
-@csrf               // proteksi form
-@method('PUT')      // method spoofing
-@method('DELETE')</code></pre>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Layout mengurangi HTML berulang. <code>@csrf</code> wajib di setiap form.</div></div>
-    </section>
-
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">📋</span><p class="kicker">Step 12</p></div>
-        <h2>Buat Halaman Siswa</h2>
-        <ul>
-            <li><code>siswa/index</code> &mdash; tabel NIS, Nama, Kelas, Jenis Kelamin, aksi edit/hapus dengan konfirmasi.</li>
-            <li><code>siswa/create</code> &amp; <code>siswa/edit</code> &mdash; memakai partial <code>siswa/form</code>.</li>
-        </ul>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Partial cocok untuk form yang dipakai lebih dari satu halaman.</div></div>
-    </section>
-
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🏷️</span><p class="kicker">Step 13</p></div>
-        <h2>Buat Halaman Kelas</h2>
-        <p><code>kelas/index</code> menyediakan:</p>
-        <ul>
-            <li>Form tambah kelas.</li>
-            <li>Daftar kelas + jumlah siswa.</li>
-            <li>Tombol hapus + pesan jika kelas masih berisi siswa.</li>
-        </ul>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Buat UI sederhana dulu. CSS tambahan hanya untuk keterbacaan &amp; aksesibilitas.</div></div>
-    </section>
-
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🎨</span><p class="kicker">Step 14</p></div>
-        <h2>Tambahkan CSS</h2>
-        <p><code>resources/css/app.css</code> mengatur container, navbar, card, table, button, form, alert, dan tampilan mobile lewat design token di <code>:root</code>.</p>
-        <pre><code>:root {
-    --navy: #102a43;
-    --blue: #1769aa;
-    --surface: #ffffff;
-    --shadow: 0 14px 35px rgb(16 42 67 / 10%);
-}</code></pre>
-        <ul>
-            <li>Aksesibilitas: <code>:focus-visible</code> beri outline pada button, input, select.</li>
-            <li>Responsive: media query <code>max-width: 640px</code> menumpuk navbar &amp; form, tombol full-width.</li>
-            <li><code>prefers-reduced-motion: reduce</code> matikan transisi untuk user sensitif gerakan.</li>
-        </ul>
-        <pre><code>npm run dev</code></pre>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> HTML struktur, Blade isi data, CSS tampilan.</div></div>
-    </section>
-
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🧹</span><p class="kicker">Step 15</p></div>
-        <h2>Hapus Halaman Starter</h2>
-        <ul>
-            <li><code>welcome.blade.php</code> default dihapus.</li>
-            <li>Route <code>/</code> mengarah ke daftar siswa.</li>
-        </ul>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Hapus kode starter yang tidak dipakai agar project mudah dipahami.</div></div>
-    </section>
-
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🧪</span><p class="kicker">Step 16</p></div>
-        <h2>Buat Pengujian Otomatis</h2>
-        <ul>
-            <li>Buat &amp; lihat siswa.</li>
-            <li>NIS harus unik.</li>
-            <li>Kelas berisi siswa tidak bisa dihapus.</li>
-            <li>Route <code>/</code> redirect ke daftar siswa.</li>
-        </ul>
-        <pre><code>php artisan test   # target: 5 passed</code></pre>
-        <p>PHPUnit memakai SQLite in-memory sehingga test tidak menyentuh database MySQL development.</p>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Test menangkap regresi setelah perubahan kode.</div></div>
-    </section>
-
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">▶️</span><p class="kicker">Step 17</p></div>
-        <h2>Jalankan Project</h2>
-        <pre><code>cd project
-php artisan serve
-# buka http://127.0.0.1:8000</code></pre>
-        <p>Uji alur manual: tambah kelas, tambah siswa, edit, NIS duplikat ditolak, hapus siswa, hapus kelas kosong, kelas berisi siswa ditolak.</p>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Test manual memeriksa pengalaman user, bukan hanya kode backend.</div></div>
-    </section>
-
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">✅</span><p class="kicker">Step 18</p></div>
-        <h2>Pemeriksaan Akhir</h2>
-        <pre><code>php artisan route:list
-php artisan test
-git diff --check</code></pre>
-        <ul>
-            <li>Tidak ada error di log saat pemakaian normal.</li>
-            <li>Semua input punya label, semua form pakai CSRF.</li>
-            <li>Output Blade di-escape, NIS tidak duplikat.</li>
-            <li>Perubahan tercatat di development log.</li>
-        </ul>
-    </section>
-
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🧭</span><p class="kicker">Tutorial Code 1</p></div>
-        <h2>Dari Starter ke Project</h2>
-        <p class="copy-note">Semua perintah dijalankan dari folder <code>project/</code>. Blok code dapat dipilih lalu disalin.</p>
-        <pre><code>composer install
-copy .env.example .env
-php artisan key:generate
-npm install
-
-# Atur DB_* di .env, lalu buat database laravel di MySQL
-php artisan migrate --seed
-php artisan serve
-# buka http://127.0.0.1:8000</code></pre>
-        <div class="lesson"><span>💡</span><div><strong>Urutan:</strong> dependency → environment → database → source code → browser.</div></div>
-    </section>
-
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🗄️</span><p class="kicker">Tutorial Code 2</p></div>
-        <h2>Migration Tabel Kelas</h2>
-        <p><code>php artisan make:migration create_kelas_table</code></p>
-        <pre><code>&lt;?php
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-
-return new class extends Migration
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@10.18.0/dist/motion.min.js"></script>
+<script type="importmap">
 {
-    public function up()
-    {
-        Schema::create('kelas', function (Blueprint $table) {
-            $table-&gt;id();
-            $table-&gt;string('nama_kelas')-&gt;unique();
-            $table-&gt;timestamps();
-        });
+    "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js"
     }
-
-    public function down()
-    {
-        Schema::dropIfExists('kelas');
-    }
-};</code></pre>
-    </section>
-
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🗄️</span><p class="kicker">Tutorial Code 3</p></div>
-        <h2>Migration Tabel Siswa</h2>
-        <p><code>php artisan make:migration create_siswa_table</code></p>
-        <pre><code>&lt;?php
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-
-return new class extends Migration
-{
-    public function up()
-    {
-        Schema::create('siswa', function (Blueprint $table) {
-            $table-&gt;id();
-            $table-&gt;string('nis')-&gt;unique();
-            $table-&gt;string('nama');
-            $table-&gt;foreignId('kelas_id')
-                -&gt;constrained('kelas')-&gt;cascadeOnDelete();
-            $table-&gt;enum('jenis_kelamin', ['L', 'P'])-&gt;nullable();
-            $table-&gt;timestamps();
-        });
-    }
-
-    public function down()
-    {
-        Schema::dropIfExists('siswa');
-    }
-};</code></pre>
-        <pre><code>php artisan migrate
-# development: php artisan migrate:fresh --seed</code></pre>
-    </section>
-
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🧩</span><p class="kicker">Tutorial Code 4</p></div>
-        <h2>Model dan Relasi</h2>
-        <div class="cols">
-            <div class="box"><strong>app/Models/Kelas.php</strong><pre><code>&lt;?php
-namespace App\Models;
-use Illuminate\Database\Eloquent\Model;
-
-class Kelas extends Model
-{
-    protected $table = 'kelas';
-    protected $fillable = ['nama_kelas'];
-
-    public function siswa()
-    {
-        return $this-&gt;hasMany(Siswa::class);
-    }
-}</code></pre></div>
-            <div class="box"><strong>app/Models/Siswa.php</strong><pre><code>&lt;?php
-namespace App\Models;
-use Illuminate\Database\Eloquent\Model;
-
-class Siswa extends Model
-{
-    protected $table = 'siswa';
-    protected $fillable = ['nis', 'nama', 'kelas_id', 'jenis_kelamin'];
-
-    public function kelas()
-    {
-        return $this-&gt;belongsTo(Kelas::class);
-    }
-}</code></pre></div>
-        </div>
-    </section>
-
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🌱</span><p class="kicker">Tutorial Code 5</p></div>
-        <h2>Seeder Data Demo</h2>
-        <p><code>database/seeders/DatabaseSeeder.php</code></p>
-        <pre><code>&lt;?php
-namespace Database\Seeders;
-
-use App\Models\Kelas;
-use App\Models\Siswa;
-use Illuminate\Database\Seeder;
-
-class DatabaseSeeder extends Seeder
-{
-    public function run()
-    {
-        $kelas = collect([
-            'X RPL 1', 'XI RPL 1', 'XI RPL 2', 'XII RPL 1',
-        ])-&gt;map(fn ($nama) =&gt; Kelas::firstOrCreate(['nama_kelas' =&gt; $nama]));
-
-        $siswa = [
-            ['nis' =&gt; '2024.01.001', 'nama' =&gt; 'Ahmad Fauzi', 'jenis_kelamin' =&gt; 'L'],
-            ['nis' =&gt; '2024.01.002', 'nama' =&gt; 'Bella Saraswati', 'jenis_kelamin' =&gt; 'P'],
-            ['nis' =&gt; '2024.01.003', 'nama' =&gt; 'Candra Wijaya', 'jenis_kelamin' =&gt; 'L'],
-            ['nis' =&gt; '2024.01.004', 'nama' =&gt; 'Dewi Anggraini', 'jenis_kelamin' =&gt; 'P'],
-            ['nis' =&gt; '2024.01.005', 'nama' =&gt; 'Eko Prasetyo', 'jenis_kelamin' =&gt; 'L'],
-            ['nis' =&gt; '2024.01.006', 'nama' =&gt; 'Fitri Handayani', 'jenis_kelamin' =&gt; 'P'],
-            ['nis' =&gt; '2024.01.007', 'nama' =&gt; 'Gede Bayu', 'jenis_kelamin' =&gt; 'L'],
-            ['nis' =&gt; '2024.01.008', 'nama' =&gt; 'Komang Ayu', 'jenis_kelamin' =&gt; 'P'],
-        ];
-
-        foreach ($siswa as $i =&gt; $data) {
-            Siswa::firstOrCreate(
-                ['nis' =&gt; $data['nis']],
-                $data + ['kelas_id' =&gt; $kelas[$i % $kelas-&gt;count()]-&gt;id]
-            );
-        }
-    }
-}</code></pre>
-        <pre><code>php artisan db:seed
-php artisan migrate:fresh --seed</code></pre>
-    </section>
-
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🛣️</span><p class="kicker">Tutorial Code 6</p></div>
-        <h2>Route Web</h2>
-        <p><code>routes/web.php</code></p>
-        <pre><code>&lt;?php
-
-use App\Http\Controllers\KelasController;
-use App\Http\Controllers\SiswaController;
-use Illuminate\Support\Facades\Route;
-
-Route::get('/', function () {
-    return redirect()-&gt;route('siswa.index');
-});
-
-Route::resource('siswa', SiswaController::class)-&gt;except(['show']);
-Route::get('kelas', [KelasController::class, 'index'])
-    -&gt;name('kelas.index');
-Route::post('kelas', [KelasController::class, 'store'])
-    -&gt;name('kelas.store');
-Route::delete('kelas/{kela}', [KelasController::class, 'destroy'])
-    -&gt;name('kelas.destroy');</code></pre>
-        <pre><code>php artisan route:list</code></pre>
-    </section>
-
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Tutorial Code 7</p></div>
-        <h2>Controller Siswa</h2>
-        <p><code>app/Http/Controllers/SiswaController.php</code></p>
-        <pre><code>&lt;?php
-namespace App\Http\Controllers;
-
-use App\Models\Kelas;
-use App\Models\Siswa;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-
-class SiswaController extends Controller
-{
-    public function index()
-    {
-        $siswa = Siswa::with('kelas')-&gt;orderBy('nama')-&gt;get();
-        return view('siswa.index', compact('siswa'));
-    }
-
-    public function create()
-    {
-        return view('siswa.create', ['kelas' =&gt; Kelas::orderBy('nama_kelas')-&gt;get()]);
-    }
-
-    public function store(Request $request)
-    {
-        Siswa::create($this-&gt;validated($request));
-        return redirect()-&gt;route('siswa.index')-&gt;with('success', 'Data siswa berhasil ditambahkan.');
-    }
-
-    public function edit(Siswa $siswa)
-    {
-        return view('siswa.edit', ['siswa' =&gt; $siswa, 'kelas' =&gt; Kelas::orderBy('nama_kelas')-&gt;get()]);
-    }
-
-    public function update(Request $request, Siswa $siswa)
-    {
-        $siswa-&gt;update($this-&gt;validated($request, $siswa));
-        return redirect()-&gt;route('siswa.index')-&gt;with('success', 'Data siswa berhasil diperbarui.');
-    }
-
-    public function destroy(Siswa $siswa)
-    {
-        $siswa-&gt;delete();
-        return redirect()-&gt;route('siswa.index')-&gt;with('success', 'Data siswa berhasil dihapus.');
-    }
-
-    private function validated(Request $request, ?Siswa $siswa = null)
-    {
-        return $request-&gt;validate([
-            'nis' =&gt; ['required', 'string', 'max:50', Rule::unique('siswa', 'nis')-&gt;ignore($siswa)],
-            'nama' =&gt; ['required', 'string', 'max:255'],
-            'kelas_id' =&gt; ['required', 'integer', 'exists:kelas,id'],
-            'jenis_kelamin' =&gt; ['nullable', Rule::in(['L', 'P'])],
-        ]);
-    }
-}</code></pre>
-    </section>
-
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🏫</span><p class="kicker">Tutorial Code 8</p></div>
-        <h2>Controller Kelas</h2>
-        <p><code>app/Http/Controllers/KelasController.php</code></p>
-        <pre><code>&lt;?php
-namespace App\Http\Controllers;
-
-use App\Models\Kelas;
-use Illuminate\Http\Request;
-
-class KelasController extends Controller
-{
-    public function index()
-    {
-        return view('kelas.index', [
-            'kelas' =&gt; Kelas::withCount('siswa')-&gt;orderBy('nama_kelas')-&gt;get(),
-        ]);
-    }
-
-    public function store(Request $request)
-    {
-        $request-&gt;validate([
-            'nama_kelas' =&gt; ['required', 'string', 'max:100', 'unique:kelas,nama_kelas'],
-        ]);
-        Kelas::create($request-&gt;only('nama_kelas'));
-        return redirect()-&gt;route('kelas.index')-&gt;with('success', 'Kelas berhasil ditambahkan.');
-    }
-
-    public function destroy(Kelas $kela)
-    {
-        if ($kela-&gt;siswa()-&gt;exists()) {
-            return redirect()-&gt;route('kelas.index')
-                -&gt;with('error', 'Kelas tidak dapat dihapus karena masih memiliki siswa.');
-        }
-        $kela-&gt;delete();
-        return redirect()-&gt;route('kelas.index')-&gt;with('success', 'Kelas berhasil dihapus.');
-    }
-}</code></pre>
-    </section>
-
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🖼️</span><p class="kicker">Tutorial Code 9</p></div>
-        <h2>Layout dan Halaman Blade</h2>
-        <p><code>resources/views/layouts/app.blade.php</code></p>
-        <pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang="id"&gt;
-&lt;head&gt;
-    &lt;meta charset="utf-8"&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
-    &lt;title&gt;@yield('title', 'Data Siswa')&lt;/title&gt;
-    &lt;link rel="stylesheet" href="{{ asset('css/app.css') }}"&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;nav class="navbar"&gt;
-        &lt;div class="container nav-links"&gt;
-            &lt;span class="brand"&gt;SMKN 2 Tabanan&lt;/span&gt;
-            &lt;a href="{{ route('siswa.index') }}"&gt;Data Siswa&lt;/a&gt;
-            &lt;a href="{{ route('kelas.index') }}"&gt;Data Kelas&lt;/a&gt;
-        &lt;/div&gt;
-    &lt;/nav&gt;
-    &lt;main class="container"&gt;
-        @if (session('success'))&lt;div class="alert alert-success"&gt;{{ session('success') }}&lt;/div&gt;@endif
-        @if (session('error'))&lt;div class="alert alert-error"&gt;{{ session('error') }}&lt;/div&gt;@endif
-        @if ($errors-&gt;any())
-            &lt;ul class="errors"&gt;@foreach ($errors-&gt;all() as $error)&lt;li&gt;{{ $error }}&lt;/li&gt;@endforeach&lt;/ul&gt;
-        @endif
-        @yield('content')
-    &lt;/main&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
-    </section>
-
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">📋</span><p class="kicker">Tutorial Code 10</p></div>
-        <h2>Blade Daftar + Form Siswa</h2>
-        <p><code>resources/views/siswa/index.blade.php</code></p>
-        <pre><code>@extends('layouts.app')
-@section('title', 'Data Siswa')
-@section('content')
-&lt;div class="card"&gt;
-    &lt;div class="page-heading"&gt;&lt;h1&gt;Data Siswa&lt;/h1&gt;
-        &lt;a class="btn btn-primary" href="{{ route('siswa.create') }}"&gt;Tambah Siswa&lt;/a&gt;
-    &lt;/div&gt;
-    &lt;div class="table-wrap"&gt;&lt;table&gt;
-        &lt;thead&gt;&lt;tr&gt;&lt;th&gt;NIS&lt;/th&gt;&lt;th&gt;Nama&lt;/th&gt;&lt;th&gt;Kelas&lt;/th&gt;&lt;th&gt;Jenis Kelamin&lt;/th&gt;&lt;th&gt;Aksi&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
-        &lt;tbody&gt;
-        @forelse ($siswa as $item)
-            &lt;tr&gt;&lt;td&gt;{{ $item-&gt;nis }}&lt;/td&gt;&lt;td&gt;{{ $item-&gt;nama }}&lt;/td&gt;
-            &lt;td&gt;{{ $item-&gt;kelas-&gt;nama_kelas ?? '-' }}&lt;/td&gt;&lt;td&gt;{{ $item-&gt;jenis_kelamin ?? '-' }}&lt;/td&gt;
-            &lt;td&gt;&lt;a class="btn btn-secondary" href="{{ route('siswa.edit', $item) }}"&gt;Edit&lt;/a&gt;
-                &lt;form class="inline-form" method="POST" action="{{ route('siswa.destroy', $item) }}"&gt;@csrf @method('DELETE')
-                    &lt;button class="btn btn-danger" type="submit"&gt;Hapus&lt;/button&gt;&lt;/form&gt;&lt;/td&gt;&lt;/tr&gt;
-        @empty
-            &lt;tr&gt;&lt;td class="empty" colspan="5"&gt;Belum ada data siswa.&lt;/td&gt;&lt;/tr&gt;
-        @endforelse
-        &lt;/tbody&gt;
-    &lt;/table&gt;&lt;/div&gt;
-&lt;/div&gt;
-@endsection</code></pre>
-    </section>
-
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🎨</span><p class="kicker">Tutorial Code 11</p></div>
-        <h2>CSS Project</h2>
-        <p><code>resources/css/app.css</code> — salin seluruh file dari project agar visual sama.</p>
-        <pre><code>:root {
-    --navy: #102a43; --blue: #1769aa; --blue-dark: #0f4c81;
-    --text: #243b53; --muted: #627d98; --surface: #ffffff;
-    --page: #f4f7fb; --line: #d9e2ec;
-    --success-bg: #e3fcef; --success-text: #147d64;
-    --error-bg: #fff0f0; --error-text: #b42318;
-    --shadow: 0 14px 35px rgb(16 42 67 / 10%);
 }
-
-* { box-sizing: border-box; }
-body { margin: 0; color: var(--text); background: var(--page); font-family: Arial, sans-serif; line-height: 1.5; }
-.container { width: min(1100px, calc(100% - 2rem)); margin: 0 auto; }
-.navbar { color: #fff; background: linear-gradient(120deg, var(--navy), var(--blue-dark)); }
-.card { padding: clamp(1.25rem, 3vw, 2rem); background: rgb(255 255 255 / 94%); border-radius: 1rem; box-shadow: var(--shadow); }
-.btn { display: inline-block; padding: .65rem 1rem; border: 0; border-radius: .55rem; font-weight: 700; text-decoration: none; }
-.btn-primary { color: #fff; background: var(--blue); }
-.btn-secondary { color: var(--text); background: #e8eef5; }
-.btn-danger { color: #fff; background: #c0392b; }
-.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: .75rem; }
-table { width: 100%; border-collapse: collapse; background: var(--surface); }
-th, td { padding: .9rem 1rem; text-align: left; border-bottom: 1px solid var(--line); }
-input, select { width: 100%; min-height: 2.75rem; padding: .65rem .75rem; border: 1px solid #bcccdc; border-radius: .5rem; font: inherit; }
-
-@media (max-width: 640px) {
-    .container { width: min(100% - 1rem, 1100px); }
-    .page-heading { align-items: stretch; flex-direction: column; }
-    .page-heading .btn { width: 100%; text-align: center; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
-}</code></pre>
-        <p class="copy-note">Runtime membaca <code>public/css/app.css</code> dari <code>asset('css/app.css')</code>. Setelah edit source, jalankan <code>npm run dev</code> atau salin CSS hasil akhir ke public.</p>
-    </section>
-
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🧾</span><p class="kicker">Tutorial Code 12</p></div>
-        <h2>Blade Form Siswa</h2>
-        <p><code>resources/views/siswa/form.blade.php</code> dipakai oleh create dan edit.</p>
-        <pre><code>@php
-    $siswa = $siswa ?? null;
-@endphp
-
-&lt;div class="form-group"&gt;
-    &lt;label for="nis"&gt;NIS&lt;/label&gt;
-    &lt;input id="nis" name="nis" type="text" value="{{ old('nis', $siswa-&gt;nis ?? '') }}" required&gt;
-&lt;/div&gt;
-&lt;div class="form-group"&gt;
-    &lt;label for="nama"&gt;Nama&lt;/label&gt;
-    &lt;input id="nama" name="nama" type="text" value="{{ old('nama', $siswa-&gt;nama ?? '') }}" required&gt;
-&lt;/div&gt;
-&lt;div class="form-group"&gt;
-    &lt;label for="kelas_id"&gt;Kelas&lt;/label&gt;
-    &lt;select id="kelas_id" name="kelas_id" required&gt;
-        &lt;option value=""&gt;-- Pilih Kelas --&lt;/option&gt;
-        @foreach ($kelas as $item)
-            &lt;option value="{{ $item-&gt;id }}" @selected(old('kelas_id', $siswa-&gt;kelas_id ?? null) == $item-&gt;id)&gt;{{ $item-&gt;nama_kelas }}&lt;/option&gt;
-        @endforeach
-    &lt;/select&gt;
-&lt;/div&gt;
-&lt;div class="form-group"&gt;
-    &lt;label for="jenis_kelamin"&gt;Jenis Kelamin&lt;/label&gt;
-    &lt;select id="jenis_kelamin" name="jenis_kelamin"&gt;
-        &lt;option value=""&gt;-- Tidak diisi --&lt;/option&gt;
-        &lt;option value="L" @selected(old('jenis_kelamin', $siswa-&gt;jenis_kelamin ?? null) === 'L')&gt;Laki-laki&lt;/option&gt;
-        &lt;option value="P" @selected(old('jenis_kelamin', $siswa-&gt;jenis_kelamin ?? null) === 'P')&gt;Perempuan&lt;/option&gt;
-    &lt;/select&gt;
-&lt;/div&gt;
-&lt;div class="form-actions"&gt;
-    &lt;button class="btn btn-primary" type="submit"&gt;Simpan&lt;/button&gt;
-    &lt;a class="btn btn-secondary" href="{{ route('siswa.index') }}"&gt;Batal&lt;/a&gt;
-&lt;/div&gt;</code></pre>
-    </section>
-
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">📝</span><p class="kicker">Tutorial Code 13</p></div>
-        <h2>Blade Create dan Edit</h2>
-        <pre><code>resources/views/siswa/create.blade.php
-
-@extends('layouts.app')
-@section('title', 'Tambah Siswa')
-@section('content')
-&lt;div class="card"&gt;
-    &lt;div class="page-heading"&gt;&lt;h1&gt;Tambah Siswa&lt;/h1&gt;&lt;/div&gt;
-    &lt;form method="POST" action="{{ route('siswa.store') }}"&gt;
-        @csrf
-        @include('siswa.form')
-    &lt;/form&gt;
-&lt;/div&gt;
-@endsection
-
-resources/views/siswa/edit.blade.php
-
-@extends('layouts.app')
-@section('title', 'Edit Siswa')
-@section('content')
-&lt;div class="card"&gt;
-    &lt;div class="page-heading"&gt;&lt;h1&gt;Edit Siswa&lt;/h1&gt;&lt;/div&gt;
-    &lt;form method="POST" action="{{ route('siswa.update', $siswa) }}"&gt;
-        @csrf @method('PUT')
-        @include('siswa.form')
-    &lt;/form&gt;
-&lt;/div&gt;
-@endsection</code></pre>
-    </section>
-
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🏫</span><p class="kicker">Tutorial Code 14</p></div>
-        <h2>Blade Halaman Kelas</h2>
-        <p><code>resources/views/kelas/index.blade.php</code></p>
-        <pre><code>@extends('layouts.app')
-@section('title', 'Data Kelas')
-@section('content')
-&lt;div class="card"&gt;
-    &lt;div class="page-heading"&gt;&lt;h1&gt;Data Kelas&lt;/h1&gt;&lt;/div&gt;
-    &lt;form method="POST" action="{{ route('kelas.store') }}" class="form-group"&gt;
-        @csrf
-        &lt;label for="nama_kelas"&gt;Nama Kelas Baru&lt;/label&gt;
-        &lt;div class="nav-links"&gt;
-            &lt;input id="nama_kelas" name="nama_kelas" type="text" value="{{ old('nama_kelas') }}" required&gt;
-            &lt;button class="btn btn-primary" type="submit"&gt;Tambah&lt;/button&gt;
-        &lt;/div&gt;
-    &lt;/form&gt;
-    &lt;div class="table-wrap"&gt;&lt;table&gt;
-        &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Nama Kelas&lt;/th&gt;&lt;th&gt;Jumlah Siswa&lt;/th&gt;&lt;th&gt;Aksi&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
-        &lt;tbody&gt;
-        @forelse ($kelas as $item)
-            &lt;tr&gt;&lt;td&gt;{{ $item-&gt;nama_kelas }}&lt;/td&gt;&lt;td&gt;{{ $item-&gt;siswa_count }}&lt;/td&gt;
-                &lt;td&gt;&lt;form class="inline-form" method="POST" action="{{ route('kelas.destroy', $item) }}"&gt;
-                    @csrf @method('DELETE')
-                    &lt;button class="btn btn-danger" type="submit"&gt;Hapus&lt;/button&gt;
-                &lt;/form&gt;&lt;/td&gt;&lt;/tr&gt;
-        @empty
-            &lt;tr&gt;&lt;td class="empty" colspan="3"&gt;Belum ada data kelas.&lt;/td&gt;&lt;/tr&gt;
-        @endforelse
-        &lt;/tbody&gt;
-    &lt;/table&gt;&lt;/div&gt;
-&lt;/div&gt;
-@endsection</code></pre>
-    </section>
-
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">✅</span><p class="kicker">Tutorial Code 15</p></div>
-        <h2>Verifikasi sampai Sama</h2>
-        <pre><code>php artisan migrate:fresh --seed
-php artisan route:list
-php artisan test
-git diff --check
-php artisan serve</code></pre>
-        <ul class="checklist">
-            <li><code>resources/views/layouts/app.blade.php</code> memuat <code>public/css/app.css</code>.</li>
-            <li>Root <code>/</code> redirect ke <code>siswa.index</code>.</li>
-            <li>Tambah, edit, hapus siswa; NIS duplikat ditolak.</li>
-            <li>Kelas berisi siswa tidak dapat dihapus.</li>
-            <li>Responsive pada lebar layar ≤ 640px; keyboard focus terlihat.</li>
-        </ul>
-    </section>
-
-    <section class="slide hero">
-        <span class="icon-badge" style="width:3.2rem;height:3.2rem;font-size:1.7rem;margin-bottom:1rem">🎉</span>
-        <p class="kicker">Selesai</p>
-        <h1>Project Selesai</h1>
-        <p>CRUD siswa &amp; kelas berfungsi, tervalidasi, dan teruji.</p>
-        <p>Lanjutkan dengan mengisi <strong>Log Perubahan</strong> setiap kali ada pekerjaan baru.</p>
-    </section>
-
-</main>
-
-<nav class="navbar">
-    <button id="prev" type="button">&larr; Sebelumnya</button>
-    <span id="counter"></span>
-    <button id="next" type="button">Selanjutnya &rarr;</button>
-</nav>
-
-<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+</script>
 <script>
-if (window.particlesJS) {
-    particlesJS('particles-bg', {
-        particles: {
-            number: { value: 55, density: { enable: true, value_area: 900 } },
-            color: { value: ['#1769aa', '#7c3aed', '#0891b2'] },
-            opacity: { value: 0.62, random: true },
-            size: { value: 2.5, random: true },
-            line_linked: { enable: true, distance: 145, color: '#1769aa', opacity: 0.35, width: 1.2 },
-            move: { enable: true, speed: 1.2, direction: 'none', out_mode: 'out' }
-        },
-        interactivity: {
-            detect_on: 'canvas',
-            events: { onhover: { enable: true, mode: 'grab' }, resize: true },
-            modes: { grab: { distance: 150, line_linked: { opacity: 0.45 } } }
-        },
-        retina_detect: true
-    });
-}
+(function () {
+    'use strict';
 
-var slides = document.querySelectorAll('.slide');
-var current = 0;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
 
-function show(index) {
-    current = Math.max(0, Math.min(slides.length - 1, index));
-    slides.forEach(function (slide, i) {
-        if (i === current) {
-            slide.classList.remove('active');
-            void slide.offsetWidth;
-            slide.classList.add('active');
-        } else {
-            slide.classList.remove('active');
+    var hasGsap = typeof window.gsap === 'function' || (window.gsap && window.gsap.timeline);
+    var hasScroll = hasGsap && !!window.ScrollTrigger;
+    var hasMotion = !!window.Motion;
+
+    if (hasScroll) window.gsap.registerPlugin(window.ScrollTrigger);
+
+    if (hasGsap) {
+        window.gsap.set('.card', { transformPerspective: 1000, transformOrigin: '50% 50%' });
+
+        var tl = window.gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.15 });
+
+        tl.from('.eyebrow', { y: 16, opacity: 0, duration: 0.55 })
+          .from('.headline .line > span', { yPercent: 118, duration: 0.95, stagger: 0.1 }, '-=0.25')
+          .from('.lead', { y: 18, opacity: 0, duration: 0.7 }, '-=0.6')
+          .from('.author', { y: 16, opacity: 0, duration: 0.6 }, '-=0.5')
+          .from('.divider', { opacity: 0, duration: 0.4 }, '-=0.45')
+          .from('.divider .rule:nth-child(1)', { scaleX: 0, transformOrigin: 'left center', duration: 0.85 }, '-=0.3')
+          .from('.divider .rule:nth-child(3)', { scaleX: 0, transformOrigin: 'right center', duration: 0.85 }, '<')
+          .from('.divider .tag', { opacity: 0, x: -8, duration: 0.5 }, '<0.15');
+    }
+
+    if (hasScroll) {
+        window.gsap.to('#progress-bar', {
+            width: '100%', ease: 'none',
+            scrollTrigger: { trigger: document.documentElement, start: 'top top', end: 'bottom bottom', scrub: 0.3 }
+        });
+    }
+
+    if (hasGsap) {
+        document.querySelectorAll('.card').forEach(function (card) {
+            var rx = window.gsap.quickTo(card, 'rotationX', { duration: 0.6, ease: 'power3' });
+            var ry = window.gsap.quickTo(card, 'rotationY', { duration: 0.6, ease: 'power3' });
+            var ty = window.gsap.quickTo(card, 'y', { duration: 0.5, ease: 'power3' });
+
+            card.addEventListener('pointermove', function (e) {
+                if (e.pointerType && e.pointerType !== 'mouse') return;
+                var r = card.getBoundingClientRect();
+                var px = (e.clientX - r.left) / r.width - 0.5;
+                var py = (e.clientY - r.top) / r.height - 0.5;
+                card.style.setProperty('--mx', (px * 100 + 50) + '%');
+                card.style.setProperty('--my', (py * 100 + 50) + '%');
+                ry(px * 11);
+                rx(-py * 11);
+                ty(-6);
+            });
+
+            card.addEventListener('pointerleave', function () {
+                rx(0); ry(0); ty(0);
+            });
+        });
+    }
+
+    if (hasGsap && hasMotion) {
+        try {
+            window.gsap.set('[data-scroll]', { opacity: 0, y: 34 });
+
+            var ease = [0.22, 1, 0.36, 1];
+
+            window.Motion.inView('.cards', function () {
+                window.Motion.animate('.card-body', { opacity: [0, 1], y: [34, 0] }, {
+                    duration: 0.8, delay: window.Motion.stagger(0.12), easing: ease
+                });
+            }, { amount: 0.15 });
+
+            window.Motion.inView('.site-foot', function () {
+                window.Motion.animate('.site-foot [data-scroll]', { opacity: [0, 1], y: [22, 0] }, {
+                    duration: 0.7, delay: window.Motion.stagger(0.08), easing: ease
+                });
+            }, { amount: 0.15 });
+
+            var spring = { easing: window.Motion.spring({ stiffness: 420, damping: 26 }) };
+
+            document.querySelectorAll('.pill').forEach(function (pill) {
+                function to(scale) { window.Motion.animate(pill, { scale: scale }, spring); }
+
+                pill.addEventListener('pointerenter', function () { to(1.05); });
+                pill.addEventListener('pointerleave', function () { to(1); });
+                pill.addEventListener('pointerdown', function () { to(0.95); });
+                pill.addEventListener('pointerup', function () { to(1.05); });
+                pill.addEventListener('focus', function () { to(1.05); });
+                pill.addEventListener('blur', function () { to(1); });
+            });
+        } catch (err) {
+            document.querySelectorAll('[data-scroll]').forEach(function (el) {
+                el.style.opacity = '';
+                el.style.transform = '';
+            });
         }
-    });
-    document.getElementById('counter').textContent = (current + 1) + ' / ' + slides.length;
-    document.getElementById('prev').disabled = current === 0;
-    document.getElementById('next').disabled = current === slides.length - 1;
-    document.getElementById('progress-bar').style.width = ((current + 1) / slides.length * 100) + '%';
+    }
+
+    function bootConstellation(THREE) {
+        var host = document.getElementById('bg');
+        var renderer;
+
+        try {
+            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false, powerPreference: 'high-performance' });
+        } catch (err) {
+            renderer = null;
+        }
+
+        if (renderer && renderer.domElement) {
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            host.appendChild(renderer.domElement);
+
+            var scene = new THREE.Scene();
+            var camera = new THREE.PerspectiveCamera(52, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.z = 5.7;
+
+            var group = new THREE.Group();
+            scene.add(group);
+
+            var compact = window.innerWidth < 720;
+            var count = compact ? 46 : 96;
+            var radius = 2.55;
+            var palette = [0xe2a400, 0x4f9ad6, 0x22d3ee, 0xdbe6f5];
+            var positions = new Float32Array(count * 3);
+            var colors = new Float32Array(count * 3);
+            var tmp = new THREE.Color();
+
+            for (var i = 0; i < count; i++) {
+                var inc = Math.acos(1 - 2 * (i / count));
+                var az = Math.PI * (1 + Math.sqrt(5)) * i;
+                var rad = radius * (0.66 + Math.random() * 0.34);
+                positions[i * 3] = Math.sin(inc) * Math.cos(az) * rad;
+                positions[i * 3 + 1] = Math.cos(inc) * rad * 0.74;
+                positions[i * 3 + 2] = Math.sin(inc) * Math.sin(az) * rad;
+                tmp.setHex(palette[i % palette.length]);
+                colors[i * 3] = tmp.r;
+                colors[i * 3 + 1] = tmp.g;
+                colors[i * 3 + 2] = tmp.b;
+            }
+
+            var sprite = (function () {
+                var size = 64;
+                var canvas = document.createElement('canvas');
+                canvas.width = canvas.height = size;
+                var ctx = canvas.getContext('2d');
+                var grad = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+                grad.addColorStop(0, 'rgba(255,255,255,1)');
+                grad.addColorStop(0.35, 'rgba(255,255,255,.85)');
+                grad.addColorStop(1, 'rgba(255,255,255,0)');
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+                ctx.fill();
+                return new THREE.CanvasTexture(canvas);
+            })();
+
+            var pointGeo = new THREE.BufferGeometry();
+            pointGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            pointGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+            group.add(new THREE.Points(pointGeo, new THREE.PointsMaterial({
+                size: 0.085, map: sprite, vertexColors: true, transparent: true, opacity: 0.95,
+                depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true
+            })));
+
+            var segments = [];
+            var maxLink = compact ? 0.98 : 0.8;
+
+            for (var a = 0; a < count; a++) {
+                for (var b = a + 1; b < count; b++) {
+                    var dx = positions[a * 3] - positions[b * 3];
+                    var dy = positions[a * 3 + 1] - positions[b * 3 + 1];
+                    var dz = positions[a * 3 + 2] - positions[b * 3 + 2];
+                    if (Math.sqrt(dx * dx + dy * dy + dz * dz) < maxLink) {
+                        segments.push(
+                            positions[a * 3], positions[a * 3 + 1], positions[a * 3 + 2],
+                            positions[b * 3], positions[b * 3 + 1], positions[b * 3 + 2]
+                        );
+                    }
+                }
+            }
+
+            if (segments.length) {
+                var lineGeo = new THREE.BufferGeometry();
+                lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(segments, 3));
+                group.add(new THREE.LineSegments(lineGeo, new THREE.LineBasicMaterial({
+                    color: 0x5b8fd6, transparent: true, opacity: 0.2, depthWrite: false, blending: THREE.AdditiveBlending
+                })));
+            }
+
+            var pointer = { x: 0, y: 0, tx: 0, ty: 0 };
+            window.addEventListener('pointermove', function (e) {
+                pointer.tx = (e.clientX / window.innerWidth) * 2 - 1;
+                pointer.ty = (e.clientY / window.innerHeight) * 2 - 1;
+            }, { passive: true });
+
+            var raf = 0;
+            var running = false;
+            var started = performance.now();
+
+            function tick(now) {
+                var t = (now - started) / 1000;
+                pointer.x += (pointer.tx - pointer.x) * 0.045;
+                pointer.y += (pointer.ty - pointer.y) * 0.045;
+                group.rotation.y = t * 0.055 + pointer.x * 0.42;
+                group.rotation.x = -pointer.y * 0.26 + Math.sin(t * 0.35) * 0.045;
+                group.scale.setScalar(1 + Math.sin(t * 0.5) * 0.015);
+                renderer.render(scene, camera);
+                raf = window.requestAnimationFrame(tick);
+            }
+
+            function play() {
+                if (running) return;
+                running = true;
+                raf = window.requestAnimationFrame(tick);
+            }
+
+            function pause() {
+                running = false;
+                window.cancelAnimationFrame(raf);
+            }
+
+            play();
+            host.style.opacity = '1';
+
+            document.addEventListener('visibilitychange', function () {
+                if (document.hidden) pause(); else play();
+            });
+
+            window.addEventListener('resize', function () {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+    }
+
+    window.__bootConstellation = bootConstellation;
+})();
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+
+if (window.__bootConstellation) {
+    try {
+        window.__bootConstellation(THREE);
+    } catch (err) {
+        /* WebGL unavailable — the page stays fully usable without the backdrop */
+    }
 }
-
-document.getElementById('prev').addEventListener('click', function () { show(current - 1); });
-document.getElementById('next').addEventListener('click', function () { show(current + 1); });
-
-document.addEventListener('keydown', function (event) {
-    if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') show(current + 1);
-    if (event.key === 'ArrowLeft' || event.key === 'PageUp') show(current - 1);
-    if (event.key === 'Home') show(0);
-    if (event.key === 'End') show(slides.length - 1);
-});
-
-show(0);
 </script>
 
 </body>
