@@ -2,7 +2,14 @@
   "permissions": {
     "allow": [
       "Shell(git:*)",
-      "Shell(agent-browser:*)"
+      "Shell(agent-browser:*)",
+      "Shell(node \"C:\\Users\\TDI096\\AppData\\Local\\Temp\\commandcode\\C--Users-TDI096-TUGAS-KAMPUS-bimbingan-smk-1-tabanan-14september\\55655844-107d-43d1-b9da-7f842486cf64\\scratchpad\\check.js\" \"C:\\Users\\TDI096\\TUGAS KAMPUS\\bimbingan smk 1 tabanan\\14september\\docs\\workshop-laravel-smkn2-tbn\\dunia-kerja-teknologi-laravel.html\")",
+      "Shell(node \"C:\\Users\\TDI096\\AppData\\Local\\Temp\\commandcode\\C--Users-TDI096-TUGAS-KAMPUS-bimbingan-smk-1-tabanan-14september\\55655844-107d-43d1-b9da-7f842486cf64\\scratchpad\\check2.js\" \"C:\\Users\\TDI096\\TUGAS KAMPUS\\bimbingan smk 1 tabanan\\14september\\docs\\workshop-laravel-smkn2-tbn\\dunia-kerja-teknologi-laravel.html\")",
+      "Shell(C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe,C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe,C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe,C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe:*)",
+      "Shell(foreach:*)",
+      "Shell({:*)",
+      "Shell(Test-Path:*)",
+      "powershell"
     ],
     "deny": [],
     "defaultMode": "default"

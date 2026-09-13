@@ -97,6 +97,174 @@ pre code { background: none; color: inherit; padding: 0; }
 }
 .code-slide .copy-note { color: var(--muted); font-size: .9rem; margin-bottom: .6rem; }
 
+.code-wrap{position:relative; margin:.75rem 0}
+.code-wrap pre{margin:0}
+.copy-btn{
+    position:absolute; top:.5rem; right:.5rem; z-index:2;
+    display:inline-flex; align-items:center; justify-content:center;
+    width:2.1rem; height:2.1rem; padding:0; border-radius:.45rem;
+    background:rgba(255,255,255,.12); color:#d7e3f4;
+    cursor:pointer; transition:background .2s, color .2s, transform .15s;
+}
+.copy-btn svg{width:1.05rem; height:1.05rem; pointer-events:none}
+.copy-btn:hover:not(:disabled){background:rgba(255,255,255,.26); transform:translateY(-1px)}
+.copy-btn.copied{background:#147d64; color:#fff}
+
+.code-lines{
+    background:#0f2440; border-radius:.5rem; color:#d7e3f4;
+    margin:.75rem 0; padding:.5rem .75rem; overflow-x:auto;
+    font-family:Consolas,monospace; font-size:.92rem;
+}
+.code-wrap .code-lines{margin:0}
+.code-line{
+    display:flex; align-items:center; gap:.75rem;
+    padding:.12rem .25rem; border-radius:.3rem;
+    transition:background .15s ease;
+}
+.code-line:hover{background:rgba(255,255,255,.07)}
+.code-line code{
+    flex:1; white-space:pre; background:none; color:inherit;
+    padding:0; font-family:inherit; font-size:inherit;
+}
+.line-copy{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:1.65rem; height:1.65rem; padding:0; flex-shrink:0;
+    border-radius:.35rem; background:rgba(255,255,255,.12); color:#d7e3f4;
+    opacity:0; cursor:pointer;
+    transition:opacity .15s ease, background .2s ease, color .2s ease;
+}
+.code-line:hover .line-copy,
+.line-copy:focus-visible{opacity:1}
+.line-copy:hover:not(:disabled){background:rgba(255,255,255,.28)}
+.line-copy.copied{background:#147d64; color:#fff; opacity:1}
+.line-copy svg{width:.95rem; height:.95rem; pointer-events:none}
+@media (hover: none){ .line-copy{opacity:1} }
+
+.method{
+    border:1px solid var(--ring); border-radius:.6rem; overflow:hidden;
+    margin:.85rem 0; background:#fff;
+}
+.method-head{
+    display:flex; align-items:baseline; gap:.55rem; flex-wrap:wrap;
+    background:var(--blue-light); padding:.45rem .8rem; border-bottom:1px solid var(--ring);
+}
+.method-head code.method-name{
+    background:none; padding:0; font-family:Consolas,monospace;
+    font-weight:700; font-size:.95rem; color:var(--navy-2);
+}
+.method-head .method-desc{font-size:.86rem; color:var(--muted)}
+.method-head .method-desc code{background:#d3e4f5; color:#0f2440; font-size:.85em}
+.method .code-wrap{margin:0}
+.method .copy-btn{top:.45rem; right:.45rem}
+.method pre{margin:0; border-radius:0}
+
+.download{
+    display:flex; align-items:center; gap:1rem; flex-wrap:wrap;
+    background:linear-gradient(135deg,#0f1e38,#12355b); color:#fff;
+    border-radius:.7rem; padding:1rem 1.15rem; margin-top:1.5rem;
+}
+.download-icon{font-size:1.6rem; line-height:1}
+.download-text{flex:1; min-width:190px}
+.download-text strong{display:block; color:#fff; font-family:'Poppins','Inter',Arial,sans-serif}
+.download-text p{font-size:.92rem; color:#cdd8e6; margin:.15rem 0 0}
+.download-btn{
+    display:inline-flex; align-items:center; gap:.45rem; flex-shrink:0;
+    background:var(--amber); color:#3b2a00; font-weight:700; text-decoration:none;
+    padding:.6rem 1.05rem; border-radius:.5rem;
+    transition:transform .15s ease, box-shadow .2s ease;
+}
+.download-btn:hover{transform:translateY(-1px); box-shadow:0 8px 18px rgba(226,164,0,.35)}
+.download-btn svg{width:1rem; height:1rem}
+
+.mermaid-wrap{
+    background:#f7fafd; border:1px solid var(--ring); border-radius:.7rem;
+    padding:1rem; margin:.4rem 0 .75rem; overflow-x:auto;
+    display:flex; justify-content:center;
+}
+.mermaid{
+    background:none; color:#0f2440; padding:0; margin:0;
+    font-family:'Inter',Arial,sans-serif; font-size:.85rem; text-align:center;
+}
+.mermaid svg{max-width:100%; height:auto}
+
+.demo-btn{
+    display:inline-flex; align-items:center; gap:.4rem;
+    background:linear-gradient(135deg,#7c3aed,#0891b2); color:#fff; border:0;
+    border-radius:.5rem; padding:.55rem 1.05rem; font-weight:700; font-size:.92rem;
+    cursor:pointer; margin:.2rem 0 .6rem;
+    transition:transform .15s ease, box-shadow .2s ease;
+}
+.demo-btn:hover:not(:disabled){transform:translateY(-1px); box-shadow:0 10px 22px rgba(124,58,237,.32)}
+.demo-modal{
+    position:fixed; inset:0; z-index:60; display:none;
+    align-items:center; justify-content:center; padding:1.25rem;
+    background:rgba(8,12,26,.62); backdrop-filter:blur(3px);
+}
+.demo-modal.open{display:flex}
+.demo-modal-inner{
+    width:min(920px,100%); max-height:92vh; overflow:auto;
+    background:#f4f7fb; border-radius:1rem; box-shadow:0 30px 70px rgba(0,0,0,.55);
+}
+.demo-bar{
+    position:sticky; top:0; z-index:2;
+    display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    background:#0f1e38; color:#fff; padding:.6rem 1rem; font-weight:700; font-size:.9rem;
+}
+.demo-close{
+    background:rgba(255,255,255,.14); color:#fff; border:0; border-radius:.4rem;
+    width:1.9rem; height:1.9rem; padding:0; font-size:1.2rem; line-height:1; cursor:pointer;
+}
+.demo-close:hover:not(:disabled){background:rgba(255,255,255,.3)}
+.demo-app{
+    --d-navy:#102a43; --d-blue:#1769aa; --d-blue-dark:#0f4c81;
+    --d-text:#243b53; --d-muted:#627d98; --d-surface:#fff; --d-page:#f4f7fb; --d-line:#d9e2ec;
+    --d-shadow:0 14px 35px rgb(16 42 67 / 10%);
+    background:var(--d-page); color:var(--d-text); font-family:Arial,sans-serif; line-height:1.5; min-height:100%;
+}
+.demo-app *{box-sizing:border-box}
+.demo-app .container{width:min(1000px,calc(100% - 2rem)); margin:0 auto}
+.demo-app .navbar{color:#fff; background:linear-gradient(120deg,var(--d-navy),var(--d-blue-dark))}
+.demo-app .nav-links{display:flex; align-items:center; gap:1.1rem; padding:.9rem 0}
+.demo-app .brand{font-weight:700; margin-right:auto}
+.demo-app .navbar a{color:#fff; text-decoration:none; font-weight:600}
+.demo-app .card{margin:1.4rem 0; padding:1.5rem; background:rgb(255 255 255 / 94%); border-radius:1rem; box-shadow:var(--d-shadow)}
+.demo-app .page-heading{display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:1rem}
+.demo-app h1{color:var(--d-navy); font-size:1.35rem; margin:0}
+.demo-app p{font-size:.95rem; color:var(--d-muted)}
+.demo-app .btn{display:inline-block; padding:.6rem 1rem; border:0; border-radius:.55rem; font:inherit; font-size:.9rem; font-weight:700; cursor:pointer}
+.demo-app .btn-primary{color:#fff; background:var(--d-blue)}
+.demo-app .btn-secondary{color:var(--d-text); background:#e8eef5}
+.demo-app .btn-danger{color:#fff; background:#c0392b}
+.demo-app .btn-primary:hover:not(:disabled){background:#125e94}
+.demo-app .btn-secondary:hover:not(:disabled){background:#dbe5f0}
+.demo-app .btn-danger:hover:not(:disabled){background:#a93226}
+.demo-app .table-wrap{overflow-x:auto; border:1px solid var(--d-line); border-radius:.75rem}
+.demo-app table{width:100%; border-collapse:collapse; background:var(--d-surface)}
+.demo-app th,.demo-app td{padding:.8rem 1rem; text-align:left; border-bottom:1px solid var(--d-line)}
+.demo-app thead th{background:#eef4fa; color:var(--d-navy)}
+.demo-app .form-group{margin-bottom:1rem}
+.demo-app label{display:block; font-weight:600; margin-bottom:.35rem}
+.demo-app input,.demo-app select{width:100%; min-height:2.7rem; padding:.6rem .7rem; border:1px solid #bcccdc; border-radius:.5rem; font:inherit}
+.demo-app .form-actions{display:flex; gap:.6rem; margin-top:1.25rem}
+.demo-app .inline-form{display:inline-block; margin:0}
+.demo-app .inline-form+.inline-form{margin-left:.4rem}
+
+.quiz{margin-top:.4rem}
+.quiz-q{font-weight:600; color:var(--ink); font-size:1.05rem; margin:.2rem 0 1rem}
+.quiz-options{display:grid; gap:.6rem}
+.quiz-option{
+    text-align:left; background:#fff; color:var(--ink); border:1px solid var(--ring);
+    border-radius:.55rem; padding:.7rem .9rem; font:inherit; font-size:.98rem; font-weight:500;
+    cursor:pointer; transition:background .15s ease, border-color .15s ease, transform .15s ease;
+}
+.quiz-option:hover:not(:disabled){background:var(--blue-light); border-color:var(--blue); transform:translateX(2px)}
+.quiz-option.correct{background:#e3fcef; border-color:#147d64; color:#0f5132; font-weight:700}
+.quiz-option.wrong{background:#fff0f0; border-color:#b42318; color:#842029}
+.quiz-option:disabled{cursor:default}
+.quiz-feedback{border-radius:.6rem; padding:.85rem 1rem; font-size:.95rem; margin-top:1rem}
+.quiz-feedback.ok{background:#e3fcef; color:#0f5132; border-left:4px solid #147d64}
+.quiz-feedback.no{background:#fff0f0; color:#842029; border-left:4px solid #b42318}
+
 .lesson {
     background: #fff8e6;
     border-left: 4px solid #e2a400;
@@ -114,6 +282,17 @@ pre code { background: none; color: inherit; padding: 0; }
 }
 .box:hover{transform:translateY(-3px); box-shadow:0 10px 22px rgba(23,105,170,.15)}
 .box p{font-size:.95rem; color:var(--muted)}
+
+.bg-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:1.6rem; align-items:center; margin-top:.4rem}
+.bg-grid p{margin-bottom:.6rem}
+.bg-figure{margin:0}
+.bg-figure img{
+    width:100%; height:100%; max-height:44vh; object-fit:cover; display:block;
+    border-radius:.75rem; box-shadow:0 14px 30px rgba(15,30,56,.22);
+}
+.bg-figure figcaption{font-size:.78rem; color:var(--muted); margin-top:.5rem; text-align:right}
+.bg-figure figcaption a{color:var(--blue); text-decoration:none}
+.bg-figure figcaption a:hover{text-decoration:underline}
 
 .hero { display:none; text-align: center; z-index:1; position:relative }
 .hero.active{display:flex; flex-direction:column; align-items:center; justify-content:center}
@@ -147,6 +326,8 @@ button:disabled { background: #3f5b80; cursor: not-allowed; opacity:.6 }
 @media (max-width: 640px) {
     .slide { padding: 1.6rem; }
     h1 { font-size: 1.7rem; }
+    .bg-grid { grid-template-columns: 1fr; }
+    .bg-figure img { max-height: 30vh; }
     .code-slide pre { max-height: 48vh; font-size: .68rem; }
 }
 </style>
@@ -165,6 +346,23 @@ button:disabled { background: #3f5b80; cursor: not-allowed; opacity:.6 }
         <p>Laravel 8 &bull; Blade &bull; MySQL &bull; XAMPP</p>
         <p>Mini Project Workshop &mdash; SMKN 2 Tabanan</p>
         <p>Tekan tombol <strong>Selanjutnya</strong> atau panah keyboard untuk pindah slide.</p>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">📌</span><p class="kicker">Latar Belakang</p></div>
+        <h2>Latar Belakang Project</h2>
+        <div class="bg-grid">
+            <div class="bg-text">
+                <p>Saat ini data siswa dan kelas masih dicatat manual di buku atau spreadsheet terpisah. Cara ini lambat, mudah duplikat, dan sulit dipakai saat menyusun laporan.</p>
+                <p>Karena setiap siswa selalu terhubung ke satu kelas, pencatatan terpisah membuat data cepat tidak sinkron. Sekolah butuh satu tempat yang rapi untuk mencatat, mencari, dan memperbarui data.</p>
+                <p>Karena itu dibuat aplikasi web sederhana berbasis <strong>Laravel</strong> untuk mengelola data siswa &amp; kelas secara terpusat, sesuai kebutuhan PRD dan kompetensi yang dipelajari.</p>
+            </div>
+            <figure class="bg-figure">
+                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=900&q=80" alt="Suasana kelas dengan siswa yang sedang belajar" loading="lazy">
+                <figcaption>Ilustrasi: <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a></figcaption>
+            </figure>
+        </div>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Sebelum menulis kode, pahami dulu masalah nyata dan alasan project ini dibuat.</div></div>
     </section>
 
     <section class="slide">
@@ -200,6 +398,21 @@ button:disabled { background: #3f5b80; cursor: not-allowed; opacity:.6 }
     </section>
 
     <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 1</p></div>
+        <h2>Kebutuhan Project</h2>
+        <div class="quiz" data-explain="Sesuai PRD, project ini dibatasi dua tabel saja: tabel kelas dan tabel siswa. Setiap siswa terhubung ke satu kelas.">
+            <p class="quiz-q">Sesuai PRD, berapa tabel yang dipakai pada project ini?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Satu tabel</button>
+                <button class="quiz-option" type="button" data-correct="true">Dua tabel: kelas dan siswa</button>
+                <button class="quiz-option" type="button" data-correct="false">Tiga tabel: kelas, siswa, dan nilai</button>
+                <button class="quiz-option" type="button" data-correct="false">Empat tabel termasuk absensi</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
         <div class="kicker-row"><span class="icon-badge">🧰</span><p class="kicker">Step 2</p></div>
         <h2>Siapkan Tools</h2>
         <ul>
@@ -209,18 +422,45 @@ button:disabled { background: #3f5b80; cursor: not-allowed; opacity:.6 }
             <li>Node.js dan npm.</li>
             <li>Editor kode, Git (opsional).</li>
         </ul>
-        <pre><code>php --version
+        <pre data-line-copy><code>php --version
 composer --version
 node --version
 npm --version</code></pre>
         <p>Start <strong>Apache</strong> dan <strong>MySQL</strong> lewat XAMPP Control Panel.</p>
+        <div class="download">
+            <span class="download-icon">⬇️</span>
+            <div class="download-text">
+                <strong>Download Kode Project</strong>
+                <p>Ambil source code lengkap dari repository GitHub di bawah ini.</p>
+            </div>
+            <a class="download-btn" href="https://github.com/AdiSan103/trainning-workshop-smkn2-14-sept/tree/project" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+                Buka di GitHub
+            </a>
+        </div>
+        <pre><code>git clone -b project https://github.com/AdiSan103/trainning-workshop-smkn2-14-sept.git</code></pre>
         <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Pastikan tools siap sebelum debugging kode.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 2</p></div>
+        <h2>Tools yang Harus Aktif</h2>
+        <div class="quiz" data-explain="Sebelum menjalankan project, dua service XAMPP yang harus aktif adalah Apache (web server) dan MySQL (database).">
+            <p class="quiz-q">Dua service pada XAMPP yang harus dijalankan sebelum project berjalan adalah?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="true">Apache dan MySQL</button>
+                <button class="quiz-option" type="button" data-correct="false">MySQL dan Redis</button>
+                <button class="quiz-option" type="button" data-correct="false">Apache dan Node.js</button>
+                <button class="quiz-option" type="button" data-correct="false">PHP dan Composer</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
     </section>
 
     <section class="slide">
         <div class="kicker-row"><span class="icon-badge">📦</span><p class="kicker">Step 3</p></div>
         <h2>Siapkan Project Laravel</h2>
-        <pre><code>cd project
+        <pre data-line-copy><code>cd project
 composer install
 copy .env.example .env
 php artisan key:generate
@@ -234,23 +474,68 @@ npm install</code></pre>
     </section>
 
     <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 3</p></div>
+        <h2>Setup Project Laravel</h2>
+        <div class="quiz" data-explain="Perintah php artisan key:generate membuat APP_KEY yang dipakai Laravel untuk enkripsi, termasuk session dan cookie.">
+            <p class="quiz-q">Perintah apa yang dipakai untuk membuat application key Laravel?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false"><code>composer install</code></button>
+                <button class="quiz-option" type="button" data-correct="true"><code>php artisan key:generate</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>npm install</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>copy .env.example .env</code></button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
         <div class="kicker-row"><span class="icon-badge">🗄️</span><p class="kicker">Step 4</p></div>
         <h2>Konfigurasi Database</h2>
-        <p>Buat database bernama <code>laravel</code> lewat phpMyAdmin, lalu cek <code>.env</code>:</p>
+        <p>Buat database bernama <code>laravel_workshop</code> lewat phpMyAdmin, lalu cek <code>.env</code>:</p>
         <pre><code>DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=laravel
+DB_DATABASE=laravel_workshop
 DB_USERNAME=root
 DB_PASSWORD=</code></pre>
         <div class="lesson"><span>🔒</span><div><strong>Pelajaran:</strong> Jangan simpan password database asli di Git.</div></div>
     </section>
 
     <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 4</p></div>
+        <h2>Konfigurasi Database</h2>
+        <div class="quiz" data-explain="File .env menyimpan konfigurasi lokal seperti koneksi database (DB_DATABASE, DB_USERNAME, DB_PASSWORD). File ini tidak boleh di-commit ke Git.">
+            <p class="quiz-q">Di file mana konfigurasi koneksi database project ini disimpan?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false"><code>composer.json</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>package.json</code></button>
+                <button class="quiz-option" type="button" data-correct="true"><code>.env</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>routes/web.php</code></button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
         <div class="kicker-row"><span class="icon-badge">🧩</span><p class="kicker">Step 5</p></div>
         <h2>Rancang Database dari Relasi</h2>
-        <pre><code>kelas 1 ---- banyak siswa
-siswa banyak ---- 1 kelas</code></pre>
+        <div class="mermaid-wrap">
+            <pre class="mermaid">
+erDiagram
+    KELAS ||--o{ SISWA : "memiliki"
+    KELAS {
+        int id PK
+        string nama_kelas
+    }
+    SISWA {
+        int id PK
+        string nis
+        string nama
+        int kelas_id FK
+        string jenis_kelamin
+    }
+            </pre>
+        </div>
         <div class="cols">
             <div class="box">
                 <p><strong>Tabel kelas</strong></p>
@@ -274,186 +559,90 @@ siswa banyak ---- 1 kelas</code></pre>
     </section>
 
     <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🧱</span><p class="kicker">Step 6</p></div>
-        <h2>Buat Migration</h2>
-        <ul>
-            <li><code>2026_09_08_000001_create_kelas_table.php</code> &mdash; <code>nama_kelas</code> unik.</li>
-            <li><code>2026_09_08_000002_create_siswa_table.php</code> &mdash; NIS unik, FK <code>kelas_id</code>, <code>jenis_kelamin</code> nullable, <code>cascadeOnDelete</code>.</li>
-        </ul>
-        <pre><code>php artisan migrate
-php artisan migrate:fresh   # hapus &amp; buat ulang semua tabel (development)</code></pre>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Migration adalah version control untuk struktur database.</div></div>
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Database 1</p></div>
+        <h2>Relasi Kelas &amp; Siswa</h2>
+        <div class="quiz" data-explain="Pada ER diagram tertulis KELAS ||--o{ SISWA: satu kelas bisa memiliki banyak siswa, dan setiap siswa hanya milik satu kelas. Relasi ini disebut one-to-many.">
+            <p class="quiz-q">Pada ER diagram, satu kelas bisa memiliki banyak siswa. Relasi ini disebut?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">one-to-one</button>
+                <button class="quiz-option" type="button" data-correct="true">one-to-many</button>
+                <button class="quiz-option" type="button" data-correct="false">many-to-many</button>
+                <button class="quiz-option" type="button" data-correct="false">many-to-one</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
     </section>
 
     <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🔗</span><p class="kicker">Step 7</p></div>
-        <h2>Buat Model dan Relasi Eloquent</h2>
-        <ul>
-            <li><code>Kelas</code> &mdash; fillable <code>nama_kelas</code>, <code>hasMany(Siswa::class)</code>.</li>
-            <li><code>Siswa</code> &mdash; fillable <code>nis</code>, <code>nama</code>, <code>kelas_id</code>, <code>jenis_kelamin</code>; <code>belongsTo(Kelas::class)</code>.</li>
-        </ul>
-        <pre><code>$siswa-&gt;kelas-&gt;nama_kelas;
-$kelas-&gt;siswa;</code></pre>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Model menerjemahkan tabel menjadi object PHP. Relasi mencegah query manual berulang.</div></div>
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Database 2</p></div>
+        <h2>Foreign Key Tabel Siswa</h2>
+        <div class="quiz" data-explain="Tabel siswa punya kolom kelas_id sebagai foreign key ke kelas.id. Kolom inilah yang menyimpan penghubung tiap siswa ke kelasnya.">
+            <p class="quiz-q">Kolom apa pada tabel <code>siswa</code> yang menjadi foreign key penghubung ke tabel <code>kelas</code>?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false"><code>id</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>nis</code></button>
+                <button class="quiz-option" type="button" data-correct="true"><code>kelas_id</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>nama_kelas</code></button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
     </section>
 
     <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Step 8</p></div>
-        <h2>Buat Controller Siswa</h2>
-        <p><code>SiswaController</code> memakai pola resource:</p>
-        <ul>
-            <li><code>index</code> &mdash; daftar siswa.</li>
-            <li><code>create</code> / <code>store</code> &mdash; form &amp; simpan siswa baru.</li>
-            <li><code>edit</code> / <code>update</code> &mdash; form &amp; perbarui siswa.</li>
-            <li><code>destroy</code> &mdash; hapus siswa.</li>
-        </ul>
-        <pre><code>Siswa::with('kelas')-&gt;orderBy('nama')-&gt;get();</code></pre>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Eager loading mengambil nama kelas tanpa query berulang (menghindari N+1).</div></div>
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Database 3</p></div>
+        <h2>Kolom Unik</h2>
+        <div class="quiz" data-explain="Kolom nama_kelas dibuat unique agar tidak ada nama kelas yang kembar, dan nis juga unique agar tidak ada nomor induk yang duplikat.">
+            <p class="quiz-q">Mengapa kolom <code>nama_kelas</code> diberi aturan <strong>unique</strong>?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Supaya kolom wajib diisi</button>
+                <button class="quiz-option" type="button" data-correct="true">Supaya tidak ada nama kelas yang kembar/duplikat</button>
+                <button class="quiz-option" type="button" data-correct="false">Supaya kolom terhubung ke tabel lain</button>
+                <button class="quiz-option" type="button" data-correct="false">Supaya kolom memiliki nilai bawaan otomatis</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
     </section>
 
     <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🏫</span><p class="kicker">Step 9</p></div>
-        <h2>Buat Controller Kelas</h2>
-        <ul>
-            <li><code>index</code> &mdash; daftar kelas + jumlah siswa.</li>
-            <li><code>store</code> &mdash; validasi &amp; simpan kelas.</li>
-            <li><code>destroy</code> &mdash; hapus kelas hanya jika belum punya siswa.</li>
-        </ul>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Validasi bisnis tetap diperlukan walaupun database sudah punya foreign key.</div></div>
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Database 4</p></div>
+        <h2>Kolom Opsional</h2>
+        <div class="quiz" data-explain="Nullable berarti kolom boleh dikosongkan. Pada tabel siswa, jenis_kelamin dibuat nullable sehingga boleh tidak diisi.">
+            <p class="quiz-q">Apa arti kolom <code>jenis_kelamin</code> dibuat <strong>nullable</strong> pada tabel siswa?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Kolom wajib diisi setiap saat</button>
+                <button class="quiz-option" type="button" data-correct="true">Kolom boleh dikosongkan (tidak diisi)</button>
+                <button class="quiz-option" type="button" data-correct="false">Kolom hanya boleh berisi satu karakter</button>
+                <button class="quiz-option" type="button" data-correct="false">Kolom otomatis terisi nilai L atau P</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
     </section>
 
     <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🛣️</span><p class="kicker">Step 10</p></div>
-        <h2>Daftarkan Route</h2>
-        <pre><code>/                    redirect ke daftar siswa
-/siswa               daftar siswa
-/siswa/create        form tambah
-/siswa/{siswa}/edit  form edit
-/kelas               daftar &amp; tambah kelas</code></pre>
-        <pre><code>php artisan route:list</code></pre>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Route menghubungkan URL dengan controller action.</div></div>
-    </section>
-
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🖼️</span><p class="kicker">Step 11</p></div>
-        <h2>Buat Layout Blade</h2>
-        <p><code>resources/views/layouts/app.blade.php</code> berisi navigation, flash message, error validasi, dan <code>@yield('content')</code>.</p>
-        <pre><code>{{ $value }}        // escaping output
-@csrf               // proteksi form
-@method('PUT')      // method spoofing
-@method('DELETE')</code></pre>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Layout mengurangi HTML berulang. <code>@csrf</code> wajib di setiap form.</div></div>
-    </section>
-
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">📋</span><p class="kicker">Step 12</p></div>
-        <h2>Buat Halaman Siswa</h2>
-        <ul>
-            <li><code>siswa/index</code> &mdash; tabel NIS, Nama, Kelas, Jenis Kelamin, aksi edit/hapus dengan konfirmasi.</li>
-            <li><code>siswa/create</code> &amp; <code>siswa/edit</code> &mdash; memakai partial <code>siswa/form</code>.</li>
-        </ul>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Partial cocok untuk form yang dipakai lebih dari satu halaman.</div></div>
-    </section>
-
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🏷️</span><p class="kicker">Step 13</p></div>
-        <h2>Buat Halaman Kelas</h2>
-        <p><code>kelas/index</code> menyediakan:</p>
-        <ul>
-            <li>Form tambah kelas.</li>
-            <li>Daftar kelas + jumlah siswa.</li>
-            <li>Tombol hapus + pesan jika kelas masih berisi siswa.</li>
-        </ul>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Buat UI sederhana dulu. CSS tambahan hanya untuk keterbacaan &amp; aksesibilitas.</div></div>
-    </section>
-
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🎨</span><p class="kicker">Step 14</p></div>
-        <h2>Tambahkan CSS</h2>
-        <p><code>resources/css/app.css</code> mengatur container, navbar, card, table, button, form, alert, dan tampilan mobile lewat design token di <code>:root</code>.</p>
-        <pre><code>:root {
-    --navy: #102a43;
-    --blue: #1769aa;
-    --surface: #ffffff;
-    --shadow: 0 14px 35px rgb(16 42 67 / 10%);
-}</code></pre>
-        <ul>
-            <li>Aksesibilitas: <code>:focus-visible</code> beri outline pada button, input, select.</li>
-            <li>Responsive: media query <code>max-width: 640px</code> menumpuk navbar &amp; form, tombol full-width.</li>
-            <li><code>prefers-reduced-motion: reduce</code> matikan transisi untuk user sensitif gerakan.</li>
-        </ul>
-        <pre><code>npm run dev</code></pre>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> HTML struktur, Blade isi data, CSS tampilan.</div></div>
-    </section>
-
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🧹</span><p class="kicker">Step 15</p></div>
-        <h2>Hapus Halaman Starter</h2>
-        <ul>
-            <li><code>welcome.blade.php</code> default dihapus.</li>
-            <li>Route <code>/</code> mengarah ke daftar siswa.</li>
-        </ul>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Hapus kode starter yang tidak dipakai agar project mudah dipahami.</div></div>
-    </section>
-
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">🧪</span><p class="kicker">Step 16</p></div>
-        <h2>Buat Pengujian Otomatis</h2>
-        <ul>
-            <li>Buat &amp; lihat siswa.</li>
-            <li>NIS harus unik.</li>
-            <li>Kelas berisi siswa tidak bisa dihapus.</li>
-            <li>Route <code>/</code> redirect ke daftar siswa.</li>
-        </ul>
-        <pre><code>php artisan test   # target: 5 passed</code></pre>
-        <p>PHPUnit memakai SQLite in-memory sehingga test tidak menyentuh database MySQL development.</p>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Test menangkap regresi setelah perubahan kode.</div></div>
-    </section>
-
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">▶️</span><p class="kicker">Step 17</p></div>
-        <h2>Jalankan Project</h2>
-        <pre><code>cd project
-php artisan serve
-# buka http://127.0.0.1:8000</code></pre>
-        <p>Uji alur manual: tambah kelas, tambah siswa, edit, NIS duplikat ditolak, hapus siswa, hapus kelas kosong, kelas berisi siswa ditolak.</p>
-        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Test manual memeriksa pengalaman user, bukan hanya kode backend.</div></div>
-    </section>
-
-    <section class="slide">
-        <div class="kicker-row"><span class="icon-badge">✅</span><p class="kicker">Step 18</p></div>
-        <h2>Pemeriksaan Akhir</h2>
-        <pre><code>php artisan route:list
-php artisan test
-git diff --check</code></pre>
-        <ul>
-            <li>Tidak ada error di log saat pemakaian normal.</li>
-            <li>Semua input punya label, semua form pakai CSRF.</li>
-            <li>Output Blade di-escape, NIS tidak duplikat.</li>
-            <li>Perubahan tercatat di development log.</li>
-        </ul>
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Database 5</p></div>
+        <h2>Urutan Pengerjaan</h2>
+        <div class="quiz" data-explain="Rancang tabel dan relasi terlebih dahulu. Struktur database adalah fondasi, jadi form, controller, dan tampilan dibuat setelahnya.">
+            <p class="quiz-q">Kapan waktu terbaik merancang struktur tabel dan relasi database?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Setelah form dan controller selesai dibuat</button>
+                <button class="quiz-option" type="button" data-correct="true">Sebelum membuat form atau controller</button>
+                <button class="quiz-option" type="button" data-correct="false">Setelah aplikasi muncul error di log</button>
+                <button class="quiz-option" type="button" data-correct="false">Setelah semua data siswa sudah diisi</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
     </section>
 
     <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🧭</span><p class="kicker">Tutorial Code 1</p></div>
-        <h2>Dari Starter ke Project</h2>
-        <p class="copy-note">Semua perintah dijalankan dari folder <code>project/</code>. Blok code dapat dipilih lalu disalin.</p>
-        <pre><code>composer install
-copy .env.example .env
-php artisan key:generate
-npm install
+        <div class="kicker-row"><span class="icon-badge">🧱</span><p class="kicker">Step 6 &middot; Tabel Kelas</p></div>
+        <h2>Migration: Tabel Kelas</h2>
+        <p>Buat file migration lalu isi schema tabel <code>kelas</code>.</p>
+        <p class="copy-note">Setiap blok code bisa disalin lewat tombol clipboard di pojok kanan.</p>
 
-# Atur DB_* di .env, lalu buat database laravel di MySQL
-php artisan migrate --seed
-php artisan serve
-# buka http://127.0.0.1:8000</code></pre>
-        <div class="lesson"><span>💡</span><div><strong>Urutan:</strong> dependency → environment → database → source code → browser.</div></div>
-    </section>
+        <p><strong>1. Generate file migration</strong></p>
+        <pre><code>php artisan make:migration create_kelas_table</code></pre>
 
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🗄️</span><p class="kicker">Tutorial Code 2</p></div>
-        <h2>Migration Tabel Kelas</h2>
-        <p><code>php artisan make:migration create_kelas_table</code></p>
+        <p><strong>2. Copy schema tabel kelas</strong> &mdash; <code>database/migrations/2026_09_08_000001_create_kelas_table.php</code></p>
         <pre><code>&lt;?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -476,12 +665,20 @@ return new class extends Migration
         Schema::dropIfExists('kelas');
     }
 };</code></pre>
+
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> <code>nama_kelas</code> dibuat unik agar tidak ada nama kelas yang kembar.</div></div>
     </section>
 
     <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🗄️</span><p class="kicker">Tutorial Code 3</p></div>
-        <h2>Migration Tabel Siswa</h2>
-        <p><code>php artisan make:migration create_siswa_table</code></p>
+        <div class="kicker-row"><span class="icon-badge">🧱</span><p class="kicker">Step 6 &middot; Tabel Siswa</p></div>
+        <h2>Migration: Tabel Siswa</h2>
+        <p>Buat file migration lalu isi schema tabel <code>siswa</code>, terhubung ke tabel <code>kelas</code>.</p>
+        <p class="copy-note">Setiap blok code bisa disalin lewat tombol clipboard di pojok kanan.</p>
+
+        <p><strong>1. Generate file migration</strong></p>
+        <pre><code>php artisan make:migration create_siswa_table</code></pre>
+
+        <p><strong>2. Copy schema tabel siswa</strong> &mdash; <code>database/migrations/2026_09_08_000002_create_siswa_table.php</code></p>
         <pre><code>&lt;?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -508,15 +705,39 @@ return new class extends Migration
         Schema::dropIfExists('siswa');
     }
 };</code></pre>
+
+        <p><strong>3. Jalankan migration</strong></p>
         <pre><code>php artisan migrate
-# development: php artisan migrate:fresh --seed</code></pre>
+php artisan migrate:fresh   # hapus &amp; buat ulang semua tabel (development)</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Migration adalah version control untuk struktur database.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 6</p></div>
+        <h2>Fungsi Migration</h2>
+        <div class="quiz" data-explain="Migration berfungsi sebagai version control untuk struktur database. Struktur tabel dibuat dan diubah lewat kode secara terurut, bukan diubah manual di phpMyAdmin.">
+            <p class="quiz-q">Apa fungsi utama migration pada Laravel?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Menyimpan data siswa</button>
+                <button class="quiz-option" type="button" data-correct="true">Menjadi version control untuk struktur database</button>
+                <button class="quiz-option" type="button" data-correct="false">Mengatur tampilan halaman</button>
+                <button class="quiz-option" type="button" data-correct="false">Menghubungkan URL dengan controller</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
     </section>
 
     <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🧩</span><p class="kicker">Tutorial Code 4</p></div>
-        <h2>Model dan Relasi</h2>
-        <div class="cols">
-            <div class="box"><strong>app/Models/Kelas.php</strong><pre><code>&lt;?php
+        <div class="kicker-row"><span class="icon-badge">🔗</span><p class="kicker">Step 7 &middot; Model Kelas</p></div>
+        <h2>Model Kelas</h2>
+        <p>Model <code>Kelas</code> punya relasi <code>hasMany</code> ke <code>Siswa</code>.</p>
+        <p class="copy-note">Setiap blok code bisa disalin lewat tombol clipboard di pojok kanan.</p>
+
+        <p><strong>1. Generate file model</strong></p>
+        <pre><code>php artisan make:model Kelas</code></pre>
+
+        <p><strong>2. Copy code model Kelas</strong> &mdash; <code>app/Models/Kelas.php</code></p>
+        <pre><code>&lt;?php
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
@@ -529,8 +750,22 @@ class Kelas extends Model
     {
         return $this-&gt;hasMany(Siswa::class);
     }
-}</code></pre></div>
-            <div class="box"><strong>app/Models/Siswa.php</strong><pre><code>&lt;?php
+}</code></pre>
+
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Satu kelas bisa punya banyak siswa, jadi relasinya <code>hasMany</code>.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🔗</span><p class="kicker">Step 7 &middot; Model Siswa</p></div>
+        <h2>Model Siswa</h2>
+        <p>Model <code>Siswa</code> punya relasi <code>belongsTo</code> ke <code>Kelas</code>.</p>
+        <p class="copy-note">Setiap blok code bisa disalin lewat tombol clipboard di pojok kanan.</p>
+
+        <p><strong>1. Generate file model</strong></p>
+        <pre><code>php artisan make:model Siswa</code></pre>
+
+        <p><strong>2. Copy code model Siswa</strong> &mdash; <code>app/Models/Siswa.php</code></p>
+        <pre><code>&lt;?php
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
@@ -543,80 +778,98 @@ class Siswa extends Model
     {
         return $this-&gt;belongsTo(Kelas::class);
     }
-}</code></pre></div>
+}</code></pre>
+
+        <p><strong>3. Pakai relasinya</strong></p>
+        <pre><code>$siswa-&gt;kelas-&gt;nama_kelas;
+$kelas-&gt;siswa;</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Model menerjemahkan tabel menjadi object PHP. Relasi mencegah query manual berulang.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz 1</p></div>
+        <h2>Model Eloquent</h2>
+        <div class="quiz" data-explain="Model Eloquent merepresentasikan tabel sebagai class/object PHP, sehingga baris data bisa diakses sebagai properti object.">
+            <p class="quiz-q">Apa fungsi utama model Eloquent pada Laravel?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Mengatur struktur tabel di database</button>
+                <button class="quiz-option" type="button" data-correct="true">Menerjemahkan tabel menjadi object PHP</button>
+                <button class="quiz-option" type="button" data-correct="false">Menyusun tampilan halaman</button>
+                <button class="quiz-option" type="button" data-correct="false">Menghubungkan URL dengan controller</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz 2</p></div>
+        <h2>Relasi Kelas &rarr; Siswa</h2>
+        <div class="quiz" data-explain="Satu kelas bisa punya banyak siswa, jadi relasinya hasMany(Siswa::class) ditulis pada model Kelas.">
+            <p class="quiz-q">Model <code>Kelas</code> ingin mengambil semua siswa di kelasnya. Relasi apa yang dipakai?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">belongsTo</button>
+                <button class="quiz-option" type="button" data-correct="false">hasOne</button>
+                <button class="quiz-option" type="button" data-correct="true">hasMany</button>
+                <button class="quiz-option" type="button" data-correct="false">belongsToMany</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz 3</p></div>
+        <h2>Relasi Siswa &rarr; Kelas</h2>
+        <div class="quiz" data-explain="Satu siswa hanya milik satu kelas, jadi relasinya belongsTo(Kelas::class) ditulis pada model Siswa.">
+            <p class="quiz-q">Model <code>Siswa</code> ingin mengambil satu kelas tempat siswa itu berada. Relasi apa yang dipakai?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">hasMany</button>
+                <button class="quiz-option" type="button" data-correct="true">belongsTo</button>
+                <button class="quiz-option" type="button" data-correct="false">hasManyThrough</button>
+                <button class="quiz-option" type="button" data-correct="false">morphMany</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz 4</p></div>
+        <h2>Properti <code>$table</code></h2>
+        <div class="quiz" data-explain="Properti $table menetapkan nama tabel yang dipakai model, berguna saat nama tabel tidak mengikuti bentuk jamak dari nama model.">
+            <p class="quiz-q">Apa fungsi <code>protected $table = 'kelas';</code> pada model?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="true">Menentukan nama tabel yang dipakai model</button>
+                <button class="quiz-option" type="button" data-correct="false">Menentukan kolom yang boleh diisi</button>
+                <button class="quiz-option" type="button" data-correct="false">Menentukan primary key</button>
+                <button class="quiz-option" type="button" data-correct="false">Menentukan relasi antar tabel</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz 5</p></div>
+        <h2>Properti <code>$fillable</code></h2>
+        <div class="quiz" data-explain="Kolom di dalam $fillable boleh diisi lewat mass assignment, misalnya Kelas::create([...]) atau $model-&gt;update([...]).">
+            <p class="quiz-q">Apa fungsi <code>protected $fillable = ['nama_kelas'];</code>?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="true">Menentukan kolom yang boleh diisi massal lewat create() dan update()</button>
+                <button class="quiz-option" type="button" data-correct="false">Menentukan nama tabel</button>
+                <button class="quiz-option" type="button" data-correct="false">Menyembunyikan kolom dari output JSON</button>
+                <button class="quiz-option" type="button" data-correct="false">Menentukan aturan validasi input</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
         </div>
     </section>
 
     <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🌱</span><p class="kicker">Tutorial Code 5</p></div>
-        <h2>Seeder Data Demo</h2>
-        <p><code>database/seeders/DatabaseSeeder.php</code></p>
-        <pre><code>&lt;?php
-namespace Database\Seeders;
+        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Step 8 &middot; SiswaController</p></div>
+        <h2>Generate &amp; Deklarasi</h2>
+        <p>Buat controller, lalu salin deklarasi dan import di bagian atas file.</p>
 
-use App\Models\Kelas;
-use App\Models\Siswa;
-use Illuminate\Database\Seeder;
+        <p><strong>1. Generate controller</strong></p>
+        <pre><code>php artisan make:controller SiswaController</code></pre>
 
-class DatabaseSeeder extends Seeder
-{
-    public function run()
-    {
-        $kelas = collect([
-            'X RPL 1', 'XI RPL 1', 'XI RPL 2', 'XII RPL 1',
-        ])-&gt;map(fn ($nama) =&gt; Kelas::firstOrCreate(['nama_kelas' =&gt; $nama]));
-
-        $siswa = [
-            ['nis' =&gt; '2024.01.001', 'nama' =&gt; 'Ahmad Fauzi', 'jenis_kelamin' =&gt; 'L'],
-            ['nis' =&gt; '2024.01.002', 'nama' =&gt; 'Bella Saraswati', 'jenis_kelamin' =&gt; 'P'],
-            ['nis' =&gt; '2024.01.003', 'nama' =&gt; 'Candra Wijaya', 'jenis_kelamin' =&gt; 'L'],
-            ['nis' =&gt; '2024.01.004', 'nama' =&gt; 'Dewi Anggraini', 'jenis_kelamin' =&gt; 'P'],
-            ['nis' =&gt; '2024.01.005', 'nama' =&gt; 'Eko Prasetyo', 'jenis_kelamin' =&gt; 'L'],
-            ['nis' =&gt; '2024.01.006', 'nama' =&gt; 'Fitri Handayani', 'jenis_kelamin' =&gt; 'P'],
-            ['nis' =&gt; '2024.01.007', 'nama' =&gt; 'Gede Bayu', 'jenis_kelamin' =&gt; 'L'],
-            ['nis' =&gt; '2024.01.008', 'nama' =&gt; 'Komang Ayu', 'jenis_kelamin' =&gt; 'P'],
-        ];
-
-        foreach ($siswa as $i =&gt; $data) {
-            Siswa::firstOrCreate(
-                ['nis' =&gt; $data['nis']],
-                $data + ['kelas_id' =&gt; $kelas[$i % $kelas-&gt;count()]-&gt;id]
-            );
-        }
-    }
-}</code></pre>
-        <pre><code>php artisan db:seed
-php artisan migrate:fresh --seed</code></pre>
-    </section>
-
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🛣️</span><p class="kicker">Tutorial Code 6</p></div>
-        <h2>Route Web</h2>
-        <p><code>routes/web.php</code></p>
-        <pre><code>&lt;?php
-
-use App\Http\Controllers\KelasController;
-use App\Http\Controllers\SiswaController;
-use Illuminate\Support\Facades\Route;
-
-Route::get('/', function () {
-    return redirect()-&gt;route('siswa.index');
-});
-
-Route::resource('siswa', SiswaController::class)-&gt;except(['show']);
-Route::get('kelas', [KelasController::class, 'index'])
-    -&gt;name('kelas.index');
-Route::post('kelas', [KelasController::class, 'store'])
-    -&gt;name('kelas.store');
-Route::delete('kelas/{kela}', [KelasController::class, 'destroy'])
-    -&gt;name('kelas.destroy');</code></pre>
-        <pre><code>php artisan route:list</code></pre>
-    </section>
-
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Tutorial Code 7</p></div>
-        <h2>Controller Siswa</h2>
-        <p><code>app/Http/Controllers/SiswaController.php</code></p>
+        <p><strong>2. Deklarasi &amp; import</strong> &mdash; <code>app/Http/Controllers/SiswaController.php</code></p>
         <pre><code>&lt;?php
 namespace App\Http\Controllers;
 
@@ -626,98 +879,333 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class SiswaController extends Controller
+{</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Semua method berikut ditulis di dalam kurung kurawal class ini.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Step 8 &middot; index()</p></div>
+        <h2>index() &mdash; Daftar Siswa</h2>
+        <p>Menampilkan semua siswa beserta nama kelasnya. Eager loading <code>with('kelas')</code> mencegah query berulang (N+1).</p>
+        <pre><code>public function index()
 {
-    public function index()
-    {
-        $siswa = Siswa::with('kelas')-&gt;orderBy('nama')-&gt;get();
-        return view('siswa.index', compact('siswa'));
-    }
+    $siswa = Siswa::with('kelas')-&gt;orderBy('nama')-&gt;get();
+    return view('siswa.index', compact('siswa'));
+}</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Eager loading mengambil nama kelas tanpa query berulang (menghindari N+1).</div></div>
+    </section>
 
-    public function create()
-    {
-        return view('siswa.create', ['kelas' =&gt; Kelas::orderBy('nama_kelas')-&gt;get()]);
-    }
-
-    public function store(Request $request)
-    {
-        Siswa::create($this-&gt;validated($request));
-        return redirect()-&gt;route('siswa.index')-&gt;with('success', 'Data siswa berhasil ditambahkan.');
-    }
-
-    public function edit(Siswa $siswa)
-    {
-        return view('siswa.edit', ['siswa' =&gt; $siswa, 'kelas' =&gt; Kelas::orderBy('nama_kelas')-&gt;get()]);
-    }
-
-    public function update(Request $request, Siswa $siswa)
-    {
-        $siswa-&gt;update($this-&gt;validated($request, $siswa));
-        return redirect()-&gt;route('siswa.index')-&gt;with('success', 'Data siswa berhasil diperbarui.');
-    }
-
-    public function destroy(Siswa $siswa)
-    {
-        $siswa-&gt;delete();
-        return redirect()-&gt;route('siswa.index')-&gt;with('success', 'Data siswa berhasil dihapus.');
-    }
-
-    private function validated(Request $request, ?Siswa $siswa = null)
-    {
-        return $request-&gt;validate([
-            'nis' =&gt; ['required', 'string', 'max:50', Rule::unique('siswa', 'nis')-&gt;ignore($siswa)],
-            'nama' =&gt; ['required', 'string', 'max:255'],
-            'kelas_id' =&gt; ['required', 'integer', 'exists:kelas,id'],
-            'jenis_kelamin' =&gt; ['nullable', Rule::in(['L', 'P'])],
-        ]);
-    }
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Step 8 &middot; create()</p></div>
+        <h2>create() &mdash; Form Tambah</h2>
+        <p>Menampilkan form tambah siswa sekaligus mengirim daftar kelas untuk pilihan.</p>
+        <pre><code>public function create()
+{
+    return view('siswa.create', ['kelas' =&gt; Kelas::orderBy('nama_kelas')-&gt;get()]);
 }</code></pre>
     </section>
 
     <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🏫</span><p class="kicker">Tutorial Code 8</p></div>
-        <h2>Controller Kelas</h2>
-        <p><code>app/Http/Controllers/KelasController.php</code></p>
+        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Step 8 &middot; store()</p></div>
+        <h2>store() &mdash; Simpan Siswa</h2>
+        <p>Menyimpan siswa baru setelah lolos validasi, lalu kembali ke daftar dengan pesan sukses.</p>
+        <pre><code>public function store(Request $request)
+{
+    Siswa::create($this-&gt;validated($request));
+    return redirect()-&gt;route('siswa.index')-&gt;with('success', 'Data siswa berhasil ditambahkan.');
+}</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Step 8 &middot; show()</p></div>
+        <h2>show() &mdash; Detail Siswa</h2>
+        <p>Menampilkan detail satu siswa lewat route model binding.</p>
+        <pre><code>public function show(Siswa $siswa)
+{
+    return view('siswa.show', compact('siswa'));
+}</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Step 8 &middot; edit()</p></div>
+        <h2>edit() &mdash; Form Edit</h2>
+        <p>Menampilkan form edit yang sudah terisi data siswa lewat route model binding.</p>
+        <pre><code>public function edit(Siswa $siswa)
+{
+    return view('siswa.edit', ['siswa' =&gt; $siswa, 'kelas' =&gt; Kelas::orderBy('nama_kelas')-&gt;get()]);
+}</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Step 8 &middot; update()</p></div>
+        <h2>update() &mdash; Perbarui Siswa</h2>
+        <p>Memperbarui data siswa; aturan unik NIS mengabaikan baris yang sedang diedit.</p>
+        <pre><code>public function update(Request $request, Siswa $siswa)
+{
+    $siswa-&gt;update($this-&gt;validated($request, $siswa));
+    return redirect()-&gt;route('siswa.index')-&gt;with('success', 'Data siswa berhasil diperbarui.');
+}</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Step 8 &middot; destroy()</p></div>
+        <h2>destroy() &mdash; Hapus Siswa</h2>
+        <p>Menghapus data siswa, lalu kembali ke daftar dengan pesan sukses.</p>
+        <pre><code>public function destroy(Siswa $siswa)
+{
+    $siswa-&gt;delete();
+    return redirect()-&gt;route('siswa.index')-&gt;with('success', 'Data siswa berhasil dihapus.');
+}</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Step 8 &middot; validated()</p></div>
+        <h2>validated() &mdash; Aturan Validasi</h2>
+        <p>Aturan validasi bersama untuk <code>store()</code> dan <code>update()</code>. Baris terakhir menutup class.</p>
+        <pre><code>private function validated(Request $request, ?Siswa $siswa = null)
+{
+    return $request-&gt;validate([
+        'nis' =&gt; ['required', 'string', 'max:50', Rule::unique('siswa', 'nis')-&gt;ignore($siswa)],
+        'nama' =&gt; ['required', 'string', 'max:255'],
+        'kelas_id' =&gt; ['required', 'integer', 'exists:kelas,id'],
+        'jenis_kelamin' =&gt; ['nullable', Rule::in(['L', 'P'])],
+    ]);
+}
+}</code></pre>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 8</p></div>
+        <h2>Eager Loading</h2>
+        <div class="quiz" data-explain="with('kelas') adalah eager loading: relasi kelas diambil sekaligus dalam satu query, sehingga nama kelas tidak di-query ulang untuk tiap baris (menghindari masalah N+1).">
+            <p class="quiz-q">Mengapa <code>index()</code> memakai <code>Siswa::with('kelas')</code>?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Agar data siswa terurut berdasarkan nama</button>
+                <button class="quiz-option" type="button" data-correct="true">Agar relasi kelas ikut terambil dan menghindari query berulang (N+1)</button>
+                <button class="quiz-option" type="button" data-correct="false">Agar data siswa otomatis tersimpan ke database</button>
+                <button class="quiz-option" type="button" data-correct="false">Agar validasi input berjalan otomatis</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🏫</span><p class="kicker">Step 9 &middot; KelasController</p></div>
+        <h2>Generate &amp; Deklarasi</h2>
+        <p>Buat controller, lalu salin deklarasi dan import di bagian atas file.</p>
+
+        <p><strong>1. Generate controller</strong></p>
+        <pre><code>php artisan make:controller KelasController</code></pre>
+
+        <p><strong>2. Deklarasi &amp; import</strong> &mdash; <code>app/Http/Controllers/KelasController.php</code></p>
         <pre><code>&lt;?php
 namespace App\Http\Controllers;
 
 use App\Models\Kelas;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class KelasController extends Controller
+{</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Semua method berikut ditulis di dalam kurung kurawal class ini.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🏫</span><p class="kicker">Step 9 &middot; index()</p></div>
+        <h2>index() &mdash; Daftar Kelas</h2>
+        <p>Menampilkan daftar kelas beserta jumlah siswanya lewat <code>withCount('siswa')</code>.</p>
+        <pre><code>public function index()
 {
-    public function index()
-    {
-        return view('kelas.index', [
-            'kelas' =&gt; Kelas::withCount('siswa')-&gt;orderBy('nama_kelas')-&gt;get(),
-        ]);
-    }
-
-    public function store(Request $request)
-    {
-        $request-&gt;validate([
-            'nama_kelas' =&gt; ['required', 'string', 'max:100', 'unique:kelas,nama_kelas'],
-        ]);
-        Kelas::create($request-&gt;only('nama_kelas'));
-        return redirect()-&gt;route('kelas.index')-&gt;with('success', 'Kelas berhasil ditambahkan.');
-    }
-
-    public function destroy(Kelas $kela)
-    {
-        if ($kela-&gt;siswa()-&gt;exists()) {
-            return redirect()-&gt;route('kelas.index')
-                -&gt;with('error', 'Kelas tidak dapat dihapus karena masih memiliki siswa.');
-        }
-        $kela-&gt;delete();
-        return redirect()-&gt;route('kelas.index')-&gt;with('success', 'Kelas berhasil dihapus.');
-    }
+    return view('kelas.index', [
+        'kelas' =&gt; Kelas::withCount('siswa')-&gt;orderBy('nama_kelas')-&gt;get(),
+    ]);
 }</code></pre>
     </section>
 
     <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🖼️</span><p class="kicker">Tutorial Code 9</p></div>
-        <h2>Layout dan Halaman Blade</h2>
-        <p><code>resources/views/layouts/app.blade.php</code></p>
-        <pre><code>&lt;!DOCTYPE html&gt;
+        <div class="kicker-row"><span class="icon-badge">🏫</span><p class="kicker">Step 9 &middot; create()</p></div>
+        <h2>create() &mdash; Form Tambah</h2>
+        <p>Menampilkan form tambah kelas.</p>
+        <pre><code>public function create()
+{
+    return view('kelas.create');
+}</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🏫</span><p class="kicker">Step 9 &middot; store()</p></div>
+        <h2>store() &mdash; Simpan Kelas</h2>
+        <p>Memvalidasi nama kelas (wajib &amp; unik) lalu menyimpannya, kemudian kembali ke daftar kelas.</p>
+        <pre><code>public function store(Request $request)
+{
+    $request-&gt;validate([
+        'nama_kelas' =&gt; ['required', 'string', 'max:100', 'unique:kelas,nama_kelas'],
+    ]);
+    Kelas::create($request-&gt;only('nama_kelas'));
+    return redirect()-&gt;route('kelas.index')-&gt;with('success', 'Kelas berhasil ditambahkan.');
+}</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🏫</span><p class="kicker">Step 9 &middot; show()</p></div>
+        <h2>show() &mdash; Detail Kelas</h2>
+        <p>Menampilkan detail satu kelas lewat route model binding.</p>
+        <pre><code>public function show(Kelas $kela)
+{
+    return view('kelas.show', compact('kela'));
+}</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🏫</span><p class="kicker">Step 9 &middot; edit()</p></div>
+        <h2>edit() &mdash; Form Edit</h2>
+        <p>Menampilkan form edit yang sudah terisi data kelas.</p>
+        <pre><code>public function edit(Kelas $kela)
+{
+    return view('kelas.edit', compact('kela'));
+}</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🏫</span><p class="kicker">Step 9 &middot; update()</p></div>
+        <h2>update() &mdash; Perbarui Kelas</h2>
+        <p>Memperbarui nama kelas; aturan unik mengabaikan baris yang sedang diedit.</p>
+        <pre><code>public function update(Request $request, Kelas $kela)
+{
+    $request-&gt;validate([
+        'nama_kelas' =&gt; ['required', 'string', 'max:100', Rule::unique('kelas', 'nama_kelas')-&gt;ignore($kela)],
+    ]);
+    $kela-&gt;update($request-&gt;only('nama_kelas'));
+    return redirect()-&gt;route('kelas.index')-&gt;with('success', 'Kelas berhasil diperbarui.');
+}</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🏫</span><p class="kicker">Step 9 &middot; destroy()</p></div>
+        <h2>destroy() &mdash; Hapus Kelas</h2>
+        <p>Menolak hapus jika kelas masih punya siswa; jika kosong, kelas dihapus. Baris terakhir menutup class.</p>
+        <pre><code>public function destroy(Kelas $kela)
+{
+    if ($kela-&gt;siswa()-&gt;exists()) {
+        return redirect()-&gt;route('kelas.index')
+            -&gt;with('error', 'Kelas tidak dapat dihapus karena masih memiliki siswa.');
+    }
+    $kela-&gt;delete();
+    return redirect()-&gt;route('kelas.index')-&gt;with('success', 'Kelas berhasil dihapus.');
+}
+}</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Validasi bisnis tetap diperlukan walaupun database sudah punya foreign key.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 9</p></div>
+        <h2>Hapus Kelas Berisi Siswa</h2>
+        <div class="quiz" data-explain="destroy() pada KelasController memeriksa $kela->siswa()->exists(). Jika kelas masih punya siswa, penghapusan ditolak dan muncul pesan error.">
+            <p class="quiz-q">Apa yang terjadi jika kelas yang masih memiliki siswa coba dihapus?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Kelas terhapus dan semua siswanya ikut terhapus</button>
+                <button class="quiz-option" type="button" data-correct="true">Penghapusan ditolak dan muncul pesan error</button>
+                <button class="quiz-option" type="button" data-correct="false">Siswa otomatis dipindah ke kelas lain</button>
+                <button class="quiz-option" type="button" data-correct="false">Data siswa pada kelas itu dikosongkan</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🛣️</span><p class="kicker">Step 10 &middot; Daftarkan Route</p></div>
+        <h2>Daftar URL &amp; Setup</h2>
+        <p>Route menghubungkan URL dengan controller action. Daftar URL yang dipakai:</p>
+        <pre><code>/                    redirect ke daftar siswa
+/siswa               daftar siswa
+/siswa/create        form tambah siswa
+/siswa/{siswa}       detail siswa
+/siswa/{siswa}/edit  form edit siswa
+/kelas               daftar kelas
+/kelas/create        form tambah kelas
+/kelas/{kela}        detail kelas
+/kelas/{kela}/edit   form edit kelas</code></pre>
+        <p class="copy-note">Setiap blok code bisa disalin lewat tombol clipboard di pojok kanan.</p>
+
+        <p><strong>Siapkan file</strong> &mdash; <code>routes/web.php</code></p>
+        <pre><code>&lt;?php
+
+use App\Http\Controllers\KelasController;
+use App\Http\Controllers\SiswaController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return redirect()-&gt;route('siswa.index');
+});</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Route menghubungkan URL dengan controller action.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🛣️</span><p class="kicker">Step 10 &middot; Route Siswa</p></div>
+        <h2>Route Siswa</h2>
+        <p>Tujuh route CRUD data siswa: daftar, form tambah, simpan, detail, form edit, perbarui, dan hapus.</p>
+        <pre><code>Route::get('siswa', [SiswaController::class, 'index'])-&gt;name('siswa.index');
+Route::get('siswa/create', [SiswaController::class, 'create'])-&gt;name('siswa.create');
+Route::post('siswa', [SiswaController::class, 'store'])-&gt;name('siswa.store');
+Route::get('siswa/{siswa}', [SiswaController::class, 'show'])-&gt;name('siswa.show');
+Route::get('siswa/{siswa}/edit', [SiswaController::class, 'edit'])-&gt;name('siswa.edit');
+Route::put('siswa/{siswa}', [SiswaController::class, 'update'])-&gt;name('siswa.update');
+Route::delete('siswa/{siswa}', [SiswaController::class, 'destroy'])-&gt;name('siswa.destroy');</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🛣️</span><p class="kicker">Step 10 &middot; Route Kelas</p></div>
+        <h2>Route Kelas</h2>
+        <p>Tujuh route CRUD kelas: daftar, form tambah, simpan, detail, form edit, perbarui, dan hapus.</p>
+        <pre><code>Route::get('kelas', [KelasController::class, 'index'])-&gt;name('kelas.index');
+Route::get('kelas/create', [KelasController::class, 'create'])-&gt;name('kelas.create');
+Route::post('kelas', [KelasController::class, 'store'])-&gt;name('kelas.store');
+Route::get('kelas/{kela}', [KelasController::class, 'show'])-&gt;name('kelas.show');
+Route::get('kelas/{kela}/edit', [KelasController::class, 'edit'])-&gt;name('kelas.edit');
+Route::put('kelas/{kela}', [KelasController::class, 'update'])-&gt;name('kelas.update');
+Route::delete('kelas/{kela}', [KelasController::class, 'destroy'])-&gt;name('kelas.destroy');</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🛣️</span><p class="kicker">Step 10 &middot; Cek Route</p></div>
+        <h2>Cek Daftar Route</h2>
+        <p>Pastikan semua route sudah terdaftar dengan benar.</p>
+        <pre><code>php artisan route:list</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Biasakan cek route setelah menambah atau mengubahnya.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 10</p></div>
+        <h2>HTTP Method pada Route</h2>
+        <div class="quiz" data-explain="Route::put dipakai untuk memperbarui data yang sudah ada (update). GET menampilkan halaman, POST menyimpan data baru, dan DELETE menghapus data.">
+            <p class="quiz-q"><code>Route::put('siswa/{siswa}', ...)</code> dipakai untuk action apa?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Menampilkan daftar siswa</button>
+                <button class="quiz-option" type="button" data-correct="false">Menyimpan siswa baru</button>
+                <button class="quiz-option" type="button" data-correct="true">Memperbarui data siswa</button>
+                <button class="quiz-option" type="button" data-correct="false">Menghapus data siswa</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🖼️</span><p class="kicker">Step 11</p></div>
+        <h2>Buat Layout Blade</h2>
+        <p><code>resources/views/layouts/app.blade.php</code> berisi navigation, flash message, error validasi, dan <code>@yield('content')</code>.</p>
+        <p class="copy-note">Setiap blok code bisa disalin lewat tombol clipboard di pojok kanan.</p>
+
+        <div class="method">
+            <div class="method-head"><code class="method-name">Directive Blade</code><span class="method-desc">Escaping output, proteksi form, dan method spoofing.</span></div>
+            <pre><code>{{ $value }}        // escaping output
+@csrf               // proteksi form
+@method('PUT')      // method spoofing
+@method('DELETE')</code></pre>
+        </div>
+
+        <div class="method">
+            <div class="method-head"><code class="method-name">layouts/app.blade.php</code><span class="method-desc">Layout utama: navigation, flash message, error validasi, dan tempat isi halaman.</span></div>
+            <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html lang="id"&gt;
 &lt;head&gt;
     &lt;meta charset="utf-8"&gt;
@@ -743,12 +1231,154 @@ class KelasController extends Controller
     &lt;/main&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
+        </div>
+
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Layout mengurangi HTML berulang. <code>@csrf</code> wajib di setiap form.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 11</p></div>
+        <h2>Proteksi Form</h2>
+        <div class="quiz" data-explain="@csrf menambahkan token CSRF ke dalam form. Token ini memastikan request benar-benar berasal dari aplikasi sendiri, sehingga wajib ditulis di setiap form.">
+            <p class="quiz-q">Directive Blade apa yang wajib ada di setiap form untuk proteksi CSRF?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false"><code>@yield</code></button>
+                <button class="quiz-option" type="button" data-correct="true"><code>@csrf</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>@extends</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>@section</code></button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
     </section>
 
     <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">📋</span><p class="kicker">Tutorial Code 10</p></div>
-        <h2>Blade Daftar + Form Siswa</h2>
-        <p><code>resources/views/siswa/index.blade.php</code></p>
+        <div class="kicker-row"><span class="icon-badge">📋</span><p class="kicker">Step 12 &middot; Create</p></div>
+        <h2>Create &mdash; Tambah Siswa</h2>
+        <p>Halaman form tambah siswa &mdash; <code>siswa/create.blade.php</code>.</p>
+        <pre><code>@extends('layouts.app')
+@section('title', 'Tambah Siswa')
+@section('content')
+&lt;div class="card"&gt;
+    &lt;div class="page-heading"&gt;&lt;h1&gt;Tambah Siswa&lt;/h1&gt;&lt;/div&gt;
+    &lt;form method="POST" action="{{ route('siswa.store') }}"&gt;
+        @csrf
+        &lt;div class="form-group"&gt;
+            &lt;label for="nis"&gt;NIS&lt;/label&gt;
+            &lt;input id="nis" name="nis" type="text" value="{{ old('nis') }}" required&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label for="nama"&gt;Nama&lt;/label&gt;
+            &lt;input id="nama" name="nama" type="text" value="{{ old('nama') }}" required&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label for="kelas_id"&gt;Kelas&lt;/label&gt;
+            &lt;select id="kelas_id" name="kelas_id" required&gt;
+                &lt;option value=""&gt;-- Pilih Kelas --&lt;/option&gt;
+                @foreach ($kelas as $item)
+                    &lt;option value="{{ $item-&gt;id }}" @selected(old('kelas_id') == $item-&gt;id)&gt;{{ $item-&gt;nama_kelas }}&lt;/option&gt;
+                @endforeach
+            &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label for="jenis_kelamin"&gt;Jenis Kelamin&lt;/label&gt;
+            &lt;select id="jenis_kelamin" name="jenis_kelamin"&gt;
+                &lt;option value=""&gt;-- Tidak diisi --&lt;/option&gt;
+                &lt;option value="L" @selected(old('jenis_kelamin') === 'L')&gt;Laki-laki&lt;/option&gt;
+                &lt;option value="P" @selected(old('jenis_kelamin') === 'P')&gt;Perempuan&lt;/option&gt;
+            &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div class="form-actions"&gt;
+            &lt;button class="btn btn-primary" type="submit"&gt;Simpan&lt;/button&gt;
+            &lt;a class="btn btn-secondary" href="{{ route('siswa.index') }}"&gt;Batal&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+@endsection</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Form ditulis langsung di halamannya agar tiap file bisa berdiri sendiri dan mudah disalin.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">📋</span><p class="kicker">Step 12 &middot; Update</p></div>
+        <h2>Update &mdash; Edit Siswa</h2>
+        <p>Halaman edit siswa &mdash; <code>siswa/edit.blade.php</code>.</p>
+        <pre><code>@extends('layouts.app')
+@section('title', 'Edit Siswa')
+@section('content')
+&lt;div class="card"&gt;
+    &lt;div class="page-heading"&gt;&lt;h1&gt;Edit Siswa&lt;/h1&gt;&lt;/div&gt;
+    &lt;form method="POST" action="{{ route('siswa.update', $siswa) }}"&gt;
+        @csrf @method('PUT')
+        &lt;div class="form-group"&gt;
+            &lt;label for="nis"&gt;NIS&lt;/label&gt;
+            &lt;input id="nis" name="nis" type="text" value="{{ old('nis', $siswa-&gt;nis) }}" required&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label for="nama"&gt;Nama&lt;/label&gt;
+            &lt;input id="nama" name="nama" type="text" value="{{ old('nama', $siswa-&gt;nama) }}" required&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label for="kelas_id"&gt;Kelas&lt;/label&gt;
+            &lt;select id="kelas_id" name="kelas_id" required&gt;
+                &lt;option value=""&gt;-- Pilih Kelas --&lt;/option&gt;
+                @foreach ($kelas as $item)
+                    &lt;option value="{{ $item-&gt;id }}" @selected(old('kelas_id', $siswa-&gt;kelas_id) == $item-&gt;id)&gt;{{ $item-&gt;nama_kelas }}&lt;/option&gt;
+                @endforeach
+            &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label for="jenis_kelamin"&gt;Jenis Kelamin&lt;/label&gt;
+            &lt;select id="jenis_kelamin" name="jenis_kelamin"&gt;
+                &lt;option value=""&gt;-- Tidak diisi --&lt;/option&gt;
+                &lt;option value="L" @selected(old('jenis_kelamin', $siswa-&gt;jenis_kelamin) === 'L')&gt;Laki-laki&lt;/option&gt;
+                &lt;option value="P" @selected(old('jenis_kelamin', $siswa-&gt;jenis_kelamin) === 'P')&gt;Perempuan&lt;/option&gt;
+            &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div class="form-actions"&gt;
+            &lt;button class="btn btn-primary" type="submit"&gt;Simpan&lt;/button&gt;
+            &lt;a class="btn btn-secondary" href="{{ route('siswa.index') }}"&gt;Batal&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+@endsection</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">📋</span><p class="kicker">Step 12 &middot; Detail</p></div>
+        <h2>Detail &mdash; Lihat Siswa</h2>
+        <p>Halaman detail siswa &mdash; <code>siswa/show.blade.php</code>.</p>
+        <pre><code>@extends('layouts.app')
+@section('title', 'Detail Siswa')
+@section('content')
+&lt;div class="card"&gt;
+    &lt;div class="page-heading"&gt;&lt;h1&gt;Detail Siswa&lt;/h1&gt;
+        &lt;a class="btn btn-secondary" href="{{ route('siswa.index') }}"&gt;Kembali&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;table&gt;
+        &lt;tbody&gt;
+            &lt;tr&gt;&lt;th&gt;NIS&lt;/th&gt;&lt;td&gt;{{ $siswa-&gt;nis }}&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;th&gt;Nama&lt;/th&gt;&lt;td&gt;{{ $siswa-&gt;nama }}&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;th&gt;Kelas&lt;/th&gt;&lt;td&gt;{{ $siswa-&gt;kelas-&gt;nama_kelas ?? '-' }}&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;th&gt;Jenis Kelamin&lt;/th&gt;&lt;td&gt;{{ $siswa-&gt;jenis_kelamin ?? '-' }}&lt;/td&gt;&lt;/tr&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+&lt;/div&gt;
+@endsection</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">📋</span><p class="kicker">Step 12 &middot; Delete</p></div>
+        <h2>Delete &mdash; Hapus Siswa</h2>
+        <p>Form hapus dengan konfirmasi; dipakai pada kolom aksi di halaman index.</p>
+        <pre><code>&lt;form class="inline-form" method="POST" action="{{ route('siswa.destroy', $item) }}" onsubmit="return confirm('Hapus data siswa ini?')"&gt;
+    @csrf @method('DELETE')
+    &lt;button class="btn btn-danger" type="submit"&gt;Hapus&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">📋</span><p class="kicker">Step 12 &middot; Index</p></div>
+        <h2>Index &mdash; Daftar Siswa</h2>
+        <p>Halaman daftar siswa &mdash; <code>siswa/index.blade.php</code>.</p>
         <pre><code>@extends('layouts.app')
 @section('title', 'Data Siswa')
 @section('content')
@@ -762,8 +1392,9 @@ class KelasController extends Controller
         @forelse ($siswa as $item)
             &lt;tr&gt;&lt;td&gt;{{ $item-&gt;nis }}&lt;/td&gt;&lt;td&gt;{{ $item-&gt;nama }}&lt;/td&gt;
             &lt;td&gt;{{ $item-&gt;kelas-&gt;nama_kelas ?? '-' }}&lt;/td&gt;&lt;td&gt;{{ $item-&gt;jenis_kelamin ?? '-' }}&lt;/td&gt;
-            &lt;td&gt;&lt;a class="btn btn-secondary" href="{{ route('siswa.edit', $item) }}"&gt;Edit&lt;/a&gt;
-                &lt;form class="inline-form" method="POST" action="{{ route('siswa.destroy', $item) }}"&gt;@csrf @method('DELETE')
+            &lt;td&gt;&lt;a class="btn btn-secondary" href="{{ route('siswa.show', $item) }}"&gt;Detail&lt;/a&gt;
+                &lt;a class="btn btn-secondary" href="{{ route('siswa.edit', $item) }}"&gt;Edit&lt;/a&gt;
+                &lt;form class="inline-form" method="POST" action="{{ route('siswa.destroy', $item) }}" onsubmit="return confirm('Hapus data siswa ini?')"&gt;@csrf @method('DELETE')
                     &lt;button class="btn btn-danger" type="submit"&gt;Hapus&lt;/button&gt;&lt;/form&gt;&lt;/td&gt;&lt;/tr&gt;
         @empty
             &lt;tr&gt;&lt;td class="empty" colspan="5"&gt;Belum ada data siswa.&lt;/td&gt;&lt;/tr&gt;
@@ -774,142 +1405,122 @@ class KelasController extends Controller
 @endsection</code></pre>
     </section>
 
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🎨</span><p class="kicker">Tutorial Code 11</p></div>
-        <h2>CSS Project</h2>
-        <p><code>resources/css/app.css</code> — salin seluruh file dari project agar visual sama.</p>
-        <pre><code>:root {
-    --navy: #102a43; --blue: #1769aa; --blue-dark: #0f4c81;
-    --text: #243b53; --muted: #627d98; --surface: #ffffff;
-    --page: #f4f7fb; --line: #d9e2ec;
-    --success-bg: #e3fcef; --success-text: #147d64;
-    --error-bg: #fff0f0; --error-text: #b42318;
-    --shadow: 0 14px 35px rgb(16 42 67 / 10%);
-}
-
-* { box-sizing: border-box; }
-body { margin: 0; color: var(--text); background: var(--page); font-family: Arial, sans-serif; line-height: 1.5; }
-.container { width: min(1100px, calc(100% - 2rem)); margin: 0 auto; }
-.navbar { color: #fff; background: linear-gradient(120deg, var(--navy), var(--blue-dark)); }
-.card { padding: clamp(1.25rem, 3vw, 2rem); background: rgb(255 255 255 / 94%); border-radius: 1rem; box-shadow: var(--shadow); }
-.btn { display: inline-block; padding: .65rem 1rem; border: 0; border-radius: .55rem; font-weight: 700; text-decoration: none; }
-.btn-primary { color: #fff; background: var(--blue); }
-.btn-secondary { color: var(--text); background: #e8eef5; }
-.btn-danger { color: #fff; background: #c0392b; }
-.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: .75rem; }
-table { width: 100%; border-collapse: collapse; background: var(--surface); }
-th, td { padding: .9rem 1rem; text-align: left; border-bottom: 1px solid var(--line); }
-input, select { width: 100%; min-height: 2.75rem; padding: .65rem .75rem; border: 1px solid #bcccdc; border-radius: .5rem; font: inherit; }
-
-@media (max-width: 640px) {
-    .container { width: min(100% - 1rem, 1100px); }
-    .page-heading { align-items: stretch; flex-direction: column; }
-    .page-heading .btn { width: 100%; text-align: center; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
-}</code></pre>
-        <p class="copy-note">Runtime membaca <code>public/css/app.css</code> dari <code>asset('css/app.css')</code>. Setelah edit source, jalankan <code>npm run dev</code> atau salin CSS hasil akhir ke public.</p>
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 12</p></div>
+        <h2>Mengisi Ulang Form</h2>
+        <div class="quiz" data-explain="Helper old('nis') mengembalikan nilai input sebelumnya saat validasi gagal, sehingga user tidak perlu mengetik ulang dan tinggal memperbaiki bagian yang salah.">
+            <p class="quiz-q">Helper apa yang membuat input form tetap terisi setelah validasi gagal?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false"><code>session()</code></button>
+                <button class="quiz-option" type="button" data-correct="true"><code>old()</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>route()</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>asset()</code></button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
     </section>
 
     <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🧾</span><p class="kicker">Tutorial Code 12</p></div>
-        <h2>Blade Form Siswa</h2>
-        <p><code>resources/views/siswa/form.blade.php</code> dipakai oleh create dan edit.</p>
-        <pre><code>@php
-    $siswa = $siswa ?? null;
-@endphp
-
-&lt;div class="form-group"&gt;
-    &lt;label for="nis"&gt;NIS&lt;/label&gt;
-    &lt;input id="nis" name="nis" type="text" value="{{ old('nis', $siswa-&gt;nis ?? '') }}" required&gt;
-&lt;/div&gt;
-&lt;div class="form-group"&gt;
-    &lt;label for="nama"&gt;Nama&lt;/label&gt;
-    &lt;input id="nama" name="nama" type="text" value="{{ old('nama', $siswa-&gt;nama ?? '') }}" required&gt;
-&lt;/div&gt;
-&lt;div class="form-group"&gt;
-    &lt;label for="kelas_id"&gt;Kelas&lt;/label&gt;
-    &lt;select id="kelas_id" name="kelas_id" required&gt;
-        &lt;option value=""&gt;-- Pilih Kelas --&lt;/option&gt;
-        @foreach ($kelas as $item)
-            &lt;option value="{{ $item-&gt;id }}" @selected(old('kelas_id', $siswa-&gt;kelas_id ?? null) == $item-&gt;id)&gt;{{ $item-&gt;nama_kelas }}&lt;/option&gt;
-        @endforeach
-    &lt;/select&gt;
-&lt;/div&gt;
-&lt;div class="form-group"&gt;
-    &lt;label for="jenis_kelamin"&gt;Jenis Kelamin&lt;/label&gt;
-    &lt;select id="jenis_kelamin" name="jenis_kelamin"&gt;
-        &lt;option value=""&gt;-- Tidak diisi --&lt;/option&gt;
-        &lt;option value="L" @selected(old('jenis_kelamin', $siswa-&gt;jenis_kelamin ?? null) === 'L')&gt;Laki-laki&lt;/option&gt;
-        &lt;option value="P" @selected(old('jenis_kelamin', $siswa-&gt;jenis_kelamin ?? null) === 'P')&gt;Perempuan&lt;/option&gt;
-    &lt;/select&gt;
-&lt;/div&gt;
-&lt;div class="form-actions"&gt;
-    &lt;button class="btn btn-primary" type="submit"&gt;Simpan&lt;/button&gt;
-    &lt;a class="btn btn-secondary" href="{{ route('siswa.index') }}"&gt;Batal&lt;/a&gt;
-&lt;/div&gt;</code></pre>
-    </section>
-
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">📝</span><p class="kicker">Tutorial Code 13</p></div>
-        <h2>Blade Create dan Edit</h2>
-        <pre><code>resources/views/siswa/create.blade.php
-
-@extends('layouts.app')
-@section('title', 'Tambah Siswa')
+        <div class="kicker-row"><span class="icon-badge">🏷️</span><p class="kicker">Step 13 &middot; Create</p></div>
+        <h2>Create &mdash; Tambah Kelas</h2>
+        <p>Halaman form tambah kelas &mdash; <code>kelas/create.blade.php</code>.</p>
+        <pre><code>@extends('layouts.app')
+@section('title', 'Tambah Kelas')
 @section('content')
 &lt;div class="card"&gt;
-    &lt;div class="page-heading"&gt;&lt;h1&gt;Tambah Siswa&lt;/h1&gt;&lt;/div&gt;
-    &lt;form method="POST" action="{{ route('siswa.store') }}"&gt;
+    &lt;div class="page-heading"&gt;&lt;h1&gt;Tambah Kelas&lt;/h1&gt;&lt;/div&gt;
+    &lt;form method="POST" action="{{ route('kelas.store') }}"&gt;
         @csrf
-        @include('siswa.form')
-    &lt;/form&gt;
-&lt;/div&gt;
-@endsection
-
-resources/views/siswa/edit.blade.php
-
-@extends('layouts.app')
-@section('title', 'Edit Siswa')
-@section('content')
-&lt;div class="card"&gt;
-    &lt;div class="page-heading"&gt;&lt;h1&gt;Edit Siswa&lt;/h1&gt;&lt;/div&gt;
-    &lt;form method="POST" action="{{ route('siswa.update', $siswa) }}"&gt;
-        @csrf @method('PUT')
-        @include('siswa.form')
+        &lt;div class="form-group"&gt;
+            &lt;label for="nama_kelas"&gt;Nama Kelas&lt;/label&gt;
+            &lt;input id="nama_kelas" name="nama_kelas" type="text" value="{{ old('nama_kelas') }}" required&gt;
+        &lt;/div&gt;
+        &lt;div class="form-actions"&gt;
+            &lt;button class="btn btn-primary" type="submit"&gt;Simpan&lt;/button&gt;
+            &lt;a class="btn btn-secondary" href="{{ route('kelas.index') }}"&gt;Batal&lt;/a&gt;
+        &lt;/div&gt;
     &lt;/form&gt;
 &lt;/div&gt;
 @endsection</code></pre>
     </section>
 
     <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">🏫</span><p class="kicker">Tutorial Code 14</p></div>
-        <h2>Blade Halaman Kelas</h2>
-        <p><code>resources/views/kelas/index.blade.php</code></p>
+        <div class="kicker-row"><span class="icon-badge">🏷️</span><p class="kicker">Step 13 &middot; Update</p></div>
+        <h2>Update &mdash; Edit Kelas</h2>
+        <p>Halaman edit kelas &mdash; <code>kelas/edit.blade.php</code>.</p>
+        <pre><code>@extends('layouts.app')
+@section('title', 'Edit Kelas')
+@section('content')
+&lt;div class="card"&gt;
+    &lt;div class="page-heading"&gt;&lt;h1&gt;Edit Kelas&lt;/h1&gt;&lt;/div&gt;
+    &lt;form method="POST" action="{{ route('kelas.update', $kela) }}"&gt;
+        @csrf @method('PUT')
+        &lt;div class="form-group"&gt;
+            &lt;label for="nama_kelas"&gt;Nama Kelas&lt;/label&gt;
+            &lt;input id="nama_kelas" name="nama_kelas" type="text" value="{{ old('nama_kelas', $kela-&gt;nama_kelas) }}" required&gt;
+        &lt;/div&gt;
+        &lt;div class="form-actions"&gt;
+            &lt;button class="btn btn-primary" type="submit"&gt;Simpan&lt;/button&gt;
+            &lt;a class="btn btn-secondary" href="{{ route('kelas.index') }}"&gt;Batal&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+@endsection</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🏷️</span><p class="kicker">Step 13 &middot; Detail</p></div>
+        <h2>Detail &mdash; Lihat Kelas</h2>
+        <p>Halaman detail kelas &mdash; <code>kelas/show.blade.php</code>.</p>
+        <pre><code>@extends('layouts.app')
+@section('title', 'Detail Kelas')
+@section('content')
+&lt;div class="card"&gt;
+    &lt;div class="page-heading"&gt;&lt;h1&gt;Detail Kelas&lt;/h1&gt;
+        &lt;a class="btn btn-secondary" href="{{ route('kelas.index') }}"&gt;Kembali&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;table&gt;
+        &lt;tbody&gt;
+            &lt;tr&gt;&lt;th&gt;Nama Kelas&lt;/th&gt;&lt;td&gt;{{ $kela-&gt;nama_kelas }}&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;th&gt;Jumlah Siswa&lt;/th&gt;&lt;td&gt;{{ $kela-&gt;siswa()-&gt;count() }}&lt;/td&gt;&lt;/tr&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+&lt;/div&gt;
+@endsection</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🏷️</span><p class="kicker">Step 13 &middot; Delete</p></div>
+        <h2>Delete &mdash; Hapus Kelas</h2>
+        <p>Form hapus dengan konfirmasi; server menolak jika kelas masih berisi siswa.</p>
+        <pre><code>&lt;form class="inline-form" method="POST" action="{{ route('kelas.destroy', $item) }}" onsubmit="return confirm('Hapus kelas ini?')"&gt;
+    @csrf @method('DELETE')
+    &lt;button class="btn btn-danger" type="submit"&gt;Hapus&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🏷️</span><p class="kicker">Step 13 &middot; Index</p></div>
+        <h2>Index &mdash; Daftar Kelas</h2>
+        <p>Halaman daftar kelas + jumlah siswa &mdash; <code>kelas/index.blade.php</code>.</p>
         <pre><code>@extends('layouts.app')
 @section('title', 'Data Kelas')
 @section('content')
 &lt;div class="card"&gt;
-    &lt;div class="page-heading"&gt;&lt;h1&gt;Data Kelas&lt;/h1&gt;&lt;/div&gt;
-    &lt;form method="POST" action="{{ route('kelas.store') }}" class="form-group"&gt;
-        @csrf
-        &lt;label for="nama_kelas"&gt;Nama Kelas Baru&lt;/label&gt;
-        &lt;div class="nav-links"&gt;
-            &lt;input id="nama_kelas" name="nama_kelas" type="text" value="{{ old('nama_kelas') }}" required&gt;
-            &lt;button class="btn btn-primary" type="submit"&gt;Tambah&lt;/button&gt;
-        &lt;/div&gt;
-    &lt;/form&gt;
+    &lt;div class="page-heading"&gt;&lt;h1&gt;Data Kelas&lt;/h1&gt;
+        &lt;a class="btn btn-primary" href="{{ route('kelas.create') }}"&gt;Tambah Kelas&lt;/a&gt;
+    &lt;/div&gt;
     &lt;div class="table-wrap"&gt;&lt;table&gt;
         &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Nama Kelas&lt;/th&gt;&lt;th&gt;Jumlah Siswa&lt;/th&gt;&lt;th&gt;Aksi&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
         &lt;tbody&gt;
         @forelse ($kelas as $item)
             &lt;tr&gt;&lt;td&gt;{{ $item-&gt;nama_kelas }}&lt;/td&gt;&lt;td&gt;{{ $item-&gt;siswa_count }}&lt;/td&gt;
-                &lt;td&gt;&lt;form class="inline-form" method="POST" action="{{ route('kelas.destroy', $item) }}"&gt;
-                    @csrf @method('DELETE')
-                    &lt;button class="btn btn-danger" type="submit"&gt;Hapus&lt;/button&gt;
-                &lt;/form&gt;&lt;/td&gt;&lt;/tr&gt;
+                &lt;td&gt;&lt;a class="btn btn-secondary" href="{{ route('kelas.show', $item) }}"&gt;Detail&lt;/a&gt;
+                    &lt;a class="btn btn-secondary" href="{{ route('kelas.edit', $item) }}"&gt;Edit&lt;/a&gt;
+                    &lt;form class="inline-form" method="POST" action="{{ route('kelas.destroy', $item) }}" onsubmit="return confirm('Hapus kelas ini?')"&gt;
+                        @csrf @method('DELETE')
+                        &lt;button class="btn btn-danger" type="submit"&gt;Hapus&lt;/button&gt;
+                    &lt;/form&gt;&lt;/td&gt;&lt;/tr&gt;
         @empty
             &lt;tr&gt;&lt;td class="empty" colspan="3"&gt;Belum ada data kelas.&lt;/td&gt;&lt;/tr&gt;
         @endforelse
@@ -917,23 +1528,164 @@ resources/views/siswa/edit.blade.php
     &lt;/table&gt;&lt;/div&gt;
 &lt;/div&gt;
 @endsection</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Buat UI sederhana dulu. CSS tambahan hanya untuk keterbacaan &amp; aksesibilitas.</div></div>
     </section>
 
-    <section class="slide code-slide">
-        <div class="kicker-row"><span class="icon-badge">✅</span><p class="kicker">Tutorial Code 15</p></div>
-        <h2>Verifikasi sampai Sama</h2>
-        <pre><code>php artisan migrate:fresh --seed
-php artisan route:list
-php artisan test
-git diff --check
-php artisan serve</code></pre>
-        <ul class="checklist">
-            <li><code>resources/views/layouts/app.blade.php</code> memuat <code>public/css/app.css</code>.</li>
-            <li>Root <code>/</code> redirect ke <code>siswa.index</code>.</li>
-            <li>Tambah, edit, hapus siswa; NIS duplikat ditolak.</li>
-            <li>Kelas berisi siswa tidak dapat dihapus.</li>
-            <li>Responsive pada lebar layar ≤ 640px; keyboard focus terlihat.</li>
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 13</p></div>
+        <h2>Menghitung Jumlah Siswa</h2>
+        <div class="quiz" data-explain="withCount('siswa') menambahkan kolom siswa_count pada hasil query kelas, sehingga jumlah siswa tampil di daftar kelas tanpa query tambahan per baris.">
+            <p class="quiz-q">Bagaimana daftar kelas menampilkan jumlah siswanya?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Memakai <code>Kelas::count()</code></button>
+                <button class="quiz-option" type="button" data-correct="true">Memakai <code>Kelas::withCount('siswa')</code> lalu <code>$item-&gt;siswa_count</code></button>
+                <button class="quiz-option" type="button" data-correct="false">Memakai <code>count($kelas)</code></button>
+                <button class="quiz-option" type="button" data-correct="false">Memakai <code>Siswa::all()</code></button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🎨</span><p class="kicker">Step 14</p></div>
+        <h2>Tambahkan CSS</h2>
+        <p><code>resources/css/app.css</code> mengatur container, navbar, card, table, button, form, alert, dan tampilan mobile lewat design token di <code>:root</code>.</p>
+        <pre><code>:root {
+    --navy: #102a43;
+    --blue: #1769aa;
+    --surface: #ffffff;
+    --shadow: 0 14px 35px rgb(16 42 67 / 10%);
+}</code></pre>
+        <ul>
+            <li>Aksesibilitas: <code>:focus-visible</code> beri outline pada button, input, select.</li>
+            <li>Responsive: media query <code>max-width: 640px</code> menumpuk navbar &amp; form, tombol full-width.</li>
+            <li><code>prefers-reduced-motion: reduce</code> matikan transisi untuk user sensitif gerakan.</li>
         </ul>
+        <pre><code>npm run dev</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> HTML struktur, Blade isi data, CSS tampilan.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 14</p></div>
+        <h2>Tampilan Responsive</h2>
+        <div class="quiz" data-explain="Media query max-width: 640px membuat tampilan menyesuaikan layar kecil, misalnya navbar dan form menumpuk serta tombol menjadi full-width.">
+            <p class="quiz-q">Untuk apa media query <code>max-width: 640px</code> pada <code>app.css</code>?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Menambah animasi pada tombol</button>
+                <button class="quiz-option" type="button" data-correct="true">Mengatur tampilan agar rapi di layar kecil/mobile</button>
+                <button class="quiz-option" type="button" data-correct="false">Menyembunyikan tabel data siswa</button>
+                <button class="quiz-option" type="button" data-correct="false">Mengubah seluruh warna halaman</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🧹</span><p class="kicker">Step 15</p></div>
+        <h2>Hapus Halaman Starter</h2>
+        <ul>
+            <li><code>welcome.blade.php</code> default dihapus.</li>
+            <li>Route <code>/</code> mengarah ke daftar siswa.</li>
+        </ul>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Hapus kode starter yang tidak dipakai agar project mudah dipahami.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 15</p></div>
+        <h2>Route Awal Aplikasi</h2>
+        <div class="quiz" data-explain="Setelah welcome.blade.php dihapus, route / diarahkan ke daftar siswa (siswa.index) supaya halaman pertama langsung menampilkan data siswa.">
+            <p class="quiz-q">Setelah halaman starter dihapus, route <code>/</code> diarahkan ke mana?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Halaman login</button>
+                <button class="quiz-option" type="button" data-correct="true">Daftar siswa (<code>siswa.index</code>)</button>
+                <button class="quiz-option" type="button" data-correct="false">Daftar kelas (<code>kelas.index</code>)</button>
+                <button class="quiz-option" type="button" data-correct="false">Halaman error 404</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🧪</span><p class="kicker">Step 16</p></div>
+        <h2>Buat Pengujian Otomatis</h2>
+        <ul>
+            <li>Buat &amp; lihat siswa.</li>
+            <li>NIS harus unik.</li>
+            <li>Kelas berisi siswa tidak bisa dihapus.</li>
+            <li>Route <code>/</code> redirect ke daftar siswa.</li>
+        </ul>
+        <pre><code>php artisan test   # target: 5 passed</code></pre>
+        <p>PHPUnit memakai SQLite in-memory sehingga test tidak menyentuh database MySQL development.</p>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Test menangkap regresi setelah perubahan kode.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 16</p></div>
+        <h2>Database untuk Test</h2>
+        <div class="quiz" data-explain="PHPUnit dikonfigurasi memakai SQLite in-memory, sehingga test berjalan di database sementara dan tidak menyentuh database MySQL development.">
+            <p class="quiz-q">Database apa yang dipakai saat menjalankan <code>php artisan test</code>?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">MySQL <code>laravel_workshop</code></button>
+                <button class="quiz-option" type="button" data-correct="true">SQLite in-memory</button>
+                <button class="quiz-option" type="button" data-correct="false">PostgreSQL</button>
+                <button class="quiz-option" type="button" data-correct="false">MongoDB</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">▶️</span><p class="kicker">Step 17</p></div>
+        <h2>Jalankan Project</h2>
+        <pre><code>cd project
+php artisan serve
+# buka http://127.0.0.1:8000</code></pre>
+        <p>Uji alur manual: tambah kelas, tambah siswa, edit, NIS duplikat ditolak, hapus siswa, hapus kelas kosong, kelas berisi siswa ditolak.</p>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Test manual memeriksa pengalaman user, bukan hanya kode backend.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 17</p></div>
+        <h2>Menjalankan Server</h2>
+        <div class="quiz" data-explain="php artisan serve menjalankan server pengembangan Laravel. Project lalu dibuka di browser melalui alamat http://127.0.0.1:8000.">
+            <p class="quiz-q">Perintah apa untuk menjalankan server Laravel di komputer?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false"><code>php artisan migrate</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>php artisan test</code></button>
+                <button class="quiz-option" type="button" data-correct="true"><code>php artisan serve</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>php artisan route:list</code></button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">✅</span><p class="kicker">Step 18</p></div>
+        <h2>Pemeriksaan Akhir</h2>
+        <pre><code>php artisan route:list
+php artisan test
+git diff --check</code></pre>
+        <ul>
+            <li>Tidak ada error di log saat pemakaian normal.</li>
+            <li>Semua input punya label, semua form pakai CSRF.</li>
+            <li>Output Blade di-escape, NIS tidak duplikat.</li>
+            <li>Perubahan tercatat di development log.</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 18</p></div>
+        <h2>Pemeriksaan Akhir</h2>
+        <div class="quiz" data-explain="git diff --check memeriksa masalah whitespace atau penanda konflik pada perubahan yang belum di-commit, dipakai sebagai pemeriksaan akhir sebelum kode dianggap beres.">
+            <p class="quiz-q">Apa fungsi <code>git diff --check</code> pada pemeriksaan akhir?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Menghapus file yang tidak dipakai</button>
+                <button class="quiz-option" type="button" data-correct="true">Memeriksa masalah whitespace/konflik pada perubahan</button>
+                <button class="quiz-option" type="button" data-correct="false">Menjalankan seluruh test otomatis</button>
+                <button class="quiz-option" type="button" data-correct="false">Mendaftar semua route yang aktif</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
     </section>
 
     <section class="slide hero">
@@ -946,12 +1698,183 @@ php artisan serve</code></pre>
 
 </main>
 
+<div id="demo-modal" class="demo-modal" aria-hidden="true">
+    <div class="demo-modal-inner">
+        <div class="demo-bar">
+            <span>Tampilan Demo</span>
+            <button class="demo-close" type="button" aria-label="Tutup">&times;</button>
+        </div>
+        <div class="demo-body" id="demo-body"></div>
+    </div>
+</div>
+
+<div id="demo-templates" hidden>
+    <template id="demo-siswa-create">
+        <div class="card">
+            <div class="page-heading"><h1>Tambah Siswa</h1></div>
+            <form onsubmit="return false">
+                <div class="form-group"><label for="dc-nis">NIS</label><input id="dc-nis" type="text" placeholder="contoh: 2024.01.001"></div>
+                <div class="form-group"><label for="dc-nama">Nama</label><input id="dc-nama" type="text" placeholder="Nama siswa"></div>
+                <div class="form-group"><label for="dc-kelas">Kelas</label>
+                    <select id="dc-kelas">
+                        <option value="">-- Pilih Kelas --</option>
+                        <option>X RPL 1</option><option>XI RPL 1</option><option>XI RPL 2</option><option>XII RPL 1</option>
+                    </select>
+                </div>
+                <div class="form-group"><label for="dc-jk">Jenis Kelamin</label>
+                    <select id="dc-jk">
+                        <option value="">-- Tidak diisi --</option>
+                        <option>Laki-laki</option><option>Perempuan</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="button">Simpan</button>
+                    <button class="btn btn-secondary" type="button">Batal</button>
+                </div>
+            </form>
+        </div>
+    </template>
+
+    <template id="demo-siswa-update">
+        <div class="card">
+            <div class="page-heading"><h1>Edit Siswa</h1></div>
+            <form onsubmit="return false">
+                <div class="form-group"><label for="du-nis">NIS</label><input id="du-nis" type="text" value="2024.01.001"></div>
+                <div class="form-group"><label for="du-nama">Nama</label><input id="du-nama" type="text" value="Ahmad Fauzi"></div>
+                <div class="form-group"><label for="du-kelas">Kelas</label>
+                    <select id="du-kelas">
+                        <option value="">-- Pilih Kelas --</option>
+                        <option>X RPL 1</option><option selected>XI RPL 1</option><option>XI RPL 2</option><option>XII RPL 1</option>
+                    </select>
+                </div>
+                <div class="form-group"><label for="du-jk">Jenis Kelamin</label>
+                    <select id="du-jk">
+                        <option value="">-- Tidak diisi --</option>
+                        <option selected>Laki-laki</option><option>Perempuan</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="button">Simpan</button>
+                    <button class="btn btn-secondary" type="button">Batal</button>
+                </div>
+            </form>
+        </div>
+    </template>
+
+    <template id="demo-siswa-detail">
+        <div class="card">
+            <div class="page-heading"><h1>Detail Siswa</h1><button class="btn btn-secondary" type="button">Kembali</button></div>
+            <table>
+                <tbody>
+                    <tr><th>NIS</th><td>2024.01.001</td></tr>
+                    <tr><th>Nama</th><td>Ahmad Fauzi</td></tr>
+                    <tr><th>Kelas</th><td>XI RPL 1</td></tr>
+                    <tr><th>Jenis Kelamin</th><td>L</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </template>
+
+    <template id="demo-siswa-delete">
+        <div class="card">
+            <div class="page-heading"><h1>Hapus Siswa</h1></div>
+            <p>Tombol hapus dipakai pada kolom Aksi di halaman index. Saat diklik akan muncul konfirmasi.</p>
+            <form class="inline-form" onsubmit="return false">
+                <button class="btn btn-danger" type="button">Hapus</button>
+            </form>
+        </div>
+    </template>
+
+    <template id="demo-siswa-index">
+        <div class="card">
+            <div class="page-heading"><h1>Data Siswa</h1><button class="btn btn-primary" type="button">Tambah Siswa</button></div>
+            <div class="table-wrap"><table>
+                <thead><tr><th>NIS</th><th>Nama</th><th>Kelas</th><th>Jenis Kelamin</th><th>Aksi</th></tr></thead>
+                <tbody>
+                    <tr><td>2024.01.001</td><td>Ahmad Fauzi</td><td>XI RPL 1</td><td>L</td>
+                        <td><span class="btn btn-secondary">Detail</span> <span class="btn btn-secondary">Edit</span> <span class="btn btn-danger">Hapus</span></td></tr>
+                    <tr><td>2024.01.002</td><td>Bella Saraswati</td><td>XI RPL 2</td><td>P</td>
+                        <td><span class="btn btn-secondary">Detail</span> <span class="btn btn-secondary">Edit</span> <span class="btn btn-danger">Hapus</span></td></tr>
+                    <tr><td>2024.01.003</td><td>Candra Wijaya</td><td>X RPL 1</td><td>L</td>
+                        <td><span class="btn btn-secondary">Detail</span> <span class="btn btn-secondary">Edit</span> <span class="btn btn-danger">Hapus</span></td></tr>
+                </tbody>
+            </table></div>
+        </div>
+    </template>
+
+    <template id="demo-kelas-create">
+        <div class="card">
+            <div class="page-heading"><h1>Tambah Kelas</h1></div>
+            <form onsubmit="return false">
+                <div class="form-group"><label for="kc-nama">Nama Kelas</label><input id="kc-nama" type="text" placeholder="contoh: XI RPL 1"></div>
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="button">Simpan</button>
+                    <button class="btn btn-secondary" type="button">Batal</button>
+                </div>
+            </form>
+        </div>
+    </template>
+
+    <template id="demo-kelas-update">
+        <div class="card">
+            <div class="page-heading"><h1>Edit Kelas</h1></div>
+            <form onsubmit="return false">
+                <div class="form-group"><label for="ku-nama">Nama Kelas</label><input id="ku-nama" type="text" value="XI RPL 1"></div>
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="button">Simpan</button>
+                    <button class="btn btn-secondary" type="button">Batal</button>
+                </div>
+            </form>
+        </div>
+    </template>
+
+    <template id="demo-kelas-detail">
+        <div class="card">
+            <div class="page-heading"><h1>Detail Kelas</h1><button class="btn btn-secondary" type="button">Kembali</button></div>
+            <table>
+                <tbody>
+                    <tr><th>Nama Kelas</th><td>XI RPL 1</td></tr>
+                    <tr><th>Jumlah Siswa</th><td>2</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </template>
+
+    <template id="demo-kelas-delete">
+        <div class="card">
+            <div class="page-heading"><h1>Hapus Kelas</h1></div>
+            <p>Tombol hapus dipakai pada kolom Aksi di halaman index. Server menolak jika kelas masih berisi siswa.</p>
+            <form class="inline-form" onsubmit="return false">
+                <button class="btn btn-danger" type="button">Hapus</button>
+            </form>
+        </div>
+    </template>
+
+    <template id="demo-kelas-index">
+        <div class="card">
+            <div class="page-heading"><h1>Data Kelas</h1><button class="btn btn-primary" type="button">Tambah Kelas</button></div>
+            <div class="table-wrap"><table>
+                <thead><tr><th>Nama Kelas</th><th>Jumlah Siswa</th><th>Aksi</th></tr></thead>
+                <tbody>
+                    <tr><td>X RPL 1</td><td>2</td>
+                        <td><span class="btn btn-secondary">Detail</span> <span class="btn btn-secondary">Edit</span> <span class="btn btn-danger">Hapus</span></td></tr>
+                    <tr><td>XI RPL 1</td><td>3</td>
+                        <td><span class="btn btn-secondary">Detail</span> <span class="btn btn-secondary">Edit</span> <span class="btn btn-danger">Hapus</span></td></tr>
+                    <tr><td>XI RPL 2</td><td>3</td>
+                        <td><span class="btn btn-secondary">Detail</span> <span class="btn btn-secondary">Edit</span> <span class="btn btn-danger">Hapus</span></td></tr>
+                </tbody>
+            </table></div>
+        </div>
+    </template>
+</div>
+
 <nav class="navbar">
     <button id="prev" type="button">&larr; Sebelumnya</button>
     <span id="counter"></span>
     <button id="next" type="button">Selanjutnya &rarr;</button>
 </nav>
 
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script>
 if (window.particlesJS) {
@@ -973,6 +1896,217 @@ if (window.particlesJS) {
     });
 }
 
+if (window.mermaid) {
+    mermaid.initialize({
+        startOnLoad: false,
+        theme: 'base',
+        themeVariables: {
+            primaryColor: '#eaf3fb',
+            primaryTextColor: '#0f2440',
+            primaryBorderColor: '#1769aa',
+            lineColor: '#1769aa',
+            fontFamily: 'Inter, Arial, sans-serif',
+            fontSize: '14px'
+        },
+        er: { useMaxWidth: true }
+    });
+}
+
+function renderMermaid(slide) {
+    if (!window.mermaid || !slide) return;
+    var nodes = slide.querySelectorAll('.mermaid:not([data-processed])');
+    if (nodes.length) {
+        mermaid.run({ nodes: Array.prototype.slice.call(nodes), suppressErrors: true });
+    }
+}
+
+function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function (resolve, reject) {
+        var area = document.createElement('textarea');
+        area.value = text;
+        area.setAttribute('readonly', '');
+        area.style.position = 'fixed';
+        area.style.top = '-1000px';
+        document.body.appendChild(area);
+        area.select();
+        try {
+            document.execCommand('copy') ? resolve() : reject(new Error('copy failed'));
+        } catch (error) {
+            reject(error);
+        }
+        document.body.removeChild(area);
+    });
+}
+
+var clipboardIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>';
+var checkIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+
+document.querySelectorAll('pre[data-line-copy]').forEach(function (pre) {
+    var code = pre.querySelector('code');
+    if (!code) return;
+    var lines = code.textContent.replace(/\n+$/, '').split('\n');
+    var wrap = document.createElement('div');
+    wrap.className = 'code-wrap';
+    var box = document.createElement('div');
+    box.className = 'code-lines';
+    lines.forEach(function (text) {
+        var row = document.createElement('div');
+        row.className = 'code-line';
+        var lineCode = document.createElement('code');
+        lineCode.textContent = text;
+        var lineBtn = document.createElement('button');
+        lineBtn.className = 'line-copy';
+        lineBtn.type = 'button';
+        lineBtn.setAttribute('aria-label', 'Salin baris ini');
+        lineBtn.title = 'Salin baris ini';
+        lineBtn.innerHTML = clipboardIcon;
+        row.appendChild(lineCode);
+        row.appendChild(lineBtn);
+        box.appendChild(row);
+    });
+    wrap.insertAdjacentHTML('afterbegin', '<button class="copy-btn" type="button" aria-label="Salin kode" title="Salin kode">' + clipboardIcon + '</button>');
+    wrap.appendChild(box);
+    pre.parentNode.replaceChild(wrap, pre);
+});
+
+document.querySelectorAll('pre').forEach(function (pre) {
+    if (!pre.querySelector('code')) return;
+    if (pre.parentElement && pre.parentElement.classList.contains('code-wrap')) return;
+    var wrap = document.createElement('div');
+    wrap.className = 'code-wrap';
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+    wrap.insertAdjacentHTML('afterbegin', '<button class="copy-btn" type="button" aria-label="Salin kode" title="Salin kode">' + clipboardIcon + '</button>');
+});
+
+function copyTarget(btn) {
+    var line = btn.closest('.code-line');
+    if (line) {
+        var lineCode = line.querySelector('code');
+        return lineCode ? lineCode.textContent : '';
+    }
+    var wrap = btn.closest('.code-wrap');
+    if (!wrap) return '';
+    var lines = wrap.querySelectorAll('.code-line code');
+    if (lines.length) {
+        return Array.prototype.map.call(lines, function (item) {
+            return item.textContent;
+        }).join('\n');
+    }
+    var code = wrap.querySelector('code');
+    return code ? code.textContent : '';
+}
+
+document.querySelectorAll('.copy-btn, .line-copy').forEach(function (btn) {
+    var original = btn.innerHTML;
+    var timer;
+    btn.addEventListener('click', function () {
+        var text = copyTarget(btn).trim();
+        if (!text) return;
+        copyText(text).then(function () {
+            btn.classList.add('copied');
+            btn.innerHTML = checkIcon;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                btn.classList.remove('copied');
+                btn.innerHTML = original;
+            }, 1600);
+        }).catch(function () {
+            btn.title = 'Gagal menyalin, silakan salin manual';
+        });
+    });
+});
+
+var demoModal = document.getElementById('demo-modal');
+var demoBody = document.getElementById('demo-body');
+var demoNav = '<nav class="navbar"><div class="container nav-links"><span class="brand">SMKN 2 Tabanan</span><a>Data Siswa</a><a>Data Kelas</a></div></nav>';
+var demoKeys = {
+    step12create: 'siswa-create', step12update: 'siswa-update', step12detail: 'siswa-detail', step12delete: 'siswa-delete', step12index: 'siswa-index',
+    step13create: 'kelas-create', step13update: 'kelas-update', step13detail: 'kelas-detail', step13delete: 'kelas-delete', step13index: 'kelas-index'
+};
+
+function demoKeyOf(text) {
+    return text.toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+document.querySelectorAll('.slide').forEach(function (slide) {
+    var kicker = slide.querySelector('.kicker');
+    if (!kicker) return;
+    var id = demoKeys[demoKeyOf(kicker.textContent)];
+    if (!id) return;
+    var anchor = null;
+    Array.prototype.forEach.call(slide.children, function (el) {
+        if (!anchor && el.tagName === 'P' && !el.classList.contains('copy-note')) anchor = el;
+    });
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'demo-btn';
+    btn.setAttribute('data-demo', id);
+    btn.innerHTML = '&#9654; DEMO';
+    if (anchor) anchor.insertAdjacentElement('afterend', btn);
+    else slide.appendChild(btn);
+});
+
+function openDemo(id) {
+    var tpl = document.getElementById('demo-' + id);
+    if (!tpl) return;
+    demoBody.innerHTML = '<div class="demo-app">' + demoNav + '<div class="container">' + tpl.innerHTML + '</div></div>';
+    demoModal.classList.add('open');
+    demoModal.setAttribute('aria-hidden', 'false');
+}
+
+function closeDemo() {
+    demoModal.classList.remove('open');
+    demoModal.setAttribute('aria-hidden', 'true');
+    demoBody.innerHTML = '';
+}
+
+document.addEventListener('click', function (event) {
+    var btn = event.target.closest ? event.target.closest('.demo-btn') : null;
+    if (btn) {
+        openDemo(btn.getAttribute('data-demo'));
+        return;
+    }
+    if (event.target === demoModal) closeDemo();
+});
+
+document.querySelector('.demo-close').addEventListener('click', closeDemo);
+
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && demoModal.classList.contains('open')) closeDemo();
+});
+
+document.querySelectorAll('.quiz').forEach(function (quiz) {
+    var options = quiz.querySelectorAll('.quiz-option');
+    var feedback = quiz.querySelector('.quiz-feedback');
+    var explain = quiz.getAttribute('data-explain') || '';
+
+    options.forEach(function (opt) {
+        opt.addEventListener('click', function () {
+            if (quiz.classList.contains('answered')) return;
+            quiz.classList.add('answered');
+
+            var correctOpt = quiz.querySelector('.quiz-option[data-correct="true"]');
+            options.forEach(function (o) {
+                o.disabled = true;
+                if (o === correctOpt) o.classList.add('correct');
+            });
+
+            var isCorrect = opt === correctOpt;
+            if (!isCorrect) opt.classList.add('wrong');
+
+            feedback.hidden = false;
+            feedback.className = 'quiz-feedback ' + (isCorrect ? 'ok' : 'no');
+            feedback.innerHTML = isCorrect
+                ? '<strong>Benar!</strong> ' + explain
+                : '<strong>Belum tepat.</strong> Jawaban yang benar: <em>' + correctOpt.textContent.trim() + '</em>. ' + explain;
+        });
+    });
+});
+
 var slides = document.querySelectorAll('.slide');
 var current = 0;
 
@@ -991,12 +2125,15 @@ function show(index) {
     document.getElementById('prev').disabled = current === 0;
     document.getElementById('next').disabled = current === slides.length - 1;
     document.getElementById('progress-bar').style.width = ((current + 1) / slides.length * 100) + '%';
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    renderMermaid(slides[current]);
 }
 
 document.getElementById('prev').addEventListener('click', function () { show(current - 1); });
 document.getElementById('next').addEventListener('click', function () { show(current + 1); });
 
 document.addEventListener('keydown', function (event) {
+    if (demoModal.classList.contains('open')) return;
     if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') show(current + 1);
     if (event.key === 'ArrowLeft' || event.key === 'PageUp') show(current - 1);
     if (event.key === 'Home') show(0);

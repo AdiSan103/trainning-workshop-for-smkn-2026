@@ -106,6 +106,10 @@ pre code{background:none; color:inherit; padding:0}
 .box .icon-badge{margin-top:.1rem}
 .box h3{color:var(--navy-2); font-size:1.02rem; margin-bottom:.25rem}
 .box p{font-size:.95rem; color:var(--muted); margin:0}
+.tech-logos{display:flex; flex-wrap:wrap; gap:.45rem; margin-top:.7rem}
+.tech-logos img{width:1.6rem; height:1.6rem; object-fit:contain; padding:.2rem; background:#fff; border:1px solid var(--ring); border-radius:.45rem}
+.tech-inline{width:1.25rem; height:1.25rem; object-fit:contain; vertical-align:-.28rem; margin-right:.45rem}
+.li-emoji{display:inline-block; font-size:1.05rem; line-height:1; margin-right:.45rem; vertical-align:-.12rem}
 
 .lesson{
     background:var(--amber-light); border-left:4px solid var(--amber); border-radius:.5rem;
@@ -114,6 +118,116 @@ pre code{background:none; color:inherit; padding:0}
 .lesson strong{color:#8a6100}
 .source{color:var(--muted); font-size:.82rem; margin-top:1rem; overflow-wrap:anywhere}
 .source a{color:var(--blue)}
+
+/* form demo (slide 9) */
+.form-demo{background:#fff; border:1px solid var(--ring); border-radius:.75rem; padding:1.15rem 1.2rem; box-shadow:0 10px 26px #0f1e3814}
+.form-demo h3{color:var(--navy-2); font-size:1.05rem; margin-bottom:.2rem}
+.form-demo .form-sub{color:var(--muted); font-size:.85rem; margin-bottom:.9rem}
+.field{margin-bottom:.85rem}
+.field label{display:block; font-weight:600; font-size:.88rem; color:var(--navy-2); margin-bottom:.3rem}
+.field input{width:100%; border:1.5px solid var(--ring); border-radius:.5rem; padding:.6rem .7rem; font:inherit; font-size:.95rem; color:var(--ink); background:#fff; transition:border-color .2s ease, box-shadow .2s ease}
+.field input:focus{outline:none; border-color:var(--blue); box-shadow:0 0 0 3px #1769aa22}
+.field.is-invalid input{border-color:#d9534f; box-shadow:0 0 0 3px #d9534f22}
+.field-error{color:#b33a36; display:none; font-size:.82rem; margin-top:.3rem}
+.field.is-invalid .field-error{display:block}
+.btn-submit{width:100%}
+.api-state{border-radius:.6rem; margin-top:1rem; padding:.9rem 1rem}
+.api-state[hidden]{display:none}
+.api-loading{background:var(--blue-light); border:1px solid var(--ring)}
+.api-success{background:#e8f7ee; border:1px solid #2f9e58}
+.api-head{align-items:center; display:flex; gap:.6rem; font-weight:600; color:var(--navy-2); font-size:.95rem}
+.spinner{width:1.1rem; height:1.1rem; border:3px solid #1769aa33; border-top-color:var(--blue); border-radius:50%; flex-shrink:0; animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.api-meta{background:#fff; border-radius:.4rem; color:#0f2440; font-family:Consolas,monospace; font-size:.8rem; margin-top:.6rem; padding:.55rem .65rem; white-space:pre; overflow-x:auto}
+
+/* quiz */
+.quiz{margin-top:.5rem}
+.quiz-q{color:var(--navy-2); font-weight:600; font-size:1.08rem; margin-bottom:.9rem}
+.quiz-options{display:grid; gap:.7rem}
+.quiz-opt{
+    align-items:flex-start; background:#fff; border:1.5px solid var(--ring); border-radius:.6rem;
+    color:var(--ink); display:flex; font-size:1rem; font-weight:500; gap:.6rem; padding:.85rem 1rem;
+    text-align:left; transition:background .2s ease, border-color .2s ease, transform .15s ease;
+}
+.quiz-opt:hover:not(:disabled){background:var(--blue-light); border-color:var(--blue); transform:translateX(3px)}
+.quiz-opt:disabled{background:#fff; cursor:default; opacity:1; transform:none}
+.quiz-opt .opt-key{color:var(--blue); font-weight:800}
+.quiz-opt.is-correct{background:#e8f7ee; border-color:#2f9e58}
+.quiz-opt.is-correct .opt-key{color:#1f7a43}
+.quiz-opt.is-wrong{background:#fdeceb; border-color:#d9534f}
+.quiz-opt.is-wrong .opt-key{color:#b33a36}
+.quiz-feedback{border-left:4px solid; border-radius:.6rem; margin-top:1rem; padding:.9rem 1.1rem}
+.quiz-feedback[hidden]{display:none}
+.quiz-feedback.ok{background:#e8f7ee; border-color:#2f9e58}
+.quiz-feedback.no{background:#fdeceb; border-color:#d9534f}
+.quiz-feedback strong{color:var(--navy-2)}
+.quiz-why{color:var(--muted); display:block; font-size:.95rem; margin-top:.35rem}
+
+/* clickable technology cards + detail modal */
+.box-click{cursor:pointer}
+.box-click:focus-visible{outline:3px solid var(--blue); outline-offset:2px}
+#tech-modal{position:fixed; inset:0; z-index:40; display:flex; align-items:center; justify-content:center; padding:1.5rem; background:#0b1026cc}
+#tech-modal[hidden]{display:none}
+#tech-modal .modal-card{
+    background:#fff; border-radius:1rem; box-shadow:0 24px 60px #000000aa; max-height:90vh; max-width:720px;
+    overflow-y:auto; padding:1.6rem 1.75rem; position:relative; width:100%; animation:riseIn .3s ease both;
+}
+#tech-modal .modal-close{
+    background:transparent; border:0; border-radius:.5rem; color:var(--muted); cursor:pointer;
+    font-size:1.5rem; line-height:1; padding:.25rem .55rem; position:absolute; right:.7rem; top:.7rem;
+}
+#tech-modal .modal-close:hover{background:var(--blue-light); color:var(--navy-2)}
+#tech-modal .modal-head{align-items:center; display:flex; gap:.75rem; margin-bottom:.5rem; padding-right:2.2rem}
+#tech-modal .modal-head .icon-badge{font-size:1.35rem; height:2.6rem; width:2.6rem}
+#tech-modal h3{color:var(--navy-2); font-size:1.35rem; margin:0}
+#tech-modal .modal-sub{color:var(--muted); font-size:.9rem; margin:0}
+#tech-modal h4{color:var(--blue); font-size:.78rem; letter-spacing:.07em; margin:1.15rem 0 .3rem; text-transform:uppercase}
+#tech-modal .modal-photo{
+    aspect-ratio:3/1; background:linear-gradient(135deg,var(--blue-light),var(--ring));
+    border-radius:.75rem; box-shadow:0 8px 20px #0f1e3826; margin:.85rem 0 .2rem; overflow:hidden;
+}
+#tech-modal .modal-photo img{display:block; height:100%; object-fit:cover; width:100%}
+#tech-modal p{font-size:.97rem}
+#tech-modal ul{margin:.2rem 0 0}
+#tech-modal li{font-size:.97rem; margin:.3rem 0}
+#tech-modal li.has-logo{align-items:center; display:flex; gap:.5rem}
+#tech-modal .li-logo{width:1.35rem; height:1.35rem; object-fit:contain; flex-shrink:0}
+
+/* demo app modal (slide 13) */
+.demo-launch{margin-top:1.5rem; padding:.85rem 1.6rem; font-size:1rem; box-shadow:0 12px 26px #1769aa3d}
+#demo-modal{position:fixed; inset:0; z-index:50; display:flex; align-items:center; justify-content:center; padding:1.5rem; background:#0b1026cc}
+#demo-modal[hidden]{display:none}
+#demo-modal .demo-card{background:#fff; border-radius:1rem; box-shadow:0 24px 60px #000000aa; max-height:90vh; max-width:820px; overflow-y:auto; padding:1.6rem 1.75rem; position:relative; width:100%; animation:riseIn .3s ease both}
+#demo-modal .modal-close{background:transparent; border:0; border-radius:.5rem; color:var(--muted); cursor:pointer; font-size:1.5rem; line-height:1; padding:.25rem .55rem; position:absolute; right:.7rem; top:.7rem}
+#demo-modal .modal-close:hover{background:var(--blue-light); color:var(--navy-2)}
+#demo-modal .modal-head{align-items:center; display:flex; gap:.75rem; margin-bottom:.5rem; padding-right:2.2rem}
+#demo-modal .modal-head .icon-badge{font-size:1.35rem; height:2.6rem; width:2.6rem}
+#demo-modal h3{color:var(--navy-2); font-size:1.35rem; margin:0}
+#demo-modal .modal-sub{color:var(--muted); font-size:.9rem; margin:0}
+#demo-modal .demo-form{display:grid; grid-template-columns:1fr 1fr auto; gap:.9rem; align-items:start; border-bottom:1px solid var(--ring); margin:1rem 0; padding-bottom:1rem}
+#demo-modal .demo-form .field{margin-bottom:0}
+#demo-modal .demo-form-actions{display:flex; gap:.5rem; padding-top:1.55rem}
+#demo-modal .btn-ghost{background:#eef3f9; color:var(--navy-2)}
+#demo-modal .btn-ghost:hover:not(:disabled){background:#e0e9f3}
+#demo-modal .btn-danger{background:#d9534f}
+#demo-modal .btn-danger:hover:not(:disabled){background:#b33a36}
+#demo-modal .demo-toolbar{align-items:center; display:flex; gap:.75rem; justify-content:space-between; margin-bottom:.6rem}
+#demo-modal .demo-count{color:var(--muted); font-size:.88rem}
+#demo-modal .demo-reset{background:#eef3f9; color:var(--navy-2); font-size:.85rem; padding:.45rem .9rem}
+#demo-modal .demo-reset:hover:not(:disabled){background:#e0e9f3}
+#demo-modal .demo-table-wrap{border:1px solid var(--ring); border-radius:.6rem; overflow-x:auto}
+#demo-modal table{border-collapse:collapse; font-size:.95rem; width:100%}
+#demo-modal thead th{background:var(--blue-light); color:var(--navy-2); font-size:.78rem; letter-spacing:.05em; text-transform:uppercase}
+#demo-modal th,#demo-modal td{border-bottom:1px solid var(--ring); padding:.6rem .75rem; text-align:left}
+#demo-modal tbody tr:last-child td{border-bottom:0}
+#demo-modal .row-actions{display:flex; gap:.45rem}
+#demo-modal .row-actions button{font-size:.82rem; padding:.38rem .8rem}
+#demo-modal .demo-empty{color:var(--muted); padding:1.1rem; text-align:center}
+#demo-modal .demo-hint{color:var(--muted); font-size:.82rem; margin-top:.7rem}
+@media (max-width:640px){
+    #demo-modal .demo-form{grid-template-columns:1fr}
+    #demo-modal .demo-form-actions{padding-top:0}
+}
 
 .navbar{position:fixed; bottom:0; left:0; width:100%; display:flex; gap:1rem; justify-content:center; align-items:center; padding:1rem; background:linear-gradient(0deg,#0f1e38ee,#0f1e3800); z-index:15}
 button{background:var(--blue); border:0; border-radius:.5rem; color:#fff; cursor:pointer; font:inherit; font-weight:600; padding:.6rem 1.2rem; transition:background .2s, transform .15s}
@@ -160,6 +274,22 @@ button:disabled{background:#3f5b80; cursor:not-allowed; opacity:.6}
 </section>
 
 <section class="slide">
+    <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Kuis</p></div>
+    <h2>Kuis: Dunia Kerja Saat Ini</h2>
+    <div class="quiz" data-answer="c" data-reason="Bukti kemampuan adalah portfolio, GitHub, dan project nyata. Skill teknis dan skill manusia tetap penting, tetapi bukti kerja yang menunjukkan kemampuan nyata yang meyakinkan recruiter.">
+        <p class="quiz-q">Manakah yang termasuk bukti kemampuan yang dicari perusahaan menurut slide ini?</p>
+        <div class="quiz-options">
+            <button type="button" class="quiz-opt" data-opt="a"><span class="opt-key">A.</span> Programming, database, cloud</button>
+            <button type="button" class="quiz-opt" data-opt="b"><span class="opt-key">B.</span> Komunikasi dan disiplin</button>
+            <button type="button" class="quiz-opt" data-opt="c"><span class="opt-key">C.</span> Portfolio, GitHub, dan project nyata</button>
+            <button type="button" class="quiz-opt" data-opt="d"><span class="opt-key">D.</span> Menghafal nama framework terbaru</button>
+        </div>
+        <div class="quiz-feedback" role="status" aria-live="polite" hidden></div>
+    </div>
+    <p class="source">Pilih satu jawaban. Kunci dan alasannya akan muncul setelah menjawab.</p>
+</section>
+
+<section class="slide">
     <div class="split">
         <div>
             <div class="kicker-row"><span class="icon-badge">💻</span><p class="kicker">Slide 3</p></div>
@@ -174,54 +304,137 @@ button:disabled{background:#3f5b80; cursor:not-allowed; opacity:.6}
             <div class="lesson"><span>📌</span><div><strong>Pelajaran:</strong> Programmer bukan hanya mengetik kode. Programmer memahami masalah sebelum memilih kode.</div></div>
         </div>
         <div class="visual">
-            <svg viewBox="0 0 260 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="130" cy="205" rx="95" ry="10" fill="#eaf3fb"/>
-                <rect x="45" y="40" width="170" height="110" rx="10" fill="#12355b"/>
-                <rect x="55" y="50" width="150" height="80" rx="4" fill="#0f1e38"/>
-                <rect x="65" y="60" width="46" height="6" rx="3" fill="#1769aa"/>
-                <rect x="65" y="72" width="80" height="6" rx="3" fill="#e2a400"/>
-                <rect x="65" y="84" width="60" height="6" rx="3" fill="#4f8fc9"/>
-                <rect x="65" y="96" width="95" height="6" rx="3" fill="#1769aa"/>
-                <rect x="65" y="108" width="40" height="6" rx="3" fill="#e2a400"/>
-                <rect x="110" y="150" width="40" height="10" fill="#12355b"/>
-                <rect x="85" y="160" width="90" height="8" rx="4" fill="#0f1e38"/>
-                <circle cx="205" cy="45" r="18" fill="#e2a400"/>
-                <text x="205" y="51" font-size="18" text-anchor="middle" font-family="monospace" fill="#12355b">&lt;/&gt;</text>
-            </svg>
+            <div class="photo-frame"><img src="https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?auto=format&fit=crop&w=900&q=60" alt="Baris kode program di layar komputer" loading="lazy" onerror="this.parentElement.style.display='none'"></div>
         </div>
     </div>
 </section>
 
 <section class="slide">
-    <div class="kicker-row"><span class="icon-badge">🧩</span><p class="kicker">Slide 4</p></div>
-    <h2>Jenis Teknologi Saat Ini</h2>
-    <div class="cols">
-        <div class="box"><span class="icon-badge">🌐</span><div><h3>Web</h3><p>Website, web app, API, e-commerce, sistem sekolah.</p></div></div>
-        <div class="box"><span class="icon-badge">📱</span><div><h3>Mobile</h3><p>Android, iOS, aplikasi layanan dan bisnis.</p></div></div>
-        <div class="box"><span class="icon-badge">🤖</span><div><h3>Data &amp; AI</h3><p>Analisis data, machine learning, automation, AI assistant.</p></div></div>
-        <div class="box"><span class="icon-badge">☁️</span><div><h3>Cloud &amp; DevOps</h3><p>Server, deployment, container, monitoring, CI/CD.</p></div></div>
-        <div class="box"><span class="icon-badge">🔒</span><div><h3>Cybersecurity</h3><p>Proteksi akun, aplikasi, jaringan, dan data.</p></div></div>
-        <div class="box"><span class="icon-badge">📡</span><div><h3>IoT</h3><p>Sensor, perangkat pintar, monitoring fisik.</p></div></div>
+    <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Kuis</p></div>
+    <h2>Kuis: Apa Itu Programming?</h2>
+    <div class="quiz" data-answer="b" data-reason="Programming adalah proses memberi instruksi terstruktur kepada komputer untuk menyelesaikan masalah. Programmer memahami masalah dulu sebelum memilih kode, bukan sekadar mengetik.">
+        <p class="quiz-q">Menurut slide ini, apa itu programming?</p>
+        <div class="quiz-options">
+            <button type="button" class="quiz-opt" data-opt="a"><span class="opt-key">A.</span> Mengetik kode secepat mungkin</button>
+            <button type="button" class="quiz-opt" data-opt="b"><span class="opt-key">B.</span> Memberi instruksi terstruktur kepada komputer untuk menyelesaikan masalah</button>
+            <button type="button" class="quiz-opt" data-opt="c"><span class="opt-key">C.</span> Menghafal semua sintaks bahasa pemrograman</button>
+            <button type="button" class="quiz-opt" data-opt="d"><span class="opt-key">D.</span> Memasang aplikasi di komputer</button>
+        </div>
+        <div class="quiz-feedback" role="status" aria-live="polite" hidden></div>
     </div>
-    <div class="lesson"><span>🎯</span><div><strong>Strategi pemula:</strong> Pilih satu jalur utama. Bangun fondasi sebelum mengejar semua teknologi.</div></div>
-</section>
-
-<section class="slide">
-    <div class="kicker-row"><span class="icon-badge">🌐</span><p class="kicker">Slide 5</p></div>
-    <h2>Website: Salah Satu Jalur Terbaik untuk Mulai</h2>
-    <div class="cols">
-        <div class="box"><span class="icon-badge">🎨</span><div><h3>Frontend</h3><p>Bagian yang dilihat user: HTML, CSS, JavaScript. Gunakan design token CSS dan layout responsif.</p></div></div>
-        <div class="box"><span class="icon-badge">⚙️</span><div><h3>Backend</h3><p>Logika server, autentikasi, validasi, API, proses bisnis.</p></div></div>
-        <div class="box"><span class="icon-badge">🗄️</span><div><h3>Database</h3><p>Penyimpanan data: MySQL, PostgreSQL, SQLite.</p></div></div>
-    </div>
-    <p>Website cocok untuk belajar karena hasilnya dapat dibuka melalui browser dan mudah dijadikan portfolio.</p>
-    <div class="lesson"><span>🧭</span><div><strong>Urutan belajar:</strong> HTML → CSS → JavaScript dasar → database → backend → deployment.</div></div>
+    <p class="source">Pilih satu jawaban. Kunci dan alasannya akan muncul setelah menjawab.</p>
 </section>
 
 <section class="slide">
     <div class="split">
         <div>
-            <div class="kicker-row"><span class="icon-badge">📈</span><p class="kicker">Slide 6</p></div>
+            <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Slide 4</p></div>
+            <h2>Kuis 1: Dasar Programming</h2>
+            <div class="quiz" data-answer="b" data-reason="Program bekerja dengan urutan: input (data yang masuk) diproses melalui process (logika dan aturan), lalu menghasilkan output (hasil). Urutan inilah yang dipakai saat form data siswa divalidasi lalu disimpan ke database.">
+                <p class="quiz-q">Programmer menulis kode untuk menyelesaikan masalah. Manakah urutan proses kerja sebuah program yang paling tepat?</p>
+                <div class="quiz-options">
+                    <button type="button" class="quiz-opt" data-opt="a"><span class="opt-key">A.</span> Output &rarr; Process &rarr; Input</button>
+                    <button type="button" class="quiz-opt" data-opt="b"><span class="opt-key">B.</span> Input &rarr; Process &rarr; Output</button>
+                    <button type="button" class="quiz-opt" data-opt="c"><span class="opt-key">C.</span> Process &rarr; Output &rarr; Input</button>
+                    <button type="button" class="quiz-opt" data-opt="d"><span class="opt-key">D.</span> Input &rarr; Output &rarr; Process</button>
+                </div>
+                <div class="quiz-feedback" role="status" aria-live="polite" hidden></div>
+            </div>
+            <p class="source">Pilih satu jawaban. Kunci dan alasannya akan muncul setelah menjawab.</p>
+        </div>
+        <div class="visual">
+            <div class="photo-frame"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=60" alt="Siswa belajar programming dengan laptop" loading="lazy" onerror="this.parentElement.style.display='none'"></div>
+        </div>
+    </div>
+</section>
+
+<section class="slide">
+    <div class="split">
+        <div>
+            <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Slide 5</p></div>
+            <h2>Kuis 2: Dunia Kerja</h2>
+            <div class="quiz" data-answer="c" data-reason="Perusahaan mencari orang yang mampu memecahkan masalah dan bekerja dalam tim. Yang menunjukkan kemampuan itu adalah skill teknis, skill manusia, dan bukti kerja berupa portfolio, GitHub, serta project nyata. Ijazah membuka pintu, tetapi bukti kerja yang meyakinkan recruiter.">
+                <p class="quiz-q">Menurut materi, apa yang paling membantu siswa SMK melewati proses seleksi kerja di bidang teknologi?</p>
+                <div class="quiz-options">
+                    <button type="button" class="quiz-opt" data-opt="a"><span class="opt-key">A.</span> Ijazah dan nilai rapor saja</button>
+                    <button type="button" class="quiz-opt" data-opt="b"><span class="opt-key">B.</span> Menghafal nama framework terbaru</button>
+                    <button type="button" class="quiz-opt" data-opt="c"><span class="opt-key">C.</span> Skill teknis, skill manusia, dan bukti kerja seperti portfolio</button>
+                    <button type="button" class="quiz-opt" data-opt="d"><span class="opt-key">D.</span> Koleksi sertifikat tanpa project nyata</button>
+                </div>
+                <div class="quiz-feedback" role="status" aria-live="polite" hidden></div>
+            </div>
+            <p class="source">Pilih satu jawaban. Kunci dan alasannya akan muncul setelah menjawab.</p>
+        </div>
+        <div class="visual">
+            <div class="photo-frame"><img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=60" alt="Tim bekerja sama di dunia kerja" loading="lazy" onerror="this.parentElement.style.display='none'"></div>
+        </div>
+    </div>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">🧩</span><p class="kicker">Slide 6</p></div>
+    <h2>Jenis Teknologi Saat Ini</h2>
+    <div class="cols">
+        <div class="box box-click" data-tech="web" role="button" tabindex="0"><span class="icon-badge">🌐</span><div><h3>Web</h3><p>Website, web app, API, e-commerce, sistem sekolah.</p></div></div>
+        <div class="box box-click" data-tech="mobile" role="button" tabindex="0"><span class="icon-badge">📱</span><div><h3>Mobile</h3><p>Android, iOS, aplikasi layanan dan bisnis.</p></div></div>
+        <div class="box box-click" data-tech="ai" role="button" tabindex="0"><span class="icon-badge">🤖</span><div><h3>Data &amp; AI</h3><p>Analisis data, machine learning, automation, AI assistant.</p></div></div>
+        <div class="box box-click" data-tech="cloud" role="button" tabindex="0"><span class="icon-badge">☁️</span><div><h3>Cloud &amp; DevOps</h3><p>Server, deployment, container, monitoring, CI/CD.</p></div></div>
+        <div class="box box-click" data-tech="security" role="button" tabindex="0"><span class="icon-badge">🔒</span><div><h3>Cybersecurity</h3><p>Proteksi akun, aplikasi, jaringan, dan data.</p></div></div>
+        <div class="box box-click" data-tech="iot" role="button" tabindex="0"><span class="icon-badge">📡</span><div><h3>IoT</h3><p>Sensor, perangkat pintar, monitoring fisik.</p></div></div>
+    </div>
+    <div class="lesson"><span>🎯</span><div><strong>Strategi pemula:</strong> Pilih satu jalur utama. Bangun fondasi sebelum mengejar semua teknologi.</div></div>
+    <p class="source">Klik salah satu kartu untuk melihat contoh implementasi nyatanya. Tekan Esc atau klik area gelap untuk menutup.</p>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Kuis</p></div>
+    <h2>Kuis: Jenis Teknologi</h2>
+    <div class="quiz" data-answer="c" data-reason="Cloud dan DevOps menangani server, deployment, container, monitoring, dan CI/CD. Setiap kartu pada slide ini mewakili satu jalur teknologi yang berbeda.">
+        <p class="quiz-q">Bidang teknologi yang berfokus pada server, deployment, container, dan CI/CD adalah?</p>
+        <div class="quiz-options">
+            <button type="button" class="quiz-opt" data-opt="a"><span class="opt-key">A.</span> Web</button>
+            <button type="button" class="quiz-opt" data-opt="b"><span class="opt-key">B.</span> Data dan AI</button>
+            <button type="button" class="quiz-opt" data-opt="c"><span class="opt-key">C.</span> Cloud dan DevOps</button>
+            <button type="button" class="quiz-opt" data-opt="d"><span class="opt-key">D.</span> IoT</button>
+        </div>
+        <div class="quiz-feedback" role="status" aria-live="polite" hidden></div>
+    </div>
+    <p class="source">Pilih satu jawaban. Kunci dan alasannya akan muncul setelah menjawab.</p>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">🌐</span><p class="kicker">Slide 7</p></div>
+    <h2>Website: Salah Satu Jalur Terbaik untuk Mulai</h2>
+    <div class="cols">
+        <div class="box box-click" data-tech="frontend" role="button" tabindex="0"><span class="icon-badge">🎨</span><div><h3>Frontend</h3><p>Bagian yang dilihat user: HTML, CSS, JavaScript. Gunakan design token CSS dan layout responsif.</p><div class="tech-logos"><img src="https://cdn.simpleicons.org/html5" alt="HTML5" title="HTML5" loading="lazy" onerror="this.remove()"><img src="https://cdn.simpleicons.org/css" alt="CSS" title="CSS" loading="lazy" onerror="this.remove()"><img src="https://cdn.simpleicons.org/javascript" alt="JavaScript" title="JavaScript" loading="lazy" onerror="this.remove()"></div></div></div>
+        <div class="box box-click" data-tech="backend" role="button" tabindex="0"><span class="icon-badge">⚙️</span><div><h3>Backend</h3><p>Logika server, autentikasi, validasi, API, proses bisnis.</p><div class="tech-logos"><img src="https://cdn.simpleicons.org/php" alt="PHP" title="PHP" loading="lazy" onerror="this.remove()"><img src="https://cdn.simpleicons.org/laravel" alt="Laravel" title="Laravel" loading="lazy" onerror="this.remove()"><img src="https://cdn.simpleicons.org/nodedotjs" alt="Node.js" title="Node.js" loading="lazy" onerror="this.remove()"><img src="https://cdn.simpleicons.org/python" alt="Python" title="Python" loading="lazy" onerror="this.remove()"></div></div></div>
+        <div class="box box-click" data-tech="database" role="button" tabindex="0"><span class="icon-badge">🗄️</span><div><h3>Database</h3><p>Penyimpanan data: MySQL, PostgreSQL, SQLite.</p><div class="tech-logos"><img src="https://cdn.simpleicons.org/mysql" alt="MySQL" title="MySQL" loading="lazy" onerror="this.remove()"><img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL" title="PostgreSQL" loading="lazy" onerror="this.remove()"><img src="https://cdn.simpleicons.org/sqlite" alt="SQLite" title="SQLite" loading="lazy" onerror="this.remove()"></div></div></div>
+    </div>
+    <p>Website cocok untuk belajar karena hasilnya dapat dibuka melalui browser dan mudah dijadikan portfolio.</p>
+    <div class="lesson"><span>🧭</span><div><strong>Urutan belajar:</strong> HTML → CSS → JavaScript dasar → database → backend → deployment.</div></div>
+    <p class="source">Klik setiap kartu untuk melihat contoh implementasi dan teknologi yang sedang tren. Tekan Esc atau klik area gelap untuk menutup.</p>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Kuis</p></div>
+    <h2>Kuis: Website</h2>
+    <div class="quiz" data-answer="b" data-reason="Backend menangani logika server, autentikasi, validasi, API, dan proses bisnis. Frontend adalah bagian yang dilihat user, dan database adalah tempat data disimpan.">
+        <p class="quiz-q">Bagian website yang menangani logika server, autentikasi, dan API disebut?</p>
+        <div class="quiz-options">
+            <button type="button" class="quiz-opt" data-opt="a"><span class="opt-key">A.</span> Frontend</button>
+            <button type="button" class="quiz-opt" data-opt="b"><span class="opt-key">B.</span> Backend</button>
+            <button type="button" class="quiz-opt" data-opt="c"><span class="opt-key">C.</span> Database</button>
+            <button type="button" class="quiz-opt" data-opt="d"><span class="opt-key">D.</span> Deployment</button>
+        </div>
+        <div class="quiz-feedback" role="status" aria-live="polite" hidden></div>
+    </div>
+    <p class="source">Pilih satu jawaban. Kunci dan alasannya akan muncul setelah menjawab.</p>
+</section>
+
+<section class="slide">
+    <div class="split">
+        <div>
+            <div class="kicker-row"><span class="icon-badge">📈</span><p class="kicker">Slide 8</p></div>
             <h2>Trend Web Development</h2>
             <ul>
                 <li>JavaScript tetap sangat luas digunakan; Node.js dan React menjadi teknologi web populer.</li>
@@ -237,24 +450,94 @@ button:disabled{background:#3f5b80; cursor:not-allowed; opacity:.6}
             <div class="photo-frame"><img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=900&q=60" alt="Layar kode program" loading="lazy" onerror="this.parentElement.style.display='none'"></div>
         </div>
     </div>
+    <div class="box" style="margin-top:1.35rem">
+        <span class="icon-badge">🍽️</span>
+        <div>
+            <h3>Perumpamaan: web development seperti restoran</h3>
+            <p>Frontend = <strong>ruang makan dan menu</strong> yang dilihat pengunjung. Backend = <strong>dapur dan koki</strong> yang memproses pesanan. Database = <strong>gudang bahan</strong> tempat data disimpan. API = <strong>pelayan</strong> yang menyampaikan pesanan. Docker dan deployment = <strong>SOP cabang</strong> agar semua restoran berjalan dengan standar yang sama.</p>
+        </div>
+    </div>
 </section>
 
 <section class="slide">
-    <div class="kicker-row"><span class="icon-badge">🛠️</span><p class="kicker">Slide 7</p></div>
-    <h2>Kenapa Backend Penting?</h2>
-    <p>Frontend menampilkan form. Backend memastikan prosesnya benar dan aman.</p>
-    <ul>
-        <li>Validasi input dari user.</li>
-        <li>Menyimpan dan mengambil data dari database.</li>
-        <li>Mengatur hak akses.</li>
-        <li>Menyediakan API.</li>
-        <li>Mencatat error dan menjaga performa.</li>
-    </ul>
-    <div class="box"><span class="icon-badge">🎓</span><div><h3>Contoh sistem siswa</h3><p>Backend menolak NIS duplikat, memastikan kelas tersedia, lalu menyimpan siswa ke database.</p></div></div>
+    <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Kuis</p></div>
+    <h2>Kuis: Trend Web Development</h2>
+    <div class="quiz" data-answer="b" data-reason="Trend berubah, tetapi HTML, CSS, JavaScript, dan SQL tetap menjadi fondasi. Pelajari konsepnya, bukan hanya nama framework yang sedang populer.">
+        <p class="quiz-q">Menurut slide trend ini, apa yang tetap menjadi fondasi walau framework berganti?</p>
+        <div class="quiz-options">
+            <button type="button" class="quiz-opt" data-opt="a"><span class="opt-key">A.</span> Nama framework terbaru</button>
+            <button type="button" class="quiz-opt" data-opt="b"><span class="opt-key">B.</span> HTML, CSS, dan konsep dasar web</button>
+            <button type="button" class="quiz-opt" data-opt="c"><span class="opt-key">C.</span> Versi library JavaScript</button>
+            <button type="button" class="quiz-opt" data-opt="d"><span class="opt-key">D.</span> Tema desain yang sedang tren</button>
+        </div>
+        <div class="quiz-feedback" role="status" aria-live="polite" hidden></div>
+    </div>
+    <p class="source">Pilih satu jawaban. Kunci dan alasannya akan muncul setelah menjawab.</p>
 </section>
 
 <section class="slide">
-    <div class="kicker-row"><span class="icon-badge" style="background:linear-gradient(145deg,#fce9e6,#fff)">🔺</span><p class="kicker">Slide 8</p></div>
+    <div class="split">
+        <div>
+            <div class="kicker-row"><span class="icon-badge">🛠️</span><p class="kicker">Slide 9</p></div>
+            <h2>Kenapa Backend Penting?</h2>
+            <p>Frontend menampilkan form. Backend memastikan prosesnya benar dan aman.</p>
+            <ul>
+                <li>Validasi input dari user.</li>
+                <li>Menyimpan dan mengambil data dari database.</li>
+                <li>Mengatur hak akses.</li>
+                <li>Menyediakan API.</li>
+                <li>Mencatat error dan menjaga performa.</li>
+            </ul>
+            <div class="box"><span class="icon-badge">🎓</span><div><h3>Contoh sistem siswa</h3><p>Backend menolak NIS duplikat, memastikan kelas tersedia, lalu menyimpan siswa ke database.</p></div></div>
+        </div>
+        <div>
+            <div class="form-demo">
+                <h3>Coba kirim data siswa</h3>
+                <p class="form-sub">Isi form lalu klik Simpan untuk melihat alur backend memprosesnya.</p>
+                <form id="siswa-form" novalidate>
+                    <div class="field" id="field-nama">
+                        <label for="input-nama">Nama Siswa</label>
+                        <input id="input-nama" name="nama" type="text" required autocomplete="off" placeholder="Contoh: Putu Adi">
+                        <span class="field-error">Nama siswa wajib diisi (required).</span>
+                    </div>
+                    <div class="field" id="field-kelas">
+                        <label for="input-kelas">Kelas</label>
+                        <input id="input-kelas" name="kelas" type="number" required min="1" inputmode="numeric" placeholder="Contoh: 10">
+                        <span class="field-error">Kelas wajib diisi (required).</span>
+                    </div>
+                    <button class="btn-submit" id="btn-simpan" type="submit">Simpan Siswa</button>
+                </form>
+                <div class="api-state api-loading" id="api-loading" role="status" aria-live="polite" hidden>
+                    <div class="api-head"><span class="spinner"></span> Proses mengirim API — POST /api/create/siswa/post</div>
+                    <div class="api-meta" id="api-meta"></div>
+                </div>
+                <div class="api-state api-success" id="api-success" role="status" aria-live="polite" hidden>
+                    <div class="api-head">✅ Data berhasil disimpan</div>
+                    <div class="api-meta" id="api-response"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Kuis</p></div>
+    <h2>Kuis: Kenapa Backend Penting?</h2>
+    <div class="quiz" data-answer="b" data-reason="Backend memastikan proses benar dan aman: memvalidasi input, menolak NIS duplikat, memastikan kelas tersedia, lalu menyimpan data ke database.">
+        <p class="quiz-q">Manakah contoh tugas backend pada sistem data siswa?</p>
+        <div class="quiz-options">
+            <button type="button" class="quiz-opt" data-opt="a"><span class="opt-key">A.</span> Mengatur warna tombol</button>
+            <button type="button" class="quiz-opt" data-opt="b"><span class="opt-key">B.</span> Menolak NIS duplikat dan memastikan kelas tersedia</button>
+            <button type="button" class="quiz-opt" data-opt="c"><span class="opt-key">C.</span> Menampilkan gambar pada halaman</button>
+            <button type="button" class="quiz-opt" data-opt="d"><span class="opt-key">D.</span> Menyusun teks halaman</button>
+        </div>
+        <div class="quiz-feedback" role="status" aria-live="polite" hidden></div>
+    </div>
+    <p class="source">Pilih satu jawaban. Kunci dan alasannya akan muncul setelah menjawab.</p>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge" style="background:linear-gradient(145deg,#fce9e6,#fff)">🔺</span><p class="kicker">Slide 10</p></div>
     <h2>Apa Itu Laravel?</h2>
     <p>Laravel adalah framework PHP untuk membangun aplikasi web dengan struktur yang rapi dan tools siap pakai.</p>
     <div class="cols">
@@ -266,7 +549,23 @@ button:disabled{background:#3f5b80; cursor:not-allowed; opacity:.6}
 </section>
 
 <section class="slide">
-    <div class="kicker-row"><span class="icon-badge">🆕</span><p class="kicker">Slide 9</p></div>
+    <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Kuis</p></div>
+    <h2>Kuis: Apa Itu Laravel?</h2>
+    <div class="quiz" data-answer="a" data-reason="Struktur Laravel terdiri dari route, controller, model, migration, dan view Blade. Validasi, ORM Eloquent, dan testing termasuk sisi produktivitasnya.">
+        <p class="quiz-q">Manakah yang termasuk bagian struktur Laravel?</p>
+        <div class="quiz-options">
+            <button type="button" class="quiz-opt" data-opt="a"><span class="opt-key">A.</span> Route, controller, model, migration, view Blade</button>
+            <button type="button" class="quiz-opt" data-opt="b"><span class="opt-key">B.</span> Photoshop dan Illustrator</button>
+            <button type="button" class="quiz-opt" data-opt="c"><span class="opt-key">C.</span> Excel dan Word</button>
+            <button type="button" class="quiz-opt" data-opt="d"><span class="opt-key">D.</span> Router wifi dan kabel jaringan</button>
+        </div>
+        <div class="quiz-feedback" role="status" aria-live="polite" hidden></div>
+    </div>
+    <p class="source">Pilih satu jawaban. Kunci dan alasannya akan muncul setelah menjawab.</p>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">🆕</span><p class="kicker">Slide 11</p></div>
     <h2>Trend Laravel Saat Ini</h2>
     <ul>
         <li>Laravel 13 dirilis 17 Maret 2026.</li>
@@ -279,7 +578,23 @@ button:disabled{background:#3f5b80; cursor:not-allowed; opacity:.6}
 </section>
 
 <section class="slide">
-    <div class="kicker-row"><span class="icon-badge">🧪</span><p class="kicker">Slide 10</p></div>
+    <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Kuis</p></div>
+    <h2>Kuis: Trend Laravel</h2>
+    <div class="quiz" data-answer="c" data-reason="Laravel 13 membutuhkan PHP minimum 8.3. Project pembelajaran ini tetap memakai Laravel 8 agar konsep dasar lebih mudah dipahami.">
+        <p class="quiz-q">Berapa versi PHP minimum yang dibutuhkan Laravel 13 menurut slide ini?</p>
+        <div class="quiz-options">
+            <button type="button" class="quiz-opt" data-opt="a"><span class="opt-key">A.</span> PHP 7.3</button>
+            <button type="button" class="quiz-opt" data-opt="b"><span class="opt-key">B.</span> PHP 8.0</button>
+            <button type="button" class="quiz-opt" data-opt="c"><span class="opt-key">C.</span> PHP 8.3</button>
+            <button type="button" class="quiz-opt" data-opt="d"><span class="opt-key">D.</span> PHP 9.0</button>
+        </div>
+        <div class="quiz-feedback" role="status" aria-live="polite" hidden></div>
+    </div>
+    <p class="source">Pilih satu jawaban. Kunci dan alasannya akan muncul setelah menjawab.</p>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">🧪</span><p class="kicker">Slide 12</p></div>
     <h2>Laravel 8 di Project Ini</h2>
     <p>Project Sistem Input Data Siswa memakai Laravel 8, Blade, MySQL, HTML, CSS, dan Laravel Mix.</p>
     <div class="cols">
@@ -293,9 +608,25 @@ php artisan test</code></pre>
 </section>
 
 <section class="slide">
+    <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Kuis</p></div>
+    <h2>Kuis: Laravel 8 di Project Ini</h2>
+    <div class="quiz" data-answer="a" data-reason="Project ini memakai Artisan: php artisan serve untuk menjalankan server, php artisan route:list untuk melihat route, dan php artisan test untuk menjalankan test.">
+        <p class="quiz-q">Manakah perintah Artisan yang dipakai pada project Laravel 8 ini?</p>
+        <div class="quiz-options">
+            <button type="button" class="quiz-opt" data-opt="a"><span class="opt-key">A.</span> php artisan serve, route:list, test</button>
+            <button type="button" class="quiz-opt" data-opt="b"><span class="opt-key">B.</span> npx create-react-app</button>
+            <button type="button" class="quiz-opt" data-opt="c"><span class="opt-key">C.</span> python manage.py runserver</button>
+            <button type="button" class="quiz-opt" data-opt="d"><span class="opt-key">D.</span> go run main.go</button>
+        </div>
+        <div class="quiz-feedback" role="status" aria-live="polite" hidden></div>
+    </div>
+    <p class="source">Pilih satu jawaban. Kunci dan alasannya akan muncul setelah menjawab.</p>
+</section>
+
+<section class="slide">
     <div class="split">
         <div>
-            <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Slide 11</p></div>
+            <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Slide 13</p></div>
             <h2>Hubungan Laravel dengan Siswa SMK</h2>
             <ul>
                 <li>Mengubah pelajaran database menjadi aplikasi nyata.</li>
@@ -306,6 +637,7 @@ php artisan test</code></pre>
             </ul>
             <div class="box"><span class="icon-badge">🪜</span><div><h3>Project bertahap</h3><p>Data siswa → perpustakaan → inventaris → kasir → sistem pelayanan sekolah.</p></div></div>
             <div class="lesson"><span>🎯</span><div><strong>Target belajar:</strong> Tidak harus langsung menjadi ahli. Selesaikan project kecil, pahami, lalu tingkatkan.</div></div>
+            <button class="demo-launch" type="button" id="open-demo">🚀 DEMO APP — Dashboard Data Siswa</button>
         </div>
         <div class="visual">
             <svg viewBox="0 0 260 220" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -324,24 +656,56 @@ php artisan test</code></pre>
 </section>
 
 <section class="slide">
-    <div class="kicker-row"><span class="icon-badge">🗺️</span><p class="kicker">Slide 12</p></div>
+    <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Kuis</p></div>
+    <h2>Kuis: Laravel &amp; Siswa SMK</h2>
+    <div class="quiz" data-answer="b" data-reason="Laravel menghubungkan pelajaran database dan HTML dengan aplikasi nyata, melatih logika lewat CRUD, serta membangun portfolio yang bisa didemokan.">
+        <p class="quiz-q">Menurut slide ini, apa manfaat mempelajari Laravel bagi siswa SMK?</p>
+        <div class="quiz-options">
+            <button type="button" class="quiz-opt" data-opt="a"><span class="opt-key">A.</span> Langsung menjadi ahli tanpa latihan</button>
+            <button type="button" class="quiz-opt" data-opt="b"><span class="opt-key">B.</span> Mengubah pelajaran database menjadi aplikasi nyata dan membangun portfolio</button>
+            <button type="button" class="quiz-opt" data-opt="c"><span class="opt-key">C.</span> Tidak perlu lagi belajar HTML dan CSS</button>
+            <button type="button" class="quiz-opt" data-opt="d"><span class="opt-key">D.</span> Menghindari penggunaan Git</button>
+        </div>
+        <div class="quiz-feedback" role="status" aria-live="polite" hidden></div>
+    </div>
+    <p class="source">Pilih satu jawaban. Kunci dan alasannya akan muncul setelah menjawab.</p>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">🗺️</span><p class="kicker">Slide 14</p></div>
     <h2>Roadmap Belajar Laravel</h2>
     <ol>
-        <li>HTML semantic dan form.</li>
-        <li>CSS layout responsive dengan custom properties/design token.</li>
-        <li>PHP dasar: variable, condition, loop, function, array.</li>
-        <li>SQL: tabel, primary key, foreign key, query.</li>
-        <li>Laravel: route, controller, model, migration, Blade.</li>
-        <li>Validasi, authentication, authorization, testing.</li>
-        <li>Git, API, deployment, keamanan.</li>
+        <li><img class="tech-inline" src="https://cdn.simpleicons.org/html5" alt="" aria-hidden="true" loading="lazy" onerror="this.remove()">HTML semantic dan form.</li>
+        <li><img class="tech-inline" src="https://cdn.simpleicons.org/css" alt="" aria-hidden="true" loading="lazy" onerror="this.remove()">CSS layout responsive dengan custom properties/design token.</li>
+        <li><img class="tech-inline" src="https://cdn.simpleicons.org/php" alt="" aria-hidden="true" loading="lazy" onerror="this.remove()">PHP dasar: variable, condition, loop, function, array.</li>
+        <li><img class="tech-inline" src="https://cdn.simpleicons.org/mysql" alt="" aria-hidden="true" loading="lazy" onerror="this.remove()">SQL: tabel, primary key, foreign key, query.</li>
+        <li><img class="tech-inline" src="https://cdn.simpleicons.org/laravel" alt="" aria-hidden="true" loading="lazy" onerror="this.remove()">Laravel: route, controller, model, migration, Blade.</li>
+        <li><span class="li-emoji" aria-hidden="true">🔐</span>Validasi, authentication, authorization, testing.</li>
+        <li><img class="tech-inline" src="https://cdn.simpleicons.org/git" alt="" aria-hidden="true" loading="lazy" onerror="this.remove()"><img class="tech-inline" src="https://cdn.simpleicons.org/docker" alt="" aria-hidden="true" loading="lazy" onerror="this.remove()">Git, API, deployment, keamanan.</li>
     </ol>
     <div class="lesson"><span>⏱️</span><div><strong>Rutinitas:</strong> 30–60 menit per hari, satu konsep kecil, satu commit, satu catatan.</div></div>
 </section>
 
 <section class="slide">
+    <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Kuis</p></div>
+    <h2>Kuis: Roadmap Belajar</h2>
+    <div class="quiz" data-answer="b" data-reason="Urutan roadmap: HTML, CSS, PHP dasar, SQL, Laravel, lalu validasi/autentikasi/testing, dan terakhir Git, API, serta deployment.">
+        <p class="quiz-q">Menurut roadmap ini, setelah HTML dan CSS langkah berikutnya adalah?</p>
+        <div class="quiz-options">
+            <button type="button" class="quiz-opt" data-opt="a"><span class="opt-key">A.</span> Langsung deployment ke server</button>
+            <button type="button" class="quiz-opt" data-opt="b"><span class="opt-key">B.</span> PHP dasar</button>
+            <button type="button" class="quiz-opt" data-opt="c"><span class="opt-key">C.</span> Docker dan CI/CD</button>
+            <button type="button" class="quiz-opt" data-opt="d"><span class="opt-key">D.</span> Machine learning</button>
+        </div>
+        <div class="quiz-feedback" role="status" aria-live="polite" hidden></div>
+    </div>
+    <p class="source">Pilih satu jawaban. Kunci dan alasannya akan muncul setelah menjawab.</p>
+</section>
+
+<section class="slide">
     <div class="split">
         <div>
-            <div class="kicker-row"><span class="icon-badge">👩‍💻</span><p class="kicker">Slide 13</p></div>
+            <div class="kicker-row"><span class="icon-badge">👩‍💻</span><p class="kicker">Slide 15</p></div>
             <h2>Jenis Pekerjaan yang Bisa Dituju</h2>
             <div class="cols">
                 <div class="box"><span class="icon-badge">🌐</span><div><h3>Junior Web Developer</h3><p>Membuat dan merawat halaman atau fitur web.</p></div></div>
@@ -358,9 +722,25 @@ php artisan test</code></pre>
 </section>
 
 <section class="slide">
+    <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Kuis</p></div>
+    <h2>Kuis: Jenis Pekerjaan</h2>
+    <div class="quiz" data-answer="b" data-reason="Frontend Developer membuat UI responsive, interaksi, dan aksesibilitas. Backend Developer menangani API, database, dan business logic.">
+        <p class="quiz-q">Pekerjaan yang berfokus pada UI responsive, interaksi, dan aksesibilitas disebut?</p>
+        <div class="quiz-options">
+            <button type="button" class="quiz-opt" data-opt="a"><span class="opt-key">A.</span> Backend Developer</button>
+            <button type="button" class="quiz-opt" data-opt="b"><span class="opt-key">B.</span> Frontend Developer</button>
+            <button type="button" class="quiz-opt" data-opt="c"><span class="opt-key">C.</span> QA / Software Tester</button>
+            <button type="button" class="quiz-opt" data-opt="d"><span class="opt-key">D.</span> Technical Support</button>
+        </div>
+        <div class="quiz-feedback" role="status" aria-live="polite" hidden></div>
+    </div>
+    <p class="source">Pilih satu jawaban. Kunci dan alasannya akan muncul setelah menjawab.</p>
+</section>
+
+<section class="slide">
     <div class="split">
         <div>
-            <div class="kicker-row"><span class="icon-badge">📁</span><p class="kicker">Slide 14</p></div>
+            <div class="kicker-row"><span class="icon-badge">📁</span><p class="kicker">Slide 16</p></div>
             <h2>Portfolio yang Dicari</h2>
             <ul>
                 <li>Live demo atau screenshot jelas.</li>
@@ -380,7 +760,23 @@ php artisan test</code></pre>
 </section>
 
 <section class="slide">
-    <div class="kicker-row"><span class="icon-badge">🤝</span><p class="kicker">Slide 15</p></div>
+    <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Kuis</p></div>
+    <h2>Kuis: Portfolio yang Dicari</h2>
+    <div class="quiz" data-answer="a" data-reason="Portfolio yang baik memuat live demo, README berisi masalah-fitur-instalasi-teknologi, diagram database, validasi dan test, Git history, serta video demo singkat.">
+        <p class="quiz-q">Manakah yang termasuk isi portfolio yang dicari menurut slide ini?</p>
+        <div class="quiz-options">
+            <button type="button" class="quiz-opt" data-opt="a"><span class="opt-key">A.</span> README berisi masalah, fitur, instalasi, dan teknologi</button>
+            <button type="button" class="quiz-opt" data-opt="b"><span class="opt-key">B.</span> Hanya screenshot tanpa penjelasan</button>
+            <button type="button" class="quiz-opt" data-opt="c"><span class="opt-key">C.</span> Copy-paste kode tanpa memahami isinya</button>
+            <button type="button" class="quiz-opt" data-opt="d"><span class="opt-key">D.</span> Koleksi sertifikat tanpa project nyata</button>
+        </div>
+        <div class="quiz-feedback" role="status" aria-live="polite" hidden></div>
+    </div>
+    <p class="source">Pilih satu jawaban. Kunci dan alasannya akan muncul setelah menjawab.</p>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">🤝</span><p class="kicker">Slide 17</p></div>
     <h2>Skill Kerja di Luar Kode</h2>
     <div class="cols">
         <div class="box"><span class="icon-badge">🗣️</span><div><h3>Komunikasi</h3><p>Menjelaskan masalah, bertanya jelas, memberi update.</p></div></div>
@@ -392,7 +788,23 @@ php artisan test</code></pre>
 </section>
 
 <section class="slide">
-    <div class="kicker-row"><span class="icon-badge">📅</span><p class="kicker">Slide 16</p></div>
+    <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Kuis</p></div>
+    <h2>Kuis: Skill di Luar Kode</h2>
+    <div class="quiz" data-answer="b" data-reason="Developer yang mudah diajak bekerja sama sering lebih bernilai daripada developer yang hanya cepat mengetik kode.">
+        <p class="quiz-q">Menurut slide ini, kemampuan yang sering membuat developer lebih bernilai adalah?</p>
+        <div class="quiz-options">
+            <button type="button" class="quiz-opt" data-opt="a"><span class="opt-key">A.</span> Mengetik kode paling cepat</button>
+            <button type="button" class="quiz-opt" data-opt="b"><span class="opt-key">B.</span> Mudah diajak bekerja sama</button>
+            <button type="button" class="quiz-opt" data-opt="c"><span class="opt-key">C.</span> Hafal semua shortcut editor</button>
+            <button type="button" class="quiz-opt" data-opt="d"><span class="opt-key">D.</span> Bekerja sendiri tanpa komunikasi</button>
+        </div>
+        <div class="quiz-feedback" role="status" aria-live="polite" hidden></div>
+    </div>
+    <p class="source">Pilih satu jawaban. Kunci dan alasannya akan muncul setelah menjawab.</p>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">📅</span><p class="kicker">Slide 18</p></div>
     <h2>Project 5 Hari: Sistem Input Data Siswa</h2>
     <p>Target akhir: aplikasi Laravel CRUD siswa dan kelas yang dapat dijalankan, diuji, dan dipresentasikan.</p>
     <div class="cols">
@@ -407,7 +819,23 @@ php artisan test</code></pre>
 </section>
 
 <section class="slide">
-    <div class="kicker-row"><span class="icon-badge">✅</span><p class="kicker">Slide 17</p></div>
+    <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Kuis</p></div>
+    <h2>Kuis: Project 5 Hari</h2>
+    <div class="quiz" data-answer="a" data-reason="Hari 2 fokus pada database: membuat migration dan model, menyusun relasi Eloquent, lalu menjalankan database. Membuat form dan tabel Blade adalah kegiatan Hari 4.">
+        <p class="quiz-q">Apa kegiatan utama pada Hari 2 project 5 hari ini?</p>
+        <div class="quiz-options">
+            <button type="button" class="quiz-opt" data-opt="a"><span class="opt-key">A.</span> Membuat migration, model, dan relasi Eloquent lalu menjalankan database</button>
+            <button type="button" class="quiz-opt" data-opt="b"><span class="opt-key">B.</span> Menguji aplikasi dan presentasi</button>
+            <button type="button" class="quiz-opt" data-opt="c"><span class="opt-key">C.</span> Membuat form, tabel, dan CSS responsif</button>
+            <button type="button" class="quiz-opt" data-opt="d"><span class="opt-key">D.</span> Menyusun PRD dan merancang tabel</button>
+        </div>
+        <div class="quiz-feedback" role="status" aria-live="polite" hidden></div>
+    </div>
+    <p class="source">Pilih satu jawaban. Kunci dan alasannya akan muncul setelah menjawab.</p>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">✅</span><p class="kicker">Slide 19</p></div>
     <h2>Langkah Setelah Slide Ini</h2>
     <ol>
         <li>Jalankan project data siswa.</li>
@@ -421,7 +849,23 @@ php artisan test</code></pre>
 </section>
 
 <section class="slide">
-    <div class="kicker-row"><span class="icon-badge">🧭</span><p class="kicker">Slide 18</p></div>
+    <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Kuis</p></div>
+    <h2>Kuis: Langkah Setelah Slide Ini</h2>
+    <div class="quiz" data-answer="b" data-reason="Setelah menjalankan project, baca setiap file (route, controller, model, migration, Blade), tambah satu fitur kecil, catat log, commit ke Git, lalu presentasikan.">
+        <p class="quiz-q">Setelah menjalankan project data siswa, langkah berikutnya menurut slide ini adalah?</p>
+        <div class="quiz-options">
+            <button type="button" class="quiz-opt" data-opt="a"><span class="opt-key">A.</span> Langsung pindah ke framework lain</button>
+            <button type="button" class="quiz-opt" data-opt="b"><span class="opt-key">B.</span> Membaca setiap file: route, controller, model, migration, Blade</button>
+            <button type="button" class="quiz-opt" data-opt="c"><span class="opt-key">C.</span> Menghapus repository supaya rapi</button>
+            <button type="button" class="quiz-opt" data-opt="d"><span class="opt-key">D.</span> Berhenti karena project sudah selesai</button>
+        </div>
+        <div class="quiz-feedback" role="status" aria-live="polite" hidden></div>
+    </div>
+    <p class="source">Pilih satu jawaban. Kunci dan alasannya akan muncul setelah menjawab.</p>
+</section>
+
+<section class="slide">
+    <div class="kicker-row"><span class="icon-badge">🧭</span><p class="kicker">Slide 20</p></div>
     <h2>Kesimpulan</h2>
     <ul>
         <li>Dunia kerja membutuhkan skill teknis dan skill manusia.</li>
@@ -434,6 +878,22 @@ php artisan test</code></pre>
 </section>
 
 <section class="slide">
+    <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Kuis</p></div>
+    <h2>Kuis: Kesimpulan</h2>
+    <div class="quiz" data-answer="c" data-reason="Kesimpulan: dunia kerja butuh skill teknis dan skill manusia, fondasi web tetap penting, dan project nyata, testing, dokumentasi, serta portfolio membuka peluang.">
+        <p class="quiz-q">Manakah kesimpulan yang sesuai dengan slide ini?</p>
+        <div class="quiz-options">
+            <button type="button" class="quiz-opt" data-opt="a"><span class="opt-key">A.</span> Dunia kerja hanya membutuhkan skill teknis</button>
+            <button type="button" class="quiz-opt" data-opt="b"><span class="opt-key">B.</span> Website bukan jalur yang praktis untuk memulai</button>
+            <button type="button" class="quiz-opt" data-opt="c"><span class="opt-key">C.</span> Project nyata, testing, dokumentasi, dan portfolio membuka peluang</button>
+            <button type="button" class="quiz-opt" data-opt="d"><span class="opt-key">D.</span> Fondasi HTML, CSS, dan SQL tidak lagi penting</button>
+        </div>
+        <div class="quiz-feedback" role="status" aria-live="polite" hidden></div>
+    </div>
+    <p class="source">Pilih satu jawaban. Kunci dan alasannya akan muncul setelah menjawab.</p>
+</section>
+
+<section class="slide">
     <div class="kicker-row"><span class="icon-badge">📚</span><p class="kicker">Sumber Belajar &amp; Data</p></div>
     <h2>Referensi</h2>
     <ul>
@@ -443,7 +903,7 @@ php artisan test</code></pre>
         <li><a href="https://www.php.net/docs.php" target="_blank" rel="noreferrer">PHP Documentation</a> — bahasa pemrograman PHP.</li>
         <li><a href="https://developer.mozilla.org/en-US/docs/Web" target="_blank" rel="noreferrer">MDN Web Docs</a> — HTML, CSS, JavaScript, dan Web API.</li>
     </ul>
-    <p class="source">Foto: Unsplash (Christopher Gower, Markus Spiske, Austin Distel). Ilustrasi vektor dibuat custom (inline SVG), gaya flat seperti undraw.co. Data tren berubah — cek sumber resmi sebelum menjadikannya keputusan karier.</p>
+    <p class="source">Foto: Unsplash (Christopher Gower, Markus Spiske, Austin Distel, dan kontributor Unsplash lain untuk foto pada modal tiap teknologi). Ilustrasi vektor dibuat custom (inline SVG), gaya flat seperti undraw.co. Data tren berubah — cek sumber resmi sebelum menjadikannya keputusan karier.</p>
 </section>
 
 <section class="slide hero">
@@ -463,6 +923,64 @@ php artisan test</code></pre>
     <span id="counter"></span>
     <button id="next" type="button">Selanjutnya &rarr;</button>
 </nav>
+
+<div id="tech-modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="tech-title">
+        <button class="modal-close" id="tech-close" type="button" aria-label="Tutup detail">&times;</button>
+        <div class="modal-head">
+            <span class="icon-badge" id="tech-icon">🌐</span>
+            <div>
+                <h3 id="tech-title">Web</h3>
+                <p class="modal-sub" id="tech-sub"></p>
+            </div>
+        </div>
+        <div class="modal-photo"><img id="tech-photo" alt="" loading="lazy"></div>
+        <div id="tech-body"></div>
+    </div>
+</div>
+
+<div id="demo-modal" hidden>
+    <div class="demo-card" role="dialog" aria-modal="true" aria-labelledby="demo-title">
+        <button class="modal-close" id="demo-close" type="button" aria-label="Tutup demo">&times;</button>
+        <div class="modal-head">
+            <span class="icon-badge">🎓</span>
+            <div>
+                <h3 id="demo-title">Dashboard Data Siswa</h3>
+                <p class="modal-sub">Contoh CRUD seperti aplikasi Laravel. Data disimpan di localStorage browser.</p>
+            </div>
+        </div>
+        <form id="demo-form" class="demo-form" novalidate>
+            <input type="hidden" id="demo-id">
+            <div class="field" id="demo-field-nama">
+                <label for="demo-nama">Nama Siswa</label>
+                <input id="demo-nama" name="nama" type="text" required autocomplete="off" placeholder="Contoh: Putu Adi">
+                <span class="field-error">Nama siswa wajib diisi (required).</span>
+            </div>
+            <div class="field" id="demo-field-kelas">
+                <label for="demo-kelas">Kelas</label>
+                <input id="demo-kelas" name="kelas" type="number" required min="1" inputmode="numeric" placeholder="Contoh: 10">
+                <span class="field-error">Kelas wajib diisi (required).</span>
+            </div>
+            <div class="demo-form-actions">
+                <button type="submit" id="demo-submit">Tambah</button>
+                <button type="button" class="btn-ghost" id="demo-cancel" hidden>Batal</button>
+            </div>
+        </form>
+        <div class="demo-toolbar">
+            <span class="demo-count" id="demo-count"></span>
+            <button type="button" class="demo-reset" id="demo-reset">Reset data contoh</button>
+        </div>
+        <div class="demo-table-wrap">
+            <table>
+                <thead>
+                    <tr><th>#</th><th>Nama Siswa</th><th>Kelas</th><th>Aksi</th></tr>
+                </thead>
+                <tbody id="demo-tbody"></tbody>
+            </table>
+        </div>
+        <p class="demo-hint">Data tersimpan di localStorage — coba tutup lalu buka lagi, datanya tetap ada.</p>
+    </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script>
@@ -509,11 +1027,583 @@ document.getElementById('prev').addEventListener('click', function () { show(cur
 document.getElementById('next').addEventListener('click', function () { show(current + 1); });
 
 document.addEventListener('keydown', function (event) {
+    var tag = event.target && event.target.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (event.target && event.target.isContentEditable)) return;
+    if (isOverlayOpen()) return;
+    if (event.key === ' ' && event.target.closest && event.target.closest('button')) return;
     if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') show(current + 1);
     if (event.key === 'ArrowLeft' || event.key === 'PageUp') show(current - 1);
     if (event.key === 'Home') show(0);
     if (event.key === 'End') show(slides.length - 1);
 });
+
+document.querySelectorAll('.quiz').forEach(function (quiz) {
+    var options = Array.prototype.slice.call(quiz.querySelectorAll('.quiz-opt'));
+    var feedback = quiz.querySelector('.quiz-feedback');
+    var correct = quiz.querySelector('.quiz-opt[data-opt="' + quiz.dataset.answer + '"]');
+    if (!feedback || !correct) return;
+
+    options.forEach(function (option) {
+        option.addEventListener('click', function () {
+            if (quiz.dataset.done === '1') return;
+            quiz.dataset.done = '1';
+
+            var isCorrect = option === correct;
+            if (!isCorrect) option.classList.add('is-wrong');
+            correct.classList.add('is-correct');
+            options.forEach(function (item) { item.disabled = true; });
+            option.blur();
+
+            feedback.className = 'quiz-feedback ' + (isCorrect ? 'ok' : 'no');
+            feedback.innerHTML =
+                '<strong>' + (isCorrect ? '✅ Benar!' : '❌ Belum tepat.') + '</strong> ' +
+                'Jawaban yang benar adalah <strong>' + correct.textContent.replace(/\s+/g, ' ').trim() + '</strong>.' +
+                '<span class="quiz-why">' + quiz.dataset.reason + '</span>';
+            feedback.hidden = false;
+        });
+    });
+});
+
+var techDetails = {
+    web: {
+        icon: '🌐',
+        title: 'Web',
+        sub: 'Website, web app, API, e-commerce',
+        image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=900&q=60',
+        real: [
+            'Sistem akademik sekolah (SIAKAD): siswa melihat nilai, guru mengisi absensi, wali kelas melihat rekap.',
+            'E-commerce seperti Tokopedia dan Shopee: katalog produk, keranjang, pembayaran, status pengiriman.',
+            'Layanan publik: cek status pajak, pendaftaran sekolah, dan API cek resi pengiriman.',
+            'UMKM memakai website untuk menampilkan katalog dan menerima pesanan dari luar kota.'
+        ],
+        how: 'Browser mengirim permintaan ke server. Server memproses logika, membaca atau menulis database, lalu mengirim halaman atau data JSON kembali ke browser.',
+        project: 'Project data siswa ini contoh paling dekat: form divalidasi, data disimpan ke MySQL, lalu ditampilkan dalam tabel.'
+    },
+    mobile: {
+        icon: '📱',
+        title: 'Mobile',
+        sub: 'Android, iOS, aplikasi layanan dan bisnis',
+        image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=60',
+        real: [
+            'Transportasi dan makanan: Gojek, Grab, ShopeeFood.',
+            'Mobile banking dan dompet digital: BRImo, BCA mobile, OVO, Dana.',
+            'Absensi siswa memakai QR code dan aplikasi rapor digital untuk orang tua.',
+            'Aplikasi belajar dan game edukasi seperti Ruangguru dan Duolingo.'
+        ],
+        how: 'Aplikasi mobile memanggil API backend lewat internet, menampilkan hasilnya di layar, dan menyimpan sebagian data di perangkat agar tetap terbaca saat offline.',
+        project: 'Sistem data siswa dapat dikembangkan menjadi aplikasi Android: tampilannya dibuat ulang, tetapi datanya tetap diambil dari API Laravel yang sama.'
+    },
+    ai: {
+        icon: '🤖',
+        title: 'Data & AI',
+        sub: 'Analisis data, machine learning, automation',
+        image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=900&q=60',
+        real: [
+            'Rekomendasi produk dan film sesuai riwayat pengguna.',
+            'Deteksi spam, ujaran kebencian, dan transaksi mencurigakan di bank.',
+            'Chatbot layanan pelanggan serta AI assistant untuk menulis dan merangkum kode.',
+            'Prediksi penjualan, deteksi penyakit dari citra medis, dan pengenalan wajah.'
+        ],
+        how: 'Data historis diolah menjadi model, model mempelajari pola dari data tersebut, lalu dipakai untuk memprediksi atau mengelompokkan data baru.',
+        project: 'Data siswa yang tersimpan rapi bisa dianalisis: memperkirakan siswa yang berisiko sering terlambat atau mengelompokkan siswa berdasarkan minat.'
+    },
+    cloud: {
+        icon: '☁️',
+        title: 'Cloud & DevOps',
+        sub: 'Server, deployment, container, monitoring',
+        image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=900&q=60',
+        real: [
+            'Website sekolah yang bisa dibuka dari mana saja, bukan hanya dari komputer lokal.',
+            'Backup database otomatis setiap malam ke penyimpanan cloud.',
+            'GitHub Actions menjalankan test lalu deploy setiap kali ada push ke branch main.',
+            'Docker membuat aplikasi berjalan sama di laptop developer dan di server.'
+        ],
+        how: 'Kode dikirim ke repository, pipeline menjalankan test dan build, hasilnya dijalankan di server cloud, lalu monitoring memeriksa apakah aplikasi masih hidup.',
+        project: 'Setelah project data siswa lancar di XAMPP, langkah berikutnya adalah deploy ke VPS atau cloud, memasang domain, dan membuat backup otomatis.'
+    },
+    security: {
+        icon: '🔒',
+        title: 'Cybersecurity',
+        sub: 'Proteksi akun, aplikasi, jaringan, dan data',
+        image: 'https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=900&q=60',
+        real: [
+            'Password disimpan dalam bentuk hash (bcrypt), bukan teks asli.',
+            'Verifikasi dua langkah (2FA) dan OTP untuk mobile banking.',
+            'HTTPS dan firewall melindungi data yang lewat jaringan sekolah.',
+            'Penetration test dan audit akses untuk menemukan celah sebelum penyerang memakainya.'
+        ],
+        how: 'Semua input dianggap tidak dipercaya: divalidasi, dibersihkan, lalu dicek hak aksesnya. Query memakai parameter agar tidak bisa dibobol SQL injection.',
+        project: 'Laravel sudah menyiapkan proteksi CSRF, enkripsi password, dan validasi. Tugas siswa memastikan validasi tetap aktif dan tidak mengunggah kredensial ke GitHub.'
+    },
+    iot: {
+        icon: '📡',
+        title: 'IoT',
+        sub: 'Sensor, perangkat pintar, monitoring fisik',
+        image: 'https://images.unsplash.com/photo-1553406830-ef2513450d76?auto=format&fit=crop&w=900&q=60',
+        real: [
+            'Absensi RFID atau NFC di gerbang sekolah dan kartu pelajar pintar.',
+            'Sensor suhu dan kelembapan di lab dengan penyiraman otomatis untuk tanaman.',
+            'Monitoring daya listrik rumah dan token listrik pintar.',
+            'GPS pelacak armada pengiriman serta lampu jalan otomatis di kota.'
+        ],
+        how: 'Sensor membaca kondisi fisik, mikrokontroler seperti Arduino atau ESP32 mengirim data lewat MQTT atau HTTP, lalu data disimpan dan ditampilkan di dashboard web.',
+        project: 'Absensi siswa bisa tercatat otomatis dari pembaca RFID, lalu backend Laravel menyimpan dan menampilkan rekap harian di web.'
+    }
+};
+
+var stackDetails = {
+    frontend: {
+        icon: '🎨',
+        title: 'Frontend',
+        sub: 'HTML, CSS, JavaScript, dan tampilan yang dilihat user',
+        image: 'https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&fit=crop&w=900&q=60',
+        sections: [
+            {
+                title: 'Teknologi & framework yang banyak dipakai',
+                items: [
+                    { logo: 'react', text: 'React — paling luas dipakai untuk web app besar; ekosistemnya besar dan sering dipadukan dengan Next.js.' },
+                    { logo: 'vuedotjs', text: 'Vue 3 dan Nuxt — kurva belajar landai, populer di Indonesia dan Asia.' },
+                    { logo: 'svelte', text: 'Svelte / SvelteKit dan Astro — ringan karena banyak proses dikerjakan saat build.' },
+                    { logo: 'tailwindcss', text: 'Tailwind CSS dan Vite — styling cepat dengan utility class serta build tool modern.' },
+                    { logo: 'alpinedotjs', text: 'Alpine.js dan Blade — pilihan bila tetap di Laravel tanpa membuat SPA penuh.' },
+                    { logo: 'bootstrap', text: 'Bootstrap dan jQuery masih banyak dijumpai di project lama, jadi tetap perlu dibaca.' }
+                ]
+            },
+            {
+                title: 'Contoh implementasi',
+                items: [
+                    'Form input nilai yang divalidasi langsung di browser, jadi salah ketik diketahui sebelum dikirim.',
+                    'Tabel data siswa dengan pencarian, filter, dan paging yang halus.',
+                    'Landing page UMKM yang responsif dan gambarnya dioptimalkan agar cepat dibuka.',
+                    'PWA: website bisa dipasang seperti aplikasi di HP tanpa lewat app store.'
+                ]
+            },
+            {
+                title: 'Kaitannya dengan project sekolah',
+                text: 'Project data siswa memakai Blade, HTML, CSS, dan Laravel Mix. Setelah paham, komponen tabel dan form yang sama bisa dipindahkan ke React atau Vue ketika aplikasi makin besar.'
+            }
+        ]
+    },
+    backend: {
+        icon: '⚙️',
+        title: 'Backend',
+        sub: 'Logika server, autentikasi, API, dan keamanan',
+        image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=900&q=60',
+        sections: [
+            {
+                title: 'Teknologi & framework yang banyak dipakai',
+                items: [
+                    { logo: 'laravel', text: 'Laravel (PHP) — ekosistem lengkap: Eloquent, Sanctum, queue, dan testing. Versi terbaru menambah AI SDK serta JSON:API resources.' },
+                    { logo: 'nodedotjs', text: 'Node.js — Express untuk project kecil, NestJS ketika butuh struktur besar; runtime Bun dan Deno mulai dipakai.' },
+                    { logo: 'python', text: 'Python — Django untuk aplikasi lengkap, FastAPI untuk API cepat dan populer di proyek AI.' },
+                    { logo: 'go', text: 'Go (Gin/Echo) untuk layanan yang menuntut performa, dan Spring Boot di lingkungan enterprise.' },
+                    { logo: 'graphql', text: 'Gaya API: REST dengan JSON untuk mayoritas aplikasi, GraphQL bila klien butuh mengambil data secara fleksibel.' }
+                ]
+            },
+            {
+                title: 'Contoh implementasi',
+                items: [
+                    'Login siswa dan guru memakai token, dengan hak akses berbeda untuk admin, guru, dan siswa.',
+                    'Satu REST API dipakai bersama oleh website dan aplikasi Android.',
+                    'Queue untuk mengirim email rapor, sehingga pengguna tidak menunggu proses selesai.',
+                    'Validasi dan pembatasan jumlah permintaan (rate limit) agar form tidak dibanjiri bot.'
+                ]
+            },
+            {
+                title: 'Kaitannya dengan project sekolah',
+                text: 'Project data siswa sudah memakai pola route, controller, model, lalu view: validasi NIS unik dan relasi kelas dijalankan di backend. Menambah API berarti controller yang sama mengembalikan JSON, bukan halaman Blade.'
+            }
+        ]
+    },
+    database: {
+        icon: '🗄️',
+        title: 'Database',
+        sub: 'Tempat data disimpan, diambil, dan dijaga keutuhannya',
+        image: 'https://images.unsplash.com/photo-1531492746076-161ca9bcad58?auto=format&fit=crop&w=900&q=60',
+        sections: [
+            {
+                title: 'Teknologi & pendekatan yang banyak dipakai',
+                items: [
+                    { logo: 'mysql', text: 'MySQL dan MariaDB — paling umum dipakai bersama Laravel, termasuk di sekolah.' },
+                    { logo: 'postgresql', text: 'PostgreSQL — fitur lebih kaya: JSONB, pencarian teks penuh, dan tipe data yang ketat.' },
+                    { logo: 'sqlite', text: 'SQLite — berupa satu file, praktis untuk prototipe dan aplikasi kecil.' },
+                    { logo: 'mongodb', text: 'MongoDB — menyimpan dokumen tanpa skema kaku, cocok untuk data yang bentuknya berubah.' },
+                    { logo: 'redis', text: 'Redis untuk cache dan queue, bukan sebagai penyimpanan data utama.' }
+                ]
+            },
+            {
+                title: 'Contoh implementasi',
+                items: [
+                    'Tabel siswa, kelas, dan nilai dengan primary key serta foreign key supaya data tidak yatim.',
+                    'Migration dan seeder untuk membuat ulang struktur tabel beserta data contoh dengan satu perintah.',
+                    'Index pada kolom yang sering dicari (NIS, email) agar query tetap cepat ketika data bertambah.',
+                    'Backup terjadwal dan penggunaan transaksi commit/rollback supaya data tidak tersimpan setengah jalan.'
+                ]
+            },
+            {
+                title: 'Kaitannya dengan project sekolah',
+                text: 'Di project ini Eloquent memetakan tabel siswa dan kelas lewat relasi belongsTo dan hasMany. Menguasai SQL dasar membuat query Eloquent lebih mudah dibaca dan dioptimalkan.'
+            }
+        ]
+    }
+};
+
+var techModal = document.getElementById('tech-modal');
+var techBody = document.getElementById('tech-body');
+
+function isOverlayOpen() {
+    var demoModal = document.getElementById('demo-modal');
+    return !techModal.hidden || (demoModal && !demoModal.hidden);
+}
+
+function openTechModal(key) {
+    var data = techDetails[key] || stackDetails[key];
+    if (!data) return;
+
+    document.getElementById('tech-icon').textContent = data.icon;
+    document.getElementById('tech-title').textContent = data.title;
+    document.getElementById('tech-sub').textContent = data.sub;
+
+    var photo = document.getElementById('tech-photo');
+    photo.parentElement.style.display = '';
+    photo.alt = 'Ilustrasi ' + data.title;
+    photo.onerror = function () { photo.parentElement.style.display = 'none'; };
+    photo.src = data.image;
+
+    var body = '';
+    if (data.sections) {
+        data.sections.forEach(function (section) {
+            body += '<h4>' + section.title + '</h4>';
+            body += section.items
+                ? '<ul>' + section.items.map(function (item) {
+                    if (typeof item === 'string') return '<li>' + item + '</li>';
+                    var logo = item.logo
+                        ? '<img class="li-logo" src="https://cdn.simpleicons.org/' + item.logo + '" alt="" aria-hidden="true" loading="lazy" onerror="this.remove()">'
+                        : '';
+                    return '<li class="has-logo">' + logo + '<span>' + item.text + '</span></li>';
+                }).join('') + '</ul>'
+                : '<p>' + section.text + '</p>';
+        });
+    } else {
+        body = '<h4>Contoh nyata</h4><ul>' +
+            data.real.map(function (item) { return '<li>' + item + '</li>'; }).join('') +
+            '</ul><h4>Alur / cara kerja</h4><p>' + data.how + '</p>' +
+            '<h4>Kaitannya dengan project sekolah</h4><p>' + data.project + '</p>';
+    }
+    techBody.innerHTML = body;
+
+    techModal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    document.getElementById('tech-close').focus();
+}
+
+function closeTechModal() {
+    techModal.hidden = true;
+    document.body.style.overflow = '';
+}
+
+document.querySelectorAll('.box-click').forEach(function (box) {
+    box.addEventListener('click', function () { openTechModal(box.dataset.tech); });
+    box.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            event.stopPropagation();
+            openTechModal(box.dataset.tech);
+        }
+    });
+});
+
+techModal.addEventListener('click', function (event) {
+    if (event.target === techModal) closeTechModal();
+});
+document.getElementById('tech-close').addEventListener('click', closeTechModal);
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && !techModal.hidden) closeTechModal();
+});
+
+/* form demo: validasi + simulasi kirim API */
+(function () {
+    var form = document.getElementById('siswa-form');
+    if (!form) return;
+
+    var namaInput = document.getElementById('input-nama');
+    var kelasInput = document.getElementById('input-kelas');
+    var fieldNama = document.getElementById('field-nama');
+    var fieldKelas = document.getElementById('field-kelas');
+    var button = document.getElementById('btn-simpan');
+    var loading = document.getElementById('api-loading');
+    var success = document.getElementById('api-success');
+    var meta = document.getElementById('api-meta');
+    var responseBox = document.getElementById('api-response');
+    var endpoint = '/api/create/siswa/post';
+    var pending = false;
+
+    function setError(field, message) {
+        field.classList.add('is-invalid');
+        field.querySelector('.field-error').textContent = message;
+    }
+
+    function clearError(field) {
+        field.classList.remove('is-invalid');
+    }
+
+    function reset() {
+        form.reset();
+        clearError(fieldNama);
+        clearError(fieldKelas);
+        loading.hidden = true;
+        success.hidden = true;
+        button.disabled = false;
+        button.textContent = 'Simpan Siswa';
+        pending = false;
+    }
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        if (pending) return;
+
+        clearError(fieldNama);
+        clearError(fieldKelas);
+
+        var nama = namaInput.value.trim();
+        var kelas = kelasInput.value.trim();
+        var valid = true;
+
+        if (!nama) {
+            setError(fieldNama, 'Nama siswa wajib diisi (required).');
+            valid = false;
+        }
+
+        if (!kelas) {
+            setError(fieldKelas, 'Kelas wajib diisi (required).');
+            valid = false;
+        } else if (!/^\d+$/.test(kelas)) {
+            setError(fieldKelas, 'Kelas harus berupa angka.');
+            valid = false;
+        }
+
+        if (!valid) return;
+
+        var payload = { nama: nama, kelas: Number(kelas) };
+
+        pending = true;
+        success.hidden = true;
+        loading.hidden = false;
+        button.disabled = true;
+        button.textContent = 'Mengirim…';
+        meta.textContent =
+            'POST ' + endpoint + '\n' +
+            'Content-Type: application/json\n\n' +
+            'Payload:\n' + JSON.stringify(payload, null, 2);
+
+        window.setTimeout(function () {
+            loading.hidden = true;
+            responseBox.textContent =
+                'Status: 201 Created\n' +
+                JSON.stringify({ status: 'success', message: 'Data siswa berhasil disimpan', data: payload }, null, 2);
+            success.hidden = false;
+            button.textContent = 'Tersimpan';
+            window.setTimeout(reset, 2200);
+        }, 5000);
+    });
+})();
+
+/* demo app: dashboard CRUD data siswa (localStorage) */
+(function () {
+    var modal = document.getElementById('demo-modal');
+    if (!modal) return;
+
+    var STORAGE_KEY = 'demo-siswa-data';
+    var seed = [
+        { id: 1, nama: 'Putu Adi', kelas: 10 },
+        { id: 2, nama: 'Ni Kadek Sari', kelas: 11 },
+        { id: 3, nama: 'I Made Bayu', kelas: 12 }
+    ];
+
+    var openBtn = document.getElementById('open-demo');
+    var closeBtn = document.getElementById('demo-close');
+    var form = document.getElementById('demo-form');
+    var idInput = document.getElementById('demo-id');
+    var namaInput = document.getElementById('demo-nama');
+    var kelasInput = document.getElementById('demo-kelas');
+    var fieldNama = document.getElementById('demo-field-nama');
+    var fieldKelas = document.getElementById('demo-field-kelas');
+    var submitBtn = document.getElementById('demo-submit');
+    var cancelBtn = document.getElementById('demo-cancel');
+    var tbody = document.getElementById('demo-tbody');
+    var countEl = document.getElementById('demo-count');
+    var resetBtn = document.getElementById('demo-reset');
+
+    function load() {
+        try {
+            var raw = window.localStorage.getItem(STORAGE_KEY);
+            if (raw === null) {
+                window.localStorage.setItem(STORAGE_KEY, JSON.stringify(seed));
+                return seed.slice();
+            }
+            var parsed = JSON.parse(raw);
+            return Array.isArray(parsed) ? parsed : [];
+        } catch (err) {
+            return seed.slice();
+        }
+    }
+
+    function save() {
+        try {
+            window.localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+        } catch (err) {
+            /* localStorage diblokir/penuh: demo tetap jalan di memori */
+        }
+    }
+
+    var students = load();
+
+    function nextId() {
+        return students.reduce(function (max, item) { return Math.max(max, Number(item.id) || 0); }, 0) + 1;
+    }
+
+    function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, function (ch) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
+        });
+    }
+
+    function setError(field, message) {
+        field.classList.add('is-invalid');
+        field.querySelector('.field-error').textContent = message;
+    }
+
+    function clearError(field) {
+        field.classList.remove('is-invalid');
+    }
+
+    function render() {
+        if (!students.length) {
+            tbody.innerHTML = '<tr><td class="demo-empty" colspan="4">Belum ada data siswa. Tambahkan lewat form di atas.</td></tr>';
+        } else {
+            tbody.innerHTML = students.map(function (item, index) {
+                return '<tr>' +
+                    '<td>' + (index + 1) + '</td>' +
+                    '<td>' + escapeHtml(item.nama) + '</td>' +
+                    '<td>' + escapeHtml(item.kelas) + '</td>' +
+                    '<td><div class="row-actions">' +
+                        '<button type="button" data-edit="' + item.id + '">Edit</button>' +
+                        '<button type="button" class="btn-danger" data-delete="' + item.id + '">Hapus</button>' +
+                    '</div></td>' +
+                '</tr>';
+            }).join('');
+        }
+        countEl.textContent = students.length + ' data siswa';
+    }
+
+    function resetForm() {
+        form.reset();
+        idInput.value = '';
+        submitBtn.textContent = 'Tambah';
+        cancelBtn.hidden = true;
+        clearError(fieldNama);
+        clearError(fieldKelas);
+    }
+
+    function startEdit(id) {
+        var item = null;
+        students.forEach(function (s) { if (Number(s.id) === id) item = s; });
+        if (!item) return;
+        idInput.value = item.id;
+        namaInput.value = item.nama;
+        kelasInput.value = item.kelas;
+        submitBtn.textContent = 'Update';
+        cancelBtn.hidden = false;
+        clearError(fieldNama);
+        clearError(fieldKelas);
+        namaInput.focus();
+    }
+
+    function removeStudent(id) {
+        students = students.filter(function (s) { return Number(s.id) !== id; });
+        save();
+        render();
+        if (Number(idInput.value) === id) resetForm();
+    }
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        clearError(fieldNama);
+        clearError(fieldKelas);
+
+        var nama = namaInput.value.trim();
+        var kelas = kelasInput.value.trim();
+        var valid = true;
+
+        if (!nama) {
+            setError(fieldNama, 'Nama siswa wajib diisi (required).');
+            valid = false;
+        }
+
+        if (!kelas) {
+            setError(fieldKelas, 'Kelas wajib diisi (required).');
+            valid = false;
+        } else if (!/^\d+$/.test(kelas)) {
+            setError(fieldKelas, 'Kelas harus berupa angka.');
+            valid = false;
+        }
+
+        if (!valid) return;
+
+        var id = Number(idInput.value);
+        if (id) {
+            students = students.map(function (s) {
+                return Number(s.id) === id ? { id: id, nama: nama, kelas: Number(kelas) } : s;
+            });
+        } else {
+            students = students.concat([{ id: nextId(), nama: nama, kelas: Number(kelas) }]);
+        }
+        save();
+        render();
+        resetForm();
+    });
+
+    cancelBtn.addEventListener('click', resetForm);
+
+    tbody.addEventListener('click', function (event) {
+        var button = event.target.closest ? event.target.closest('button') : null;
+        if (!button) return;
+        if (button.dataset.edit) startEdit(Number(button.dataset.edit));
+        if (button.dataset.delete) removeStudent(Number(button.dataset.delete));
+    });
+
+    resetBtn.addEventListener('click', function () {
+        students = seed.slice();
+        save();
+        render();
+        resetForm();
+    });
+
+    function openModal() {
+        resetForm();
+        render();
+        modal.hidden = false;
+        document.body.style.overflow = 'hidden';
+        closeBtn.focus();
+    }
+
+    function closeModal() {
+        modal.hidden = true;
+        document.body.style.overflow = '';
+        if (openBtn) openBtn.focus();
+    }
+
+    if (openBtn) openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function (event) {
+        if (event.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && !modal.hidden) closeModal();
+    });
+
+    render();
+})();
 
 show(0);
 </script>
