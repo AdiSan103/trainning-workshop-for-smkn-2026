@@ -28,6 +28,11 @@ class SiswaController extends Controller
         return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil ditambahkan.');
     }
 
+    public function show(Siswa $siswa)
+    {
+        return view('siswa.show', compact('siswa'));
+    }
+
     public function edit(Siswa $siswa)
     {
         return view('siswa.edit', [
