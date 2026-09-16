@@ -298,6 +298,22 @@ pre code { background: none; color: inherit; padding: 0; }
 .hero.active{display:flex; flex-direction:column; align-items:center; justify-content:center}
 .hero p { color: #4b5563; margin: .35rem 0; }
 
+.toc{display:grid; gap:.5rem; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); margin:.75rem 0}
+.toc-link{
+    display:flex; align-items:center; gap:.6rem;
+    background:#fff; border:1px solid var(--ring); border-radius:.55rem;
+    color:var(--ink); font-size:.95rem; font-weight:500; text-decoration:none;
+    padding:.55rem .7rem;
+    transition:background .15s ease, border-color .15s ease, transform .15s ease;
+}
+.toc-link:hover{background:var(--blue-light); border-color:var(--blue); transform:translateX(2px)}
+.toc-num{
+    display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;
+    min-width:1.7rem; height:1.7rem; padding:0 .3rem; border-radius:.45rem;
+    background:var(--blue-light); color:var(--navy-2);
+    font-size:.78rem; font-weight:700;
+}
+
 .navbar {
     position:fixed; bottom:0; left:0; width:100%; z-index:15;
     display: flex;
@@ -346,6 +362,34 @@ button:disabled { background: #3f5b80; cursor: not-allowed; opacity:.6 }
         <p>Laravel 8 &bull; Blade &bull; MySQL &bull; XAMPP</p>
         <p>Mini Project Workshop &mdash; SMKN 2 Tabanan</p>
         <p>Tekan tombol <strong>Selanjutnya</strong> atau panah keyboard untuk pindah slide.</p>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">📑</span><p class="kicker">Daftar Isi</p></div>
+        <h2>Daftar Isi Materi</h2>
+        <p>Klik salah satu materi untuk langsung melompat ke slide-nya.</p>
+        <nav class="toc">
+            <a class="toc-link" href="#latar-belakang" data-target="Latar Belakang"><span class="toc-num">★</span> Latar Belakang</a>
+            <a class="toc-link" href="#step-1" data-target="Step 1"><span class="toc-num">1</span> Kebutuhan Project</a>
+            <a class="toc-link" href="#step-2" data-target="Step 2"><span class="toc-num">2</span> Siapkan Tools</a>
+            <a class="toc-link" href="#step-3" data-target="Step 3"><span class="toc-num">3</span> Setup Project Laravel</a>
+            <a class="toc-link" href="#step-4" data-target="Step 4"><span class="toc-num">4</span> Konfigurasi Database</a>
+            <a class="toc-link" href="#step-5" data-target="Step 5"><span class="toc-num">5</span> Rancang Database</a>
+            <a class="toc-link" href="#step-6" data-target="Step 6"><span class="toc-num">6</span> Migration Tabel</a>
+            <a class="toc-link" href="#step-7" data-target="Step 7"><span class="toc-num">7</span> Model Kelas &amp; Siswa</a>
+            <a class="toc-link" href="#step-8" data-target="Step 8"><span class="toc-num">8</span> SiswaController</a>
+            <a class="toc-link" href="#step-9" data-target="Step 9"><span class="toc-num">9</span> KelasController</a>
+            <a class="toc-link" href="#step-10" data-target="Step 10"><span class="toc-num">10</span> Daftarkan Route</a>
+            <a class="toc-link" href="#step-11" data-target="Step 11"><span class="toc-num">11</span> Layout Blade</a>
+            <a class="toc-link" href="#step-12" data-target="Step 12"><span class="toc-num">12</span> View Siswa (CRUD)</a>
+            <a class="toc-link" href="#step-13" data-target="Step 13"><span class="toc-num">13</span> View Kelas (CRUD)</a>
+            <a class="toc-link" href="#step-14" data-target="Step 14"><span class="toc-num">14</span> Styling Halaman</a>
+            <a class="toc-link" href="#step-15" data-target="Step 15"><span class="toc-num">15</span> Hapus Halaman Starter</a>
+            <a class="toc-link" href="#step-15b" data-target="Step 15B"><span class="toc-num">15B</span> Fitur Admin</a>
+            <a class="toc-link" href="#step-16" data-target="Step 16"><span class="toc-num">16</span> Pengujian Otomatis</a>
+            <a class="toc-link" href="#step-17" data-target="Step 17"><span class="toc-num">17</span> Jalankan Project</a>
+            <a class="toc-link" href="#step-18" data-target="Step 18"><span class="toc-num">18</span> Pemeriksaan Akhir</a>
+        </nav>
     </section>
 
     <section class="slide">
@@ -2051,6 +2095,458 @@ tbody tr:hover {
     </section>
 
     <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🔐</span><p class="kicker">Step 15B</p></div>
+        <h2>Fitur Admin</h2>
+        <p>Tambahkan tabel baru bernama <code>admin</code> dan halaman login sederhana untuk membatasi siapa yang boleh membuka data siswa &amp; kelas.</p>
+        <div class="mermaid-wrap">
+            <pre class="mermaid">
+erDiagram
+    ADMIN {
+        int id PK
+        string username
+        string email
+        string password
+    }
+            </pre>
+        </div>
+        <div class="cols">
+            <div class="box">
+                <p><strong>Fitur yang dibuat</strong></p>
+                <ul>
+                    <li>Register admin baru.</li>
+                    <li>Login dengan <code>if</code> manual.</li>
+                    <li>Dashboard: daftar data admin.</li>
+                    <li>Edit &amp; hapus data admin.</li>
+                    <li>Logout.</li>
+                </ul>
+            </div>
+            <div class="box">
+                <p><strong>Yang dipakai</strong></p>
+                <ul>
+                    <li><code>Hash</code> untuk password.</li>
+                    <li>Cookie token dari email yang di-hash.</li>
+                    <li>Middleware <code>admin</code>.</li>
+                    <li>Tanpa package auth/Sanctum.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Kita membangun autentikasi manual agar alur login, cookie, dan middleware terlihat jelas satu per satu.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🧱</span><p class="kicker">Step 15B &middot; Migration</p></div>
+        <h2>Migration: Tabel Admin</h2>
+        <p>Buat file migration lalu isi schema tabel <code>admin</code>.</p>
+        <pre><code>php artisan make:migration create_admin_table</code></pre>
+        <pre data-line-copy><code>&lt;?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up()
+    {
+        Schema::create('admin', function (Blueprint $table) {
+            $table-&gt;id();
+            $table-&gt;string('username')-&gt;unique();
+            $table-&gt;string('email')-&gt;unique();
+            $table-&gt;string('password');
+            $table-&gt;timestamps();
+        });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('admin');
+    }
+};</code></pre>
+        <p>Kolom <code>email</code> ikut ditambahkan karena dipakai sebagai dasar token yang disimpan di cookie.</p>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> <code>username</code> dan <code>email</code> dibuat unique agar tidak ada dua admin dengan data yang sama.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🔗</span><p class="kicker">Step 15B &middot; Model Admin</p></div>
+        <h2>Model Admin</h2>
+        <p>Buat model <code>app/Models/Admin.php</code>, lalu isi propertinya.</p>
+        <pre><code>php artisan make:model Admin</code></pre>
+        <pre data-line-copy><code>&lt;?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Admin extends Model
+{
+    protected $table = 'admin';
+
+    protected $fillable = ['username', 'email', 'password'];
+
+    protected $hidden = ['password'];
+}</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> <code>$hidden</code> menyembunyikan kolom password agar hash tidak pernah ikut tercetak di halaman.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">📝</span><p class="kicker">Step 15B &middot; Register</p></div>
+        <h2>Register &mdash; Simpan Admin Baru</h2>
+        <p>Controller <code>AdminAuthController</code> &mdash; password disimpan dalam bentuk hash.</p>
+        <pre><code>php artisan make:controller AdminAuthController</code></pre>
+        <pre data-line-copy><code>use App\Models\Admin;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
+public function register(Request $request)
+{
+    $request-&gt;validate([
+        'username' =&gt; ['required', 'string', 'max:50', 'unique:admin,username'],
+        'email' =&gt; ['required', 'email', 'max:255', 'unique:admin,email'],
+        'password' =&gt; ['required', 'string', 'min:6'],
+    ]);
+
+    Admin::create([
+        'username' =&gt; $request-&gt;username,
+        'email' =&gt; $request-&gt;email,
+        'password' =&gt; Hash::make($request-&gt;password),
+    ]);
+
+    return redirect()-&gt;route('admin.login')-&gt;with('success', 'Akun admin berhasil dibuat, silakan login.');
+}</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> <code>Hash::make()</code> mengubah password menjadi hash satu arah &mdash; password asli tidak pernah disimpan di database.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🔑</span><p class="kicker">Step 15B &middot; Login</p></div>
+        <h2>Login &mdash; Cek dengan <code>if</code> Manual</h2>
+        <p>Tidak memakai <code>Auth::attempt()</code>. Kita cari admin, cek password dengan <code>Hash::check()</code>, lalu simpan token ke cookie.</p>
+        <pre data-line-copy><code>public function login(Request $request)
+{
+    $admin = Admin::where('username', $request-&gt;username)-&gt;first();
+
+    if (! $admin) {
+        return back()-&gt;with('error', 'Username tidak ditemukan.');
+    }
+
+    if (! Hash::check($request-&gt;password, $admin-&gt;password)) {
+        return back()-&gt;with('error', 'Password salah.');
+    }
+
+    $token = hash('sha256', $admin-&gt;email);
+
+    return redirect()-&gt;route('admin.dashboard')
+        -&gt;with('success', 'Login berhasil.')
+        -&gt;withCookie(cookie('admin_token', $token, 120));
+}</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> <code>Hash::check()</code> membandingkan password yang diketik dengan hash di database tanpa membalik hash-nya.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🚪</span><p class="kicker">Step 15B &middot; Logout</p></div>
+        <h2>Logout &mdash; Hapus Cookie Token</h2>
+        <pre data-line-copy><code>public function logout()
+{
+    return redirect()-&gt;route('admin.login')
+        -&gt;with('success', 'Anda sudah logout.')
+        -&gt;withCookie(cookie()-&gt;forget('admin_token'));
+}</code></pre>
+        <p>Tombol logout dikirim lewat form <code>POST</code> dari dalam dashboard.</p>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Logout cukup menghapus cookie token. Selama cookie hilang, semua halaman kembali terkunci.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🛡️</span><p class="kicker">Step 15B &middot; Middleware</p></div>
+        <h2>Middleware AdminAuth</h2>
+        <p>Cek cookie token di setiap request. Token dianggap sah jika <code>hash('sha256', email)</code> cocok dengan email admin di database.</p>
+        <pre><code>php artisan make:middleware AdminAuth</code></pre>
+        <pre data-line-copy><code>&lt;?php
+
+namespace App\Http\Middleware;
+
+use App\Models\Admin;
+use Closure;
+
+class AdminAuth
+{
+    public function handle($request, Closure $next)
+    {
+        $token = $request-&gt;cookie('admin_token');
+
+        if (! $token) {
+            return redirect()-&gt;route('admin.login')-&gt;with('error', 'Silakan login terlebih dahulu.');
+        }
+
+        $cocok = Admin::all()-&gt;contains(function ($admin) use ($token) {
+            return hash('sha256', $admin-&gt;email) === $token;
+        });
+
+        if (! $cocok) {
+            return redirect()-&gt;route('admin.login')-&gt;with('error', 'Sesi tidak valid, silakan login ulang.');
+        }
+
+        return $next($request);
+    }
+}</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Middleware berjalan sebelum halaman dibuka, jadi halaman terkunci tidak pernah sempat tampil.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🛣️</span><p class="kicker">Step 15B &middot; Daftarkan</p></div>
+        <h2>Daftarkan Middleware &amp; Route</h2>
+        <p class="copy-note">Dua blok code: daftar alias middleware di Kernel, lalu group route.</p>
+
+        <div class="method">
+            <div class="method-head"><code class="method-name">app/Http/Kernel.php</code><span class="method-desc">Daftarkan alias middleware <code>admin</code>.</span></div>
+            <pre><code>protected $routeMiddleware = [
+    'auth' =&gt; \App\Http\Middleware\Authenticate::class,
+    'admin' =&gt; \App\Http\Middleware\AdminAuth::class,
+    // ...
+];</code></pre>
+        </div>
+
+        <div class="method">
+            <div class="method-head"><code class="method-name">routes/web.php</code><span class="method-desc">Login &amp; register di luar group, sisanya di dalam group.</span></div>
+            <pre><code>Route::get('admin/login', [AdminAuthController::class, 'showLogin'])-&gt;name('admin.login');
+Route::post('admin/login', [AdminAuthController::class, 'login'])-&gt;name('admin.login.post');
+Route::get('admin/register', [AdminAuthController::class, 'showRegister'])-&gt;name('admin.register');
+Route::post('admin/register', [AdminAuthController::class, 'register'])-&gt;name('admin.register.post');
+
+Route::get('/', function () {
+    return redirect()-&gt;route('siswa.index');
+});
+
+Route::middleware('admin')-&gt;group(function () {
+    Route::get('siswa', [SiswaController::class, 'index'])-&gt;name('siswa.index');
+    Route::get('kelas', [KelasController::class, 'index'])-&gt;name('kelas.index');
+    // ... route siswa &amp; kelas lainnya seperti Step 10
+
+    Route::get('admin/dashboard', [AdminController::class, 'index'])-&gt;name('admin.dashboard');
+    Route::get('admin/{admin}/edit', [AdminController::class, 'edit'])-&gt;name('admin.edit');
+    Route::put('admin/{admin}', [AdminController::class, 'update'])-&gt;name('admin.update');
+    Route::delete('admin/{admin}', [AdminController::class, 'destroy'])-&gt;name('admin.destroy');
+    Route::post('admin/logout', [AdminAuthController::class, 'logout'])-&gt;name('admin.logout');
+});</code></pre>
+        </div>
+
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Login dan register dibiarkan di luar group agar admin pertama tetap bisa dibuat. Halaman siswa, kelas, dan dashboard dicek token cookie-nya.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🗂️</span><p class="kicker">Step 15B &middot; Dashboard</p></div>
+        <h2>Dashboard &mdash; Daftar Data Admin</h2>
+        <p>Controller <code>AdminController</code> dan halaman <code>admin/index.blade.php</code>.</p>
+
+        <div class="method">
+            <div class="method-head"><code class="method-name">AdminController::index()</code><span class="method-desc">Menampilkan semua admin.</span></div>
+            <pre><code>public function index()
+{
+    $admin = Admin::orderBy('username')-&gt;get();
+    return view('admin.index', compact('admin'));
+}</code></pre>
+        </div>
+
+        <div class="method">
+            <div class="method-head"><code class="method-name">resources/views/admin/index.blade.php</code><span class="method-desc">Tabel admin + tombol edit &amp; hapus.</span></div>
+            <pre><code>@extends('layouts.app')
+@section('title', 'Dashboard Admin')
+@section('content')
+&lt;div class="card"&gt;
+    &lt;div class="page-heading"&gt;&lt;h1&gt;Data Admin&lt;/h1&gt;
+        &lt;div class="nav-links"&gt;
+            &lt;a class="btn btn-primary" href="{{ route('admin.register') }}"&gt;Tambah Admin&lt;/a&gt;
+            &lt;form class="inline-form" method="POST" action="{{ route('admin.logout') }}"&gt;@csrf
+                &lt;button class="btn btn-secondary" type="submit"&gt;Logout&lt;/button&gt;&lt;/form&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="table-wrap"&gt;&lt;table&gt;
+        &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Username&lt;/th&gt;&lt;th&gt;Email&lt;/th&gt;&lt;th&gt;Aksi&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+        &lt;tbody&gt;
+        @forelse ($admin as $item)
+            &lt;tr&gt;&lt;td&gt;{{ $item-&gt;username }}&lt;/td&gt;&lt;td&gt;{{ $item-&gt;email }}&lt;/td&gt;
+            &lt;td&gt;&lt;a class="btn btn-secondary" href="{{ route('admin.edit', $item) }}"&gt;Edit&lt;/a&gt;
+                &lt;form class="inline-form" method="POST" action="{{ route('admin.destroy', $item) }}" onsubmit="return confirm('Hapus admin ini?')"&gt;@csrf @method('DELETE')
+                    &lt;button class="btn btn-danger" type="submit"&gt;Hapus&lt;/button&gt;&lt;/form&gt;&lt;/td&gt;&lt;/tr&gt;
+        @empty
+            &lt;tr&gt;&lt;td class="empty" colspan="3"&gt;Belum ada data admin.&lt;/td&gt;&lt;/tr&gt;
+        @endforelse
+        &lt;/tbody&gt;
+    &lt;/table&gt;&lt;/div&gt;
+&lt;/div&gt;
+@endsection</code></pre>
+        </div>
+
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Kolom password tidak ditampilkan di tabel karena yang tersimpan hanya hash dan tidak perlu dibaca.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">✏️</span><p class="kicker">Step 15B &middot; Edit &amp; Hapus</p></div>
+        <h2>Edit &amp; Hapus Data Admin</h2>
+
+        <div class="method">
+            <div class="method-head"><code class="method-name">AdminController::edit() &amp; update()</code><span class="method-desc">Password boleh dikosongkan; hanya diganti jika diisi.</span></div>
+            <pre><code>public function edit(Admin $admin)
+{
+    return view('admin.edit', compact('admin'));
+}
+
+public function update(Request $request, Admin $admin)
+{
+    $request-&gt;validate([
+        'username' =&gt; ['required', 'string', 'max:50', Rule::unique('admin', 'username')-&gt;ignore($admin)],
+        'email' =&gt; ['required', 'email', 'max:255', Rule::unique('admin', 'email')-&gt;ignore($admin)],
+        'password' =&gt; ['nullable', 'string', 'min:6'],
+    ]);
+
+    $data = $request-&gt;only('username', 'email');
+
+    if ($request-&gt;filled('password')) {
+        $data['password'] = Hash::make($request-&gt;password);
+    }
+
+    $admin-&gt;update($data);
+
+    return redirect()-&gt;route('admin.dashboard')-&gt;with('success', 'Data admin berhasil diperbarui.');
+}</code></pre>
+        </div>
+
+        <div class="method">
+            <div class="method-head"><code class="method-name">AdminController::destroy()</code><span class="method-desc">Menghapus admin lalu kembali ke dashboard.</span></div>
+            <pre><code>public function destroy(Admin $admin)
+{
+    $admin-&gt;delete();
+    return redirect()-&gt;route('admin.dashboard')-&gt;with('success', 'Data admin berhasil dihapus.');
+}</code></pre>
+        </div>
+
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Saat password dibiarkan kosong, hash lama tetap dipakai &mdash; admin tidak wajib mengganti password setiap kali mengedit.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🖼️</span><p class="kicker">Step 15B &middot; View Auth</p></div>
+        <h2>View Login &amp; Register</h2>
+
+        <div class="method">
+            <div class="method-head"><code class="method-name">admin/login.blade.php</code><span class="method-desc">Form login: username &amp; password.</span></div>
+            <pre><code>@extends('layouts.app')
+@section('title', 'Login Admin')
+@section('content')
+&lt;div class="card" style="max-width:420px;margin-inline:auto"&gt;
+    &lt;div class="page-heading"&gt;&lt;h1&gt;Login Admin&lt;/h1&gt;&lt;/div&gt;
+    &lt;form method="POST" action="{{ route('admin.login.post') }}"&gt;
+        @csrf
+        &lt;div class="form-group"&gt;
+            &lt;label for="username"&gt;Username&lt;/label&gt;
+            &lt;input id="username" name="username" type="text" value="{{ old('username') }}" required&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label for="password"&gt;Password&lt;/label&gt;
+            &lt;input id="password" name="password" type="password" required&gt;
+        &lt;/div&gt;
+        &lt;div class="form-actions"&gt;
+            &lt;button class="btn btn-primary" type="submit"&gt;Masuk&lt;/button&gt;
+            &lt;a class="btn btn-secondary" href="{{ route('admin.register') }}"&gt;Daftar&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+@endsection</code></pre>
+        </div>
+
+        <div class="method">
+            <div class="method-head"><code class="method-name">admin/register.blade.php</code><span class="method-desc">Form register: username, email, password.</span></div>
+            <pre><code>@extends('layouts.app')
+@section('title', 'Daftar Admin')
+@section('content')
+&lt;div class="card" style="max-width:420px;margin-inline:auto"&gt;
+    &lt;div class="page-heading"&gt;&lt;h1&gt;Daftar Admin&lt;/h1&gt;&lt;/div&gt;
+    &lt;form method="POST" action="{{ route('admin.register.post') }}"&gt;
+        @csrf
+        &lt;div class="form-group"&gt;
+            &lt;label for="username"&gt;Username&lt;/label&gt;
+            &lt;input id="username" name="username" type="text" value="{{ old('username') }}" required&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label for="email"&gt;Email&lt;/label&gt;
+            &lt;input id="email" name="email" type="email" value="{{ old('email') }}" required&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label for="password"&gt;Password&lt;/label&gt;
+            &lt;input id="password" name="password" type="password" required&gt;
+        &lt;/div&gt;
+        &lt;div class="form-actions"&gt;
+            &lt;button class="btn btn-primary" type="submit"&gt;Daftar&lt;/button&gt;
+            &lt;a class="btn btn-secondary" href="{{ route('admin.login') }}"&gt;Kembali&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+@endsection</code></pre>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🔍</span><p class="kicker">Fungsi &middot; Fitur Admin</p></div>
+        <h2>Alur Autentikasi Manual</h2>
+        <ul>
+            <li><code>Hash::make()</code> &mdash; password disimpan sebagai hash, bukan teks asli.</li>
+            <li><code>Hash::check()</code> &mdash; mencocokkan password yang diketik dengan hash di database.</li>
+            <li><code>hash('sha256', $admin-&gt;email)</code> &mdash; token yang disimpan di cookie <code>admin_token</code>.</li>
+            <li><code>$request-&gt;cookie('admin_token')</code> &mdash; membaca token di middleware setiap request.</li>
+            <li>Middleware <code>admin</code> &mdash; membandingkan token cookie dengan email admin di database.</li>
+        </ul>
+        <div class="cols">
+            <div class="box"><p><strong>Kenapa di-hash dua kali?</strong></p><p>Password di-hash agar aman. Email di-hash hanya untuk dijadikan token rahasia, sehingga email asli tidak tampil di cookie.</p></div>
+            <div class="box"><p><strong>Alur singkat</strong></p><p>Register &rarr; Login &rarr; Cookie token dibuat &rarr; Setiap pindah halaman dicek middleware &rarr; Logout hapus cookie.</p></div>
+        </div>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Autentikasi manual ini memperlihatkan cara kerja login, cookie, dan middleware di balik layar.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🧪</span><p class="kicker">Step 15B &middot; Uji Coba</p></div>
+        <h2>Uji Coba Fitur Admin</h2>
+        <pre data-line-copy><code>php artisan migrate
+php artisan route:list --path=admin</code></pre>
+        <ul>
+            <li>Buka <code>/admin/register</code>, buat satu admin baru.</li>
+            <li>Buka <code>/admin/login</code>, masuk dengan data tadi.</li>
+            <li>Setelah login, dashboard admin muncul berisi data admin.</li>
+            <li>Buka <code>/siswa</code> tanpa login &rarr; dialihkan ke halaman login.</li>
+            <li>Edit lalu hapus satu data admin.</li>
+            <li>Klik logout &rarr; halaman kembali terkunci.</li>
+        </ul>
+        <p><strong>Catatan:</strong> karena halaman siswa &amp; kelas kini terkunci, test otomatis di Step 16 perlu login lebih dulu (atau mengirim cookie <code>admin_token</code>) agar tidak dialihkan ke halaman login.</p>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Uji dulu tanpa login. Jika halaman masih bisa dibuka, berarti middleware belum terpasang dengan benar.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 15B</p></div>
+        <h2>Penyimpanan Password</h2>
+        <div class="quiz" data-explain="Hash::make() mengubah password menjadi hash satu arah. Saat login, Hash::check() mencocokkan password yang diketik dengan hash tersebut tanpa pernah membalik hash-nya.">
+            <p class="quiz-q">Kenapa password admin disimpan dengan <code>Hash::make()</code>?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Agar password bisa dibaca kembali oleh admin</button>
+                <button class="quiz-option" type="button" data-correct="true">Agar password tidak tersimpan sebagai teks asli dan tidak bisa dibalik</button>
+                <button class="quiz-option" type="button" data-correct="false">Agar ukuran database menjadi lebih kecil</button>
+                <button class="quiz-option" type="button" data-correct="false">Agar password otomatis terisi saat login</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 15B &middot; Token</p></div>
+        <h2>Token di Cookie</h2>
+        <div class="quiz" data-explain="Setelah login, token berisi hash('sha256', email admin) disimpan di cookie admin_token. Middleware admin membaca cookie itu dan mencocokkannya dengan email admin di database; bila tidak cocok, pengguna dialihkan ke halaman login.">
+            <p class="quiz-q">Apa yang dicek middleware <code>admin</code> pada setiap request?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Jumlah data siswa yang tersimpan</button>
+                <button class="quiz-option" type="button" data-correct="true">Token di cookie <code>admin_token</code> cocok atau tidak dengan email admin di database</button>
+                <button class="quiz-option" type="button" data-correct="false">Apakah password diketik ulang di setiap halaman</button>
+                <button class="quiz-option" type="button" data-correct="false">Apakah tabel <code>admin</code> masih kosong atau tidak</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
         <div class="kicker-row"><span class="icon-badge">🧪</span><p class="kicker">Step 16</p></div>
         <h2>Buat Pengujian Otomatis</h2>
         <ul>
@@ -2314,6 +2810,7 @@ git diff --check</code></pre>
 </div>
 
 <nav class="navbar">
+    <button id="toc" type="button">Daftar Isi</button>
     <button id="prev" type="button">&larr; Sebelumnya</button>
     <span id="counter"></span>
     <button id="next" type="button">Selanjutnya &rarr;</button>
@@ -2577,6 +3074,26 @@ function show(index) {
 document.getElementById('prev').addEventListener('click', function () { show(current - 1); });
 document.getElementById('next').addEventListener('click', function () { show(current + 1); });
 
+function slideIndexByKicker(target) {
+    var index = -1;
+    Array.prototype.some.call(slides, function (slide, i) {
+        var kicker = slide.querySelector('.kicker');
+        if (!kicker) return false;
+        var text = kicker.textContent.trim();
+        if (text === target || text.indexOf(target + ' ') === 0) {
+            index = i;
+            return true;
+        }
+        return false;
+    });
+    return index;
+}
+
+document.getElementById('toc').addEventListener('click', function () {
+    var index = slideIndexByKicker('Daftar Isi');
+    if (index >= 0) show(index);
+});
+
 document.addEventListener('keydown', function (event) {
     if (demoModal.classList.contains('open')) return;
     if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') show(current + 1);
@@ -2586,6 +3103,14 @@ document.addEventListener('keydown', function (event) {
 });
 
 show(0);
+
+document.querySelectorAll('.toc-link').forEach(function (link) {
+    link.addEventListener('click', function (event) {
+        event.preventDefault();
+        var index = slideIndexByKicker(link.getAttribute('data-target'));
+        if (index >= 0) show(index);
+    });
+});
 </script>
 
 </body>
