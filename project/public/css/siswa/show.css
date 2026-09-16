@@ -1,0 +1,31 @@
+.card {
+    max-width: 700px;
+    margin-inline: auto;
+    border-top: 2px solid var(--purple);
+    box-shadow:
+        0 0 35px var(--purple-glow),
+        var(--shadow-glass);
+}
+
+.page-heading h1 {
+    padding-left: 0.9rem;
+    border-left: 0.35rem solid var(--purple);
+}
+
+table th {
+    width: 38%;
+    background: rgba(139, 92, 246, 0.08);
+    color: #c4b5fd;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.8rem;
+}
+
+table td {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+tbody tr:hover {
+    background: rgba(139, 92, 246, 0.05);
+}

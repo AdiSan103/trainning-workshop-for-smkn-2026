@@ -17,8 +17,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    // return view('welcome');
-    return redirect()->route('siswa.index');
+    return view('welcome');
+});
+
+Route::get('/fintech', function () {
+    return view('fintech');
 });
 
 Route::get('siswa', [SiswaController::class, 'index'])->name('siswa.index');

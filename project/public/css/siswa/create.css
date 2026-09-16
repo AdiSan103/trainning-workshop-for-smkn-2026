@@ -1,0 +1,13 @@
+.card {
+    max-width: 680px;
+    margin-inline: auto;
+    border-top: 2px solid var(--cyan);
+    box-shadow:
+        0 0 35px rgba(6, 182, 212, 0.15),
+        var(--shadow-glass);
+}
+
+.page-heading h1 {
+    padding-left: 0.9rem;
+    border-left: 0.35rem solid var(--cyan);
+}

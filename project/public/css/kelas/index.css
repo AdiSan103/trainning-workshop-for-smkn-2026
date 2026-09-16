@@ -1,0 +1,42 @@
+/* Kelas Index Fintech Theme */
+.card {
+    border-top: 2px solid var(--emerald);
+    box-shadow:
+        0 0 35px var(--emerald-glow),
+        var(--shadow-glass);
+}
+
+.page-heading h1 {
+    position: relative;
+    padding-left: 1rem;
+}
+
+.page-heading h1::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.15em;
+    bottom: 0.15em;
+    width: 0.35rem;
+    border-radius: 99px;
+    background: linear-gradient(180deg, var(--emerald), var(--cyan));
+    box-shadow: 0 0 10px var(--emerald-glow);
+}
+
+td .count {
+    display: inline-block;
+    min-width: 2.2rem;
+    padding: 0.25rem 0.75rem;
+    text-align: center;
+    border-radius: 9999px;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    color: #34d399;
+    font-weight: 700;
+    font-family: var(--font-mono);
+}
+
+tbody tr:hover {
+    background: rgba(16, 185, 129, 0.05);
+    box-shadow: inset 3px 0 0 var(--emerald);
+}

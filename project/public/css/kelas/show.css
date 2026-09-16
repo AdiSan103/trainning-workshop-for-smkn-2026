@@ -1,0 +1,31 @@
+.card {
+    max-width: 650px;
+    margin-inline: auto;
+    border-top: 2px solid var(--emerald);
+    box-shadow:
+        0 0 35px var(--emerald-glow),
+        var(--shadow-glass);
+}
+
+.page-heading h1 {
+    padding-left: 0.9rem;
+    border-left: 0.35rem solid var(--emerald);
+}
+
+table th {
+    width: 40%;
+    background: rgba(16, 185, 129, 0.08);
+    color: #6ee7b7;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.8rem;
+}
+
+table td {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+tbody tr:hover {
+    background: rgba(16, 185, 129, 0.05);
+}

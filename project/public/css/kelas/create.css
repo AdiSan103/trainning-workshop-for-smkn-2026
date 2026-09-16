@@ -1,0 +1,13 @@
+.card {
+    max-width: 620px;
+    margin-inline: auto;
+    border-top: 2px solid var(--emerald);
+    box-shadow:
+        0 0 35px var(--emerald-glow),
+        var(--shadow-glass);
+}
+
+.page-heading h1 {
+    padding-left: 0.9rem;
+    border-left: 0.35rem solid var(--emerald);
+}

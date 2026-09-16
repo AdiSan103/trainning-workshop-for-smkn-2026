@@ -1,0 +1,29 @@
+/* Siswa Index Fintech Theme */
+.card {
+    border-top: 2px solid var(--cyan);
+    box-shadow:
+        0 0 30px rgba(6, 182, 212, 0.15),
+        var(--shadow-glass);
+}
+
+.page-heading h1 {
+    position: relative;
+    padding-left: 1rem;
+}
+
+.page-heading h1::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.15em;
+    bottom: 0.15em;
+    width: 0.35rem;
+    border-radius: 99px;
+    background: linear-gradient(180deg, var(--cyan), var(--primary));
+    box-shadow: 0 0 10px var(--cyan-glow);
+}
+
+tbody tr:hover {
+    background: rgba(6, 182, 212, 0.06);
+    box-shadow: inset 3px 0 0 var(--cyan);
+}
