@@ -1565,6 +1565,451 @@ Route::delete('kelas/{kela}', [KelasController::class, 'destroy'])-&gt;name('kel
         <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> HTML struktur, Blade isi data, CSS tampilan.</div></div>
     </section>
 
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🎨</span><p class="kicker">Styling &middot; Struktur</p></div>
+        <h2>CSS Terpisah per Halaman</h2>
+        <p>Satu file dasar <code>app.css</code> dipakai semua halaman, lalu setiap halaman punya file CSS sendiri. File tidak menumpuk, mudah dicari, dan mudah dirawat.</p>
+        <p class="copy-note">Setiap blok code bisa disalin lewat tombol clipboard di pojok kanan.</p>
+
+        <div class="method">
+            <div class="method-head"><code class="method-name">Struktur folder</code><span class="method-desc">Dasar + satu file untuk tiap halaman.</span></div>
+            <pre><code>public/css/
+├── app.css            dasar: navbar, card, tombol, tabel, form
+├── siswa/
+│   ├── index.css
+│   ├── create.css
+│   ├── edit.css
+│   └── show.css
+└── kelas/
+    ├── index.css
+    ├── create.css
+    ├── edit.css
+    └── show.css</code></pre>
+        </div>
+
+        <div class="method">
+            <div class="method-head"><code class="method-name">Menghubungkan</code><span class="method-desc">Slot <code>@stack</code> di layout, diisi <code>@push</code> dari tiap halaman.</span></div>
+            <pre><code>{{-- layouts/app.blade.php --}}
+&lt;link rel="stylesheet" href="{{ asset('css/app.css') }}"&gt;
+@stack('styles')
+
+{{-- siswa/index.blade.php --}}
+@push('styles')
+    &lt;link rel="stylesheet" href="{{ asset('css/siswa/index.css') }}"&gt;
+@endpush</code></pre>
+        </div>
+
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> <code>@stack('styles')</code> menyiapkan tempat di layout, <code>@push('styles')</code> mengisi tempat itu dari tiap halaman.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">📋</span><p class="kicker">Styling &middot; Siswa Index</p></div>
+        <h2>CSS: Daftar Siswa</h2>
+        <p>File <code>public/css/siswa/index.css</code> &mdash; dihubungkan dari <code>siswa/index.blade.php</code> lewat <code>@push('styles')</code>.</p>
+        <pre data-line-copy><code>.card {
+    border-top: 4px solid #1769aa;
+}
+
+.page-heading h1 {
+    position: relative;
+    padding-left: .9rem;
+}
+
+.page-heading h1::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: .15em;
+    bottom: .15em;
+    width: .32rem;
+    border-radius: 99px;
+    background: linear-gradient(180deg, #1769aa, #7c3aed);
+}
+
+.page-heading .btn-primary {
+    border-radius: 99px;
+    padding-inline: 1.2rem;
+    box-shadow: 0 8px 18px rgb(23 105 170 / 30%);
+}
+
+td .btn-secondary {
+    background: #eef5fb;
+    color: #0f4c81;
+}
+
+tbody tr:hover {
+    background: linear-gradient(90deg, #f1f7ff, #fff);
+    box-shadow: inset 3px 0 0 #1769aa;
+}</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Satu file CSS bisa menimpa (override) gaya dasar untuk satu halaman saja.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🔍</span><p class="kicker">Fungsi &middot; Siswa Index</p></div>
+        <h2>Fungsi Tiap Aturan</h2>
+        <ul>
+            <li><code>.card</code> &mdash; menambah garis atas biru sebagai penanda identitas halaman siswa.</li>
+            <li><code>.page-heading h1::before</code> &mdash; membuat garis aksen gradien biru&rarr;ungu di kiri judul.</li>
+            <li><code>border-radius: 99px</code> &mdash; mengubah tombol tambah menjadi bentuk pil.</li>
+            <li><code>box-shadow</code> &mdash; memberi bayangan halus agar tombol tampak timbul.</li>
+            <li><code>tbody tr:hover</code> &mdash; menyorot baris tabel saat kursor mendekat.</li>
+        </ul>
+        <div class="cols">
+            <div class="box"><p><strong>Warna</strong></p><p>Biru <code>#1769aa</code> dan ungu <code>#7c3aed</code> dipakai konsisten lewat gradien.</p></div>
+            <div class="box"><p><strong>Interaksi</strong></p><p>Efek <code>:hover</code> memberi umpan balik visual pada tabel dan tombol.</p></div>
+        </div>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> File CSS terpisah membuat perubahan satu halaman tidak mengganggu halaman lain.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">📋</span><p class="kicker">Styling &middot; Siswa Create</p></div>
+        <h2>CSS: Form Tambah Siswa</h2>
+        <p>File <code>public/css/siswa/create.css</code> &mdash; tema biru untuk mode <strong>tambah</strong>.</p>
+        <pre data-line-copy><code>.card {
+    max-width: 620px;
+    margin-inline: auto;
+    border-top: 4px solid #1769aa;
+}
+
+.page-heading h1 {
+    padding-left: .8rem;
+    border-left: .32rem solid #1769aa;
+}
+
+input:focus,
+select:focus {
+    border-color: #1769aa;
+    box-shadow: 0 0 0 4px rgb(23 105 170 / 15%);
+    outline: none;
+}
+
+.btn-primary {
+    background: linear-gradient(120deg, #1769aa, #0f4c81);
+    border-radius: 99px;
+    padding-inline: 1.4rem;
+}</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Form yang lebih ramping dan terpusat lebih nyaman diisi.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🔍</span><p class="kicker">Fungsi &middot; Siswa Create</p></div>
+        <h2>Fungsi Tiap Aturan</h2>
+        <ul>
+            <li><code>max-width: 620px</code> + <code>margin-inline: auto</code> &mdash; form tidak terlalu lebar dan berada di tengah.</li>
+            <li><code>border-top</code> biru &mdash; menandai halaman sedang dalam mode <strong>tambah</strong>.</li>
+            <li><code>border-left</code> &mdash; memberi aksen garis di kiri judul.</li>
+            <li><code>input:focus, select:focus</code> &mdash; garis biru + glow saat kolom aktif diketik.</li>
+            <li><code>linear-gradient</code> &mdash; tombol utama berwarna gradien, tidak datar.</li>
+        </ul>
+        <div class="cols">
+            <div class="box"><p><strong>Fokus</strong></p><p><code>:focus</code> membantu pengguna tahu kolom mana yang sedang aktif.</p></div>
+            <div class="box"><p><strong>Konsisten</strong></p><p>Warna biru yang sama dipakai di halaman daftar dan tambah siswa.</p></div>
+        </div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">📋</span><p class="kicker">Styling &middot; Siswa Edit</p></div>
+        <h2>CSS: Form Edit Siswa</h2>
+        <p>File <code>public/css/siswa/edit.css</code> &mdash; tema amber untuk mode <strong>edit</strong>.</p>
+        <pre data-line-copy><code>.card {
+    max-width: 620px;
+    margin-inline: auto;
+    border-top: 4px solid #e2a400;
+}
+
+.page-heading h1 {
+    padding-left: .8rem;
+    border-left: .32rem solid #e2a400;
+    color: #7a5a00;
+}
+
+input:focus,
+select:focus {
+    border-color: #e2a400;
+    box-shadow: 0 0 0 4px rgb(226 164 0 / 18%);
+    outline: none;
+}
+
+.btn-primary {
+    background: linear-gradient(120deg, #e2a400, #b98200);
+    border-radius: 99px;
+    padding-inline: 1.4rem;
+}</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Warna berbeda membantu pengguna sadar sedang di mode apa.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🔍</span><p class="kicker">Fungsi &middot; Siswa Edit</p></div>
+        <h2>Fungsi Tiap Aturan</h2>
+        <ul>
+            <li><code>border-top</code> amber <code>#e2a400</code> &mdash; menandai mode <strong>edit</strong>, beda dari mode tambah.</li>
+            <li><code>color: #7a5a00</code> &mdash; judul mengikuti aksen amber agar serasi.</li>
+            <li><code>input:focus</code> amber &mdash; garis fokus senada dengan tema edit.</li>
+            <li><code>linear-gradient(120deg, #e2a400, #b98200)</code> &mdash; tombol simpan berwarna emas.</li>
+        </ul>
+        <div class="cols">
+            <div class="box"><p><strong>Tambah = biru</strong></p><p>Mode membuat data baru memakai aksen biru.</p></div>
+            <div class="box"><p><strong>Edit = amber</strong></p><p>Mode mengubah data memakai aksen amber/kuning.</p></div>
+        </div>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Satu kode warna yang konsisten membuat aplikasi terasa rapi.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">📋</span><p class="kicker">Styling &middot; Siswa Detail</p></div>
+        <h2>CSS: Detail Siswa</h2>
+        <p>File <code>public/css/siswa/show.css</code> &mdash; halaman detail bergaya kartu profil.</p>
+        <pre data-line-copy><code>.card {
+    max-width: 640px;
+    margin-inline: auto;
+    border-top: 4px solid #7c3aed;
+}
+
+.page-heading h1 {
+    padding-left: .8rem;
+    border-left: .32rem solid #7c3aed;
+}
+
+table th {
+    width: 38%;
+    background: #f5f3ff;
+    color: #4c1d95;
+    text-transform: none;
+    letter-spacing: 0;
+    white-space: normal;
+}
+
+table td {
+    color: #102a43;
+    font-weight: 600;
+}
+
+tbody tr:hover {
+    background: #faf8ff;
+}</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Tabel bisa dipakai sebagai daftar label&ndash;nilai pada halaman detail.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🔍</span><p class="kicker">Fungsi &middot; Siswa Detail</p></div>
+        <h2>Fungsi Tiap Aturan</h2>
+        <ul>
+            <li><code>border-top</code> ungu &mdash; menandai halaman detail.</li>
+            <li><code>background: #f5f3ff</code> pada <code>th</code> &mdash; membuat kolom label terlihat berbeda.</li>
+            <li><code>text-transform: none</code> &mdash; membatalkan huruf kapital dari <code>app.css</code>.</li>
+            <li><code>white-space: normal</code> &mdash; teks label boleh turun baris, tidak dipaksa satu baris.</li>
+            <li><code>font-weight: 600</code> pada <code>td</code> &mdash; nilai data lebih menonjol daripada label.</li>
+        </ul>
+        <div class="cols">
+            <div class="box"><p><strong>Label vs nilai</strong></p><p>Kontras warna memisahkan label dan isi data.</p></div>
+            <div class="box"><p><strong>Override</strong></p><p>File halaman dapat menimpa aturan global tanpa mengedit <code>app.css</code>.</p></div>
+        </div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🏷️</span><p class="kicker">Styling &middot; Kelas Index</p></div>
+        <h2>CSS: Daftar Kelas</h2>
+        <p>File <code>public/css/kelas/index.css</code> &mdash; menambahkan badge jumlah siswa.</p>
+        <pre data-line-copy><code>.card {
+    border-top: 4px solid #0891b2;
+}
+
+.page-heading h1 {
+    position: relative;
+    padding-left: .9rem;
+}
+
+.page-heading h1::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: .15em;
+    bottom: .15em;
+    width: .32rem;
+    border-radius: 99px;
+    background: linear-gradient(180deg, #0891b2, #1769aa);
+}
+
+.page-heading .btn-primary {
+    border-radius: 99px;
+    background: linear-gradient(120deg, #0891b2, #0f4c81);
+    box-shadow: 0 8px 18px rgb(8 145 178 / 28%);
+}
+
+td .count {
+    display: inline-block;
+    min-width: 2rem;
+    padding: .2rem .65rem;
+    text-align: center;
+    border-radius: 99px;
+    background: #e6f6fb;
+    color: #0e7490;
+    font-weight: 700;
+}
+
+tbody tr:hover {
+    background: linear-gradient(90deg, #eefcff, #fff);
+    box-shadow: inset 3px 0 0 #0891b2;
+}</code></pre>
+        <div class="lesson"><span>🔧</span><div><strong>Catatan:</strong> di blade tulis <code>&lt;td&gt;&lt;span class="count"&gt;{{ $item-&gt;siswa_count }}&lt;/span&gt;&lt;/td&gt;</code> agar badge aktif.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🔍</span><p class="kicker">Fungsi &middot; Kelas Index</p></div>
+        <h2>Fungsi Tiap Aturan</h2>
+        <ul>
+            <li><code>.card</code> border-top cyan <code>#0891b2</code> &mdash; identitas halaman kelas.</li>
+            <li><code>h1::before</code> &mdash; garis aksen gradien cyan&rarr;biru di kiri judul.</li>
+            <li><code>td .count</code> &mdash; angka jumlah siswa tampil sebagai badge bulat.</li>
+            <li><code>display: inline-block</code> + <code>min-width</code> &mdash; badge tetap rapi walau angkanya satu digit.</li>
+            <li><code>tbody tr:hover</code> &mdash; menyorot baris kelas yang disorot kursor.</li>
+        </ul>
+        <div class="cols">
+            <div class="box"><p><strong>Kelas baru</strong></p><p><code>.count</code> adalah class baru yang ditulis di blade, bukan bawaan <code>app.css</code>.</p></div>
+            <div class="box"><p><strong>Baca cepat</strong></p><p>Badge membuat jumlah siswa langsung terbaca tanpa membaca angka panjang.</p></div>
+        </div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🏷️</span><p class="kicker">Styling &middot; Kelas Create</p></div>
+        <h2>CSS: Form Tambah Kelas</h2>
+        <p>File <code>public/css/kelas/create.css</code> &mdash; tema cyan untuk mode <strong>tambah</strong>.</p>
+        <pre data-line-copy><code>.card {
+    max-width: 560px;
+    margin-inline: auto;
+    border-top: 4px solid #0891b2;
+}
+
+.page-heading h1 {
+    padding-left: .8rem;
+    border-left: .32rem solid #0891b2;
+}
+
+input:focus {
+    border-color: #0891b2;
+    box-shadow: 0 0 0 4px rgb(8 145 178 / 16%);
+    outline: none;
+}
+
+.btn-primary {
+    background: linear-gradient(120deg, #0891b2, #0f4c81);
+    border-radius: 99px;
+    padding-inline: 1.4rem;
+}</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Form kelas hanya satu kolom, jadi bisa lebih ramping lagi.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🔍</span><p class="kicker">Fungsi &middot; Kelas Create</p></div>
+        <h2>Fungsi Tiap Aturan</h2>
+        <ul>
+            <li><code>max-width: 560px</code> &mdash; form kelas yang singkat terlihat lebih pas.</li>
+            <li><code>border-top</code> cyan &mdash; menandai mode tambah kelas.</li>
+            <li><code>input:focus</code> &mdash; garis cyan + glow saat kolom nama kelas aktif.</li>
+            <li><code>linear-gradient</code> &mdash; tombol simpan bergradasi, tidak datar.</li>
+        </ul>
+        <div class="cols">
+            <div class="box"><p><strong>Terpusat</strong></p><p><code>margin-inline: auto</code> menempatkan kartu tepat di tengah halaman.</p></div>
+            <div class="box"><p><strong>Warna tema</strong></p><p>Cyan <code>#0891b2</code> menjadi ciri halaman kelas.</p></div>
+        </div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🏷️</span><p class="kicker">Styling &middot; Kelas Edit</p></div>
+        <h2>CSS: Form Edit Kelas</h2>
+        <p>File <code>public/css/kelas/edit.css</code> &mdash; tema amber untuk mode <strong>edit</strong>.</p>
+        <pre data-line-copy><code>.card {
+    max-width: 560px;
+    margin-inline: auto;
+    border-top: 4px solid #e2a400;
+}
+
+.page-heading h1 {
+    padding-left: .8rem;
+    border-left: .32rem solid #e2a400;
+    color: #7a5a00;
+}
+
+input:focus {
+    border-color: #e2a400;
+    box-shadow: 0 0 0 4px rgb(226 164 0 / 18%);
+    outline: none;
+}
+
+.btn-primary {
+    background: linear-gradient(120deg, #e2a400, #b98200);
+    border-radius: 99px;
+    padding-inline: 1.4rem;
+}</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Sama seperti siswa, halaman edit kelas memakai aksen amber.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🔍</span><p class="kicker">Fungsi &middot; Kelas Edit</p></div>
+        <h2>Fungsi Tiap Aturan</h2>
+        <ul>
+            <li><code>border-top</code> amber &mdash; menandai mode <strong>edit</strong> kelas.</li>
+            <li><code>color: #7a5a00</code> &mdash; judul mengikuti aksen amber.</li>
+            <li><code>input:focus</code> amber &mdash; fokus kolom senada tema edit.</li>
+            <li><code>linear-gradient</code> emas &mdash; tombol simpan berwarna keemasan.</li>
+        </ul>
+        <div class="cols">
+            <div class="box"><p><strong>Pola konsisten</strong></p><p>Tambah = cyan, Edit = amber, Detail = ungu, di semua halaman.</p></div>
+            <div class="box"><p><strong>Mudah diingat</strong></p><p>Siswa cukup belajar sekali polanya, lalu tetap berlaku di halaman lain.</p></div>
+        </div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🏷️</span><p class="kicker">Styling &middot; Kelas Detail</p></div>
+        <h2>CSS: Detail Kelas</h2>
+        <p>File <code>public/css/kelas/show.css</code> &mdash; detail kelas sebagai daftar label&ndash;nilai.</p>
+        <pre data-line-copy><code>.card {
+    max-width: 600px;
+    margin-inline: auto;
+    border-top: 4px solid #7c3aed;
+}
+
+.page-heading h1 {
+    padding-left: .8rem;
+    border-left: .32rem solid #7c3aed;
+}
+
+table th {
+    width: 42%;
+    background: #f5f3ff;
+    color: #4c1d95;
+    text-transform: none;
+    letter-spacing: 0;
+    white-space: normal;
+}
+
+table td {
+    color: #102a43;
+    font-weight: 600;
+}
+
+tbody tr:hover {
+    background: #faf8ff;
+}</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Tampilan detail yang bersih membuat data mudah dibaca cepat.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🔍</span><p class="kicker">Fungsi &middot; Kelas Detail</p></div>
+        <h2>Fungsi Tiap Aturan</h2>
+        <ul>
+            <li><code>border-top</code> ungu &mdash; menandai halaman detail kelas.</li>
+            <li><code>table th</code> ungu muda &mdash; membedakan kolom label dari isi.</li>
+            <li><code>text-transform: none</code> &amp; <code>letter-spacing: 0</code> &mdash; membatalkan gaya kapital dari <code>app.css</code>.</li>
+            <li><code>font-weight: 600</code> pada <code>td</code> &mdash; nilai data lebih menonjol.</li>
+            <li><code>tbody tr:hover</code> &mdash; menyorot baris saat kursor mendekat.</li>
+        </ul>
+        <div class="cols">
+            <div class="box"><p><strong>Ringkasan</strong></p><p>Setiap halaman punya satu file CSS sendiri: <code>index</code>, <code>create</code>, <code>edit</code>, <code>show</code>.</p></div>
+            <div class="box"><p><strong>Perawatan</strong></p><p>Ingin ubah tampilan satu halaman? Cukup buka file CSS halaman itu.</p></div>
+        </div>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> CSS terpisah per halaman = mudah dicari, aman diubah, dan rapi.</div></div>
+    </section>
+
     <section class="slide">
         <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 14</p></div>
         <h2>Tampilan Responsive</h2>
