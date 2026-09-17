@@ -1,0 +1,43 @@
+.card {
+    max-width: 600px;
+    max-width: 650px;
+    margin-inline: auto;
+    border-top: 4px solid #7c3aed;
+    border-top: 2px solid var(--emerald);
+    box-shadow:
+        0 0 35px var(--emerald-glow),
+        var(--shadow-glass);
+}
+
+.page-heading h1 {
+    padding-left: 0.8rem;
+    border-left: 0.32rem solid #7c3aed;
+    padding-left: 0.9rem;
+    border-left: 0.35rem solid var(--emerald);
+}
+
+table th {
+    width: 42%;
+    background: #f5f3ff;
+    color: #4c1d95;
+    text-transform: none;
+    letter-spacing: 0;
+    white-space: normal;
+    width: 40%;
+    background: rgba(16, 185, 129, 0.08);
+    color: #6ee7b7;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.8rem;
+}
+
+table td {
+    color: #102a43;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+tbody tr:hover {
+    background: #faf8ff;
+    background: rgba(16, 185, 129, 0.05);
+}

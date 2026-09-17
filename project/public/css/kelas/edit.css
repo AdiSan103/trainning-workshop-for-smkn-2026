@@ -1,0 +1,30 @@
+.card {
+    max-width: 560px;
+    max-width: 620px;
+    margin-inline: auto;
+    border-top: 4px solid #e2a400;
+    border-top: 2px solid var(--primary);
+    box-shadow:
+        0 0 35px var(--primary-glow),
+        var(--shadow-glass);
+}
+
+.page-heading h1 {
+    padding-left: 0.8rem;
+    border-left: 0.32rem solid #e2a400;
+    color: #7a5a00;
+    padding-left: 0.9rem;
+    border-left: 0.35rem solid var(--primary);
+}
+
+input:focus {
+    border-color: #e2a400;
+    box-shadow: 0 0 0 4px rgb(226 164 0 / 18%);
+    outline: none;
+}
+
+.btn-primary {
+    background: linear-gradient(120deg, #e2a400, #b98200);
+    border-radius: 99px;
+    padding-inline: 1.4rem;
+}
