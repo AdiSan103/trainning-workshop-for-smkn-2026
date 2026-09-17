@@ -2320,10 +2320,10 @@ Route::middleware('admin')-&gt;group(function () {
     Route::get('kelas', [KelasController::class, 'index'])-&gt;name('kelas.index');
     // ... route siswa &amp; kelas lainnya seperti Step 10
 
-    Route::get('admin/dashboard', [AdminController::class, 'index'])-&gt;name('admin.dashboard');
-    Route::get('admin/{admin}/edit', [AdminController::class, 'edit'])-&gt;name('admin.edit');
-    Route::put('admin/{admin}', [AdminController::class, 'update'])-&gt;name('admin.update');
-    Route::delete('admin/{admin}', [AdminController::class, 'destroy'])-&gt;name('admin.destroy');
+    Route::get('admin/dashboard', [AdminAuthController::class, 'index'])-&gt;name('admin.dashboard');
+    Route::get('admin/{admin}/edit', [AdminAuthController::class, 'edit'])-&gt;name('admin.edit');
+    Route::put('admin/{admin}', [AdminAuthController::class, 'update'])-&gt;name('admin.update');
+    Route::delete('admin/{admin}', [AdminAuthController::class, 'destroy'])-&gt;name('admin.destroy');
     Route::post('admin/logout', [AdminAuthController::class, 'logout'])-&gt;name('admin.logout');
 });</code></pre>
         </div>
@@ -2334,10 +2334,10 @@ Route::middleware('admin')-&gt;group(function () {
     <section class="slide code-slide">
         <div class="kicker-row"><span class="icon-badge">🗂️</span><p class="kicker">Step 15B &middot; Dashboard</p></div>
         <h2>Dashboard &mdash; Daftar Data Admin</h2>
-        <p>Controller <code>AdminController</code> dan halaman <code>admin/index.blade.php</code>.</p>
+        <p>Controller <code>AdminAuthController</code> dan halaman <code>admin/index.blade.php</code>.</p>
 
         <div class="method">
-            <div class="method-head"><code class="method-name">AdminController::index()</code><span class="method-desc">Menampilkan semua admin.</span></div>
+            <div class="method-head"><code class="method-name">AdminAuthController::index()</code><span class="method-desc">Menampilkan semua admin.</span></div>
             <pre><code>public function index()
 {
     $admin = Admin::orderBy('username')-&gt;get();
@@ -2383,7 +2383,7 @@ Route::middleware('admin')-&gt;group(function () {
         <h2>Edit &amp; Hapus Data Admin</h2>
 
         <div class="method">
-            <div class="method-head"><code class="method-name">AdminController::edit() &amp; update()</code><span class="method-desc">Password boleh dikosongkan; hanya diganti jika diisi.</span></div>
+            <div class="method-head"><code class="method-name">AdminAuthController::edit() &amp; update()</code><span class="method-desc">Password boleh dikosongkan; hanya diganti jika diisi.</span></div>
             <pre><code>public function edit(Admin $admin)
 {
     return view('admin.edit', compact('admin'));
@@ -2410,7 +2410,7 @@ public function update(Request $request, Admin $admin)
         </div>
 
         <div class="method">
-            <div class="method-head"><code class="method-name">AdminController::destroy()</code><span class="method-desc">Menghapus admin lalu kembali ke dashboard.</span></div>
+            <div class="method-head"><code class="method-name">AdminAuthController::destroy()</code><span class="method-desc">Menghapus admin lalu kembali ke dashboard.</span></div>
             <pre><code>public function destroy(Admin $admin)
 {
     $admin-&gt;delete();
@@ -2419,6 +2419,30 @@ public function update(Request $request, Admin $admin)
         </div>
 
         <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Saat password dibiarkan kosong, hash lama tetap dipakai &mdash; admin tidak wajib mengganti password setiap kali mengedit.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🧾</span><p class="kicker">Step 15B &middot; Tampilkan Form</p></div>
+        <h2>Tampilkan Form &mdash; <code>showLogin()</code> &amp; <code>showRegister()</code></h2>
+        <p>Dua method ini dipanggil oleh route <code>GET</code> hanya untuk menampilkan halaman form. Yang memproses kiriman form adalah <code>login()</code> dan <code>register()</code> pada route <code>POST</code>.</p>
+        <pre data-line-copy><code>public function showLogin()
+{
+    return view('admin.login');
+}
+
+public function showRegister()
+{
+    return view('admin.register');
+}</code></pre>
+        <div class="method">
+            <div class="method-head"><code class="method-name">routes/web.php</code><span class="method-desc">Satu URL, dua route: <code>GET</code> menampilkan form, <code>POST</code> memprosesnya.</span></div>
+            <pre><code>Route::get('admin/login', [AdminAuthController::class, 'showLogin'])-&gt;name('admin.login');
+Route::post('admin/login', [AdminAuthController::class, 'login'])-&gt;name('admin.login.post');
+
+Route::get('admin/register', [AdminAuthController::class, 'showRegister'])-&gt;name('admin.register');
+Route::post('admin/register', [AdminAuthController::class, 'register'])-&gt;name('admin.register.post');</code></pre>
+        </div>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Nama route <code>admin.login</code> (GET) dan <code>admin.login.post</code> (POST) dibedakan agar <code>route('admin.login')</code> selalu mengarah ke halaman form, bukan ke proses login.</div></div>
     </section>
 
     <section class="slide code-slide">
