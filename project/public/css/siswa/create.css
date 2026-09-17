@@ -1,6 +1,8 @@
 .card {
+    max-width: 620px;
     max-width: 680px;
     margin-inline: auto;
+    border-top: 4px solid #1769aa;
     border-top: 2px solid var(--cyan);
     box-shadow:
         0 0 35px rgba(6, 182, 212, 0.15),
@@ -8,6 +10,21 @@
 }
 
 .page-heading h1 {
+    padding-left: 0.8rem;
+    border-left: 0.32rem solid #1769aa;
     padding-left: 0.9rem;
     border-left: 0.35rem solid var(--cyan);
+}
+
+input:focus,
+select:focus {
+    border-color: #1769aa;
+    box-shadow: 0 0 0 4px rgb(23 105 170 / 15%);
+    outline: none;
+}
+
+.btn-primary {
+    background: linear-gradient(120deg, #1769aa, #0f4c81);
+    border-radius: 99px;
+    padding-inline: 1.4rem;
 }

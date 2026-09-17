@@ -2,10 +2,13 @@
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/kelas/show.css') }}">
 @endpush
+@section('title', 'Detail Kelas')
 @section('title', 'Detail Kelas: ' . $kela->nama_kelas)
 
 @section('content')
 <div class="card">
+    <div class="page-heading"><h1>Detail Kelas</h1>
+        <a class="btn btn-secondary" href="{{ route('kelas.index') }}">Kembali</a>
     <div class="page-heading">
         <div>
             <h1>
@@ -25,9 +28,12 @@
             </a>
         </div>
     </div>
+    <table>
 
     <table class="detail-table">
         <tbody>
+            <tr><th>Nama Kelas</th><td>{{ $kela->nama_kelas }}</td></tr>
+            <tr><th>Jumlah Siswa</th><td>{{ $kela->siswa()->count() }}</td></tr>
             <tr>
                 <th><i class="fa-solid fa-chalkboard"></i> Nama Kelas</th>
                 <td><span style="font-size: 1.05rem; font-weight: 700; color: #ffffff;">{{ $kela->nama_kelas }}</span></td>

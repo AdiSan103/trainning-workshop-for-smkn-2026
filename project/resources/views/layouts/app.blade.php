@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@yield('title', 'Data Siswa')</title>
     <title>@yield('title', 'Fintech Ledger') — CryptoSecure SMKN 2 Tabanan</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,6 +18,10 @@
 <body>
     <!-- Glassmorphism Navbar -->
     <nav class="navbar">
+        <div class="container nav-links">
+            <span class="brand">SMKN 2 Tabanan</span>
+            <a href="{{ route('siswa.index') }}">Data Siswa</a>
+            <a href="{{ route('kelas.index') }}">Data Kelas</a>
         <div class="container">
             <a href="{{ url('/') }}" class="brand-wrapper">
                 <div class="brand-icon">
@@ -55,6 +60,8 @@
 
     <!-- Main Content Container -->
     <main class="container">
+        @if (session('success'))<div class="alert alert-success">{{ session('success') }}</div>@endif
+        @if (session('error'))<div class="alert alert-error">{{ session('error') }}</div>@endif
         @if (session('success'))
             <div class="alert alert-success">
                 <i class="fa-solid fa-circle-check" style="font-size: 1.25rem;"></i>
@@ -74,6 +81,7 @@
         @endif
 
         @if ($errors->any())
+            <ul class="errors">@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
             <div class="errors">
                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; font-weight: 700;">
                     <i class="fa-solid fa-circle-xmark"></i> Validation Error Detected:

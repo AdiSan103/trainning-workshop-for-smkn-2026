@@ -1,1 +1,7 @@
+:root {
+    --navy: #102a43;
+    --blue: #1769aa;
+    --surface: #ffffff;
+    --shadow: 0 14px 35px rgb(16 42 67 / 10%);
+}
 @import "../../public/css/app.css";

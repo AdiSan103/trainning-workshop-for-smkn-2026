@@ -1,5 +1,6 @@
 /* Kelas Index Fintech Theme */
 .card {
+    border-top: 4px solid #0891b2;
     border-top: 2px solid var(--emerald);
     box-shadow:
         0 0 35px var(--emerald-glow),
@@ -8,6 +9,7 @@
 
 .page-heading h1 {
     position: relative;
+    padding-left: 0.9rem;
     padding-left: 1rem;
 }
 
@@ -17,17 +19,32 @@
     left: 0;
     top: 0.15em;
     bottom: 0.15em;
+    width: 0.32rem;
+    top: 0.15em;
+    bottom: 0.15em;
     width: 0.35rem;
     border-radius: 99px;
+    background: linear-gradient(180deg, #0891b2, #1769aa);
     background: linear-gradient(180deg, var(--emerald), var(--cyan));
     box-shadow: 0 0 10px var(--emerald-glow);
 }
 
+.page-heading .btn-primary {
+    border-radius: 99px;
+    background: linear-gradient(120deg, #0891b2, #0f4c81);
+    box-shadow: 0 8px 18px rgb(8 145 178 / 28%);
+}
+
 td .count {
     display: inline-block;
+    min-width: 2rem;
+    padding: 0.2rem 0.65rem;
     min-width: 2.2rem;
     padding: 0.25rem 0.75rem;
     text-align: center;
+    border-radius: 99px;
+    background: #e6f6fb;
+    color: #0e7490;
     border-radius: 9999px;
     background: rgba(16, 185, 129, 0.12);
     border: 1px solid rgba(16, 185, 129, 0.25);
@@ -37,6 +54,8 @@ td .count {
 }
 
 tbody tr:hover {
+    background: linear-gradient(90deg, #eefcff, #fff);
+    box-shadow: inset 3px 0 0 #0891b2;
     background: rgba(16, 185, 129, 0.05);
     box-shadow: inset 3px 0 0 var(--emerald);
 }

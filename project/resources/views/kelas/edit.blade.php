@@ -2,10 +2,12 @@
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/kelas/edit.css') }}">
 @endpush
+@section('title', 'Edit Kelas')
 @section('title', 'Edit Kelas: ' . $kela->nama_kelas)
 
 @section('content')
 <div class="card">
+    <div class="page-heading"><h1>Edit Kelas</h1></div>
     <div class="page-heading">
         <div>
             <h1>
@@ -22,14 +24,18 @@
     </div>
 
     <form method="POST" action="{{ route('kelas.update', $kela) }}">
+        @csrf @method('PUT')
         @csrf
         @method('PUT')
         <div class="form-group">
+            <label for="nama_kelas">Nama Kelas</label>
             <label for="nama_kelas"><i class="fa-solid fa-tag" style="color: var(--primary);"></i> Nama Kelas</label>
             <input id="nama_kelas" name="nama_kelas" type="text" value="{{ old('nama_kelas', $kela->nama_kelas) }}" required>
         </div>
 
         <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Simpan</button>
+            <a class="btn btn-secondary" href="{{ route('kelas.index') }}">Batal</a>
             <button class="btn btn-primary" type="submit">
                 <i class="fa-solid fa-floppy-disk"></i> Perbarui Kelas
             </button>

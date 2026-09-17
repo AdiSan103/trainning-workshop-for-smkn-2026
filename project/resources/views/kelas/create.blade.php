@@ -6,6 +6,7 @@
 
 @section('content')
 <div class="card">
+    <div class="page-heading"><h1>Tambah Kelas</h1></div>
     <div class="page-heading">
         <div>
             <h1>
@@ -24,11 +25,15 @@
     <form method="POST" action="{{ route('kelas.store') }}">
         @csrf
         <div class="form-group">
+            <label for="nama_kelas">Nama Kelas</label>
+            <input id="nama_kelas" name="nama_kelas" type="text" value="{{ old('nama_kelas') }}" required>
             <label for="nama_kelas"><i class="fa-solid fa-tag" style="color: var(--emerald);"></i> Nama Kelas</label>
             <input id="nama_kelas" name="nama_kelas" type="text" placeholder="Contoh: XII RPL 1 / Cyber Security A" value="{{ old('nama_kelas') }}" required autofocus>
         </div>
 
         <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Simpan</button>
+            <a class="btn btn-secondary" href="{{ route('kelas.index') }}">Batal</a>
             <button class="btn btn-primary" type="submit">
                 <i class="fa-solid fa-check"></i> Simpan Kelas
             </button>

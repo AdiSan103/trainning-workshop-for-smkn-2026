@@ -2,10 +2,13 @@
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/siswa/show.css') }}">
 @endpush
+@section('title', 'Detail Siswa')
 @section('title', 'Detail Siswa: ' . $siswa->nama)
 
 @section('content')
 <div class="card">
+    <div class="page-heading"><h1>Detail Siswa</h1>
+        <a class="btn btn-secondary" href="{{ route('siswa.index') }}">Kembali</a>
     <div class="page-heading">
         <div>
             <h1>
@@ -25,9 +28,14 @@
             </a>
         </div>
     </div>
+    <table>
 
     <table class="detail-table">
         <tbody>
+            <tr><th>NIS</th><td>{{ $siswa->nis }}</td></tr>
+            <tr><th>Nama</th><td>{{ $siswa->nama }}</td></tr>
+            <tr><th>Kelas</th><td>{{ $siswa->kelas->nama_kelas ?? '-' }}</td></tr>
+            <tr><th>Jenis Kelamin</th><td>{{ $siswa->jenis_kelamin ?? '-' }}</td></tr>
             <tr>
                 <th><i class="fa-solid fa-fingerprint"></i> Nomor Induk (NIS)</th>
                 <td><span class="nis-badge">{{ $siswa->nis }}</span></td>
