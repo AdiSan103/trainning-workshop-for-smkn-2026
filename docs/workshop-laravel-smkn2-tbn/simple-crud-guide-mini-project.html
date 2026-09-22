@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simple CRUD Guide Mini Project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+    --navy:#0f1e38; --navy-2:#12355b; --blue:#1769aa; --blue-light:#eaf3fb;
+    --amber:#e2a400; --amber-light:#fff8e6; --ink:#1f2937; --muted:#5b6b81; --ring:#dbe6f2;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{
+    background:
+        radial-gradient(circle at 12% 8%, #7c3aed 0, transparent 28%),
+        radial-gradient(circle at 88% 18%, #06b6d4 0, transparent 26%),
+        linear-gradient(135deg, #0b1026 0%, #172554 48%, #312e81 100%) fixed;
+    color:var(--ink); font-family:'Inter',Arial,sans-serif; line-height:1.6; min-height:100vh;
+}
+h1,h2{font-family:'Poppins','Inter',Arial,sans-serif}
+
+#progress-track{position:fixed;top:0;left:0;width:100%;height:5px;background:#0000002e;z-index:20}
+#progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--amber),var(--blue));transition:width .35s ease}
+
+#particles-bg{position:fixed; inset:0; z-index:10; pointer-events:none; opacity:.42; mix-blend-mode:multiply}
+#particles-bg canvas{display:block; width:100%; height:100%;}
+#deck{position:relative; z-index:1}
+
+.slide {
+    display: none;
+    width: min(960px, calc(100% - 2rem));
+    margin: 2.75rem auto 1.5rem;
+    min-height: calc(100vh - 10rem);
+    background: #fff;
+    color: #1f2937;
+    border-radius: .9rem;
+    padding: 2.5rem 3rem;
+    box-shadow: 0 20px 50px rgba(0,0,0,.4);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+.slide.active { display: block; }
+
+@keyframes riseIn{from{opacity:0; transform:translateY(24px)} to{opacity:1; transform:translateY(0)}}
+.slide.active > *{animation:riseIn .55s cubic-bezier(.2,.7,.3,1) both}
+.slide.active > *:nth-child(1){animation-delay:.02s}
+.slide.active > *:nth-child(2){animation-delay:.08s}
+.slide.active > *:nth-child(3){animation-delay:.14s}
+.slide.active > *:nth-child(4){animation-delay:.2s}
+.slide.active > *:nth-child(5){animation-delay:.26s}
+.slide.active > *:nth-child(6){animation-delay:.32s}
+
+.kicker-row{display:flex; align-items:center; gap:.6rem; margin-bottom:.35rem}
+.icon-badge{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:2.1rem; height:2.1rem; border-radius:50%; font-size:1.1rem; flex-shrink:0;
+    background:linear-gradient(145deg,var(--blue-light),#fff); box-shadow:0 2px 6px rgba(23,105,170,.2), inset 0 0 0 1px var(--ring);
+}
+.kicker { color: #1769aa; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: .8rem; }
+h1 { color: #12355b; font-size: 2.2rem; margin: .5rem 0 1rem; line-height: 1.2; }
+h2 { color: #12355b; font-size: 1.6rem; margin-bottom: 1rem; }
+p, li { font-size: 1.05rem; }
+ul { padding-left: 1.4rem; margin: .75rem 0; }
+li { margin: .35rem 0; }
+
+code {
+    background: #eef2f7;
+    border-radius: .3rem;
+    color: #0f2440;
+    font-family: Consolas, monospace;
+    font-size: .92em;
+    padding: .1em .35em;
+}
+
+pre {
+    background: #0f2440;
+    border-radius: .5rem;
+    color: #d7e3f4;
+    overflow-x: auto;
+    padding: 1rem;
+    font-size: .92rem;
+    margin: .75rem 0;
+}
+pre code { background: none; color: inherit; padding: 0; }
+
+.code-slide pre {
+    max-height: 52vh;
+    overflow: auto;
+    font-size: .78rem;
+    line-height: 1.35;
+    user-select: text;
+}
+.code-slide .copy-note { color: var(--muted); font-size: .9rem; margin-bottom: .6rem; }
+
+.code-wrap{position:relative; margin:.75rem 0}
+.code-wrap pre{margin:0}
+.copy-btn{
+    position:absolute; top:.5rem; right:.5rem; z-index:2;
+    display:inline-flex; align-items:center; justify-content:center;
+    width:2.1rem; height:2.1rem; padding:0; border-radius:.45rem;
+    background:rgba(255,255,255,.12); color:#d7e3f4;
+    cursor:pointer; transition:background .2s, color .2s, transform .15s;
+}
+.copy-btn svg{width:1.05rem; height:1.05rem; pointer-events:none}
+.copy-btn:hover:not(:disabled){background:rgba(255,255,255,.26); transform:translateY(-1px)}
+.copy-btn.copied{background:#147d64; color:#fff}
+
+.code-lines{
+    background:#0f2440; border-radius:.5rem; color:#d7e3f4;
+    margin:.75rem 0; padding:.5rem .75rem; overflow-x:auto;
+    font-family:Consolas,monospace; font-size:.92rem;
+}
+.code-wrap .code-lines{margin:0}
+.code-line{
+    display:flex; align-items:center; gap:.75rem;
+    padding:.12rem .25rem; border-radius:.3rem;
+    transition:background .15s ease;
+}
+.code-line:hover{background:rgba(255,255,255,.07)}
+.code-line code{
+    flex:1; white-space:pre; background:none; color:inherit;
+    padding:0; font-family:inherit; font-size:inherit;
+}
+.line-copy{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:1.65rem; height:1.65rem; padding:0; flex-shrink:0;
+    border-radius:.35rem; background:rgba(255,255,255,.12); color:#d7e3f4;
+    opacity:0; cursor:pointer;
+    transition:opacity .15s ease, background .2s ease, color .2s ease;
+}
+.code-line:hover .line-copy,
+.line-copy:focus-visible{opacity:1}
+.line-copy:hover:not(:disabled){background:rgba(255,255,255,.28)}
+.line-copy.copied{background:#147d64; color:#fff; opacity:1}
+.line-copy svg{width:.95rem; height:.95rem; pointer-events:none}
+@media (hover: none){ .line-copy{opacity:1} }
+
+.method{
+    border:1px solid var(--ring); border-radius:.6rem; overflow:hidden;
+    margin:.85rem 0; background:#fff;
+}
+.method-head{
+    display:flex; align-items:baseline; gap:.55rem; flex-wrap:wrap;
+    background:var(--blue-light); padding:.45rem .8rem; border-bottom:1px solid var(--ring);
+}
+.method-head code.method-name{
+    background:none; padding:0; font-family:Consolas,monospace;
+    font-weight:700; font-size:.95rem; color:var(--navy-2);
+}
+.method-head .method-desc{font-size:.86rem; color:var(--muted)}
+.method-head .method-desc code{background:#d3e4f5; color:#0f2440; font-size:.85em}
+.method .code-wrap{margin:0}
+.method .copy-btn{top:.45rem; right:.45rem}
+.method pre{margin:0; border-radius:0}
+
+.download{
+    display:flex; align-items:center; gap:1rem; flex-wrap:wrap;
+    background:linear-gradient(135deg,#0f1e38,#12355b); color:#fff;
+    border-radius:.7rem; padding:1rem 1.15rem; margin-top:1.5rem;
+}
+.download-icon{font-size:1.6rem; line-height:1}
+.download-text{flex:1; min-width:190px}
+.download-text strong{display:block; color:#fff; font-family:'Poppins','Inter',Arial,sans-serif}
+.download-text p{font-size:.92rem; color:#cdd8e6; margin:.15rem 0 0}
+.download-btn{
+    display:inline-flex; align-items:center; gap:.45rem; flex-shrink:0;
+    background:var(--amber); color:#3b2a00; font-weight:700; text-decoration:none;
+    padding:.6rem 1.05rem; border-radius:.5rem;
+    transition:transform .15s ease, box-shadow .2s ease;
+}
+.download-btn:hover{transform:translateY(-1px); box-shadow:0 8px 18px rgba(226,164,0,.35)}
+.download-btn svg{width:1rem; height:1rem}
+
+.mermaid-wrap{
+    background:#f7fafd; border:1px solid var(--ring); border-radius:.7rem;
+    padding:1rem; margin:.4rem 0 .75rem; overflow-x:auto;
+    display:flex; justify-content:center;
+}
+.mermaid{
+    background:none; color:#0f2440; padding:0; margin:0;
+    font-family:'Inter',Arial,sans-serif; font-size:.85rem; text-align:center;
+}
+.mermaid svg{max-width:100%; height:auto}
+
+.demo-btn{
+    display:inline-flex; align-items:center; gap:.4rem;
+    background:linear-gradient(135deg,#7c3aed,#0891b2); color:#fff; border:0;
+    border-radius:.5rem; padding:.55rem 1.05rem; font-weight:700; font-size:.92rem;
+    cursor:pointer; margin:.2rem 0 .6rem;
+    transition:transform .15s ease, box-shadow .2s ease;
+}
+.demo-btn:hover:not(:disabled){transform:translateY(-1px); box-shadow:0 10px 22px rgba(124,58,237,.32)}
+.demo-modal{
+    position:fixed; inset:0; z-index:60; display:none;
+    align-items:center; justify-content:center; padding:1.25rem;
+    background:rgba(8,12,26,.62); backdrop-filter:blur(3px);
+}
+.demo-modal.open{display:flex}
+.demo-modal-inner{
+    width:min(920px,100%); max-height:92vh; overflow:auto;
+    background:#f4f7fb; border-radius:1rem; box-shadow:0 30px 70px rgba(0,0,0,.55);
+}
+.demo-bar{
+    position:sticky; top:0; z-index:2;
+    display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    background:#0f1e38; color:#fff; padding:.6rem 1rem; font-weight:700; font-size:.9rem;
+}
+.demo-close{
+    background:rgba(255,255,255,.14); color:#fff; border:0; border-radius:.4rem;
+    width:1.9rem; height:1.9rem; padding:0; font-size:1.2rem; line-height:1; cursor:pointer;
+}
+.demo-close:hover:not(:disabled){background:rgba(255,255,255,.3)}
+.demo-app{
+    --d-navy:#102a43; --d-blue:#1769aa; --d-blue-dark:#0f4c81;
+    --d-text:#243b53; --d-muted:#627d98; --d-surface:#fff; --d-page:#f4f7fb; --d-line:#d9e2ec;
+    --d-shadow:0 14px 35px rgb(16 42 67 / 10%);
+    background:var(--d-page); color:var(--d-text); font-family:Arial,sans-serif; line-height:1.5; min-height:100%;
+}
+.demo-app *{box-sizing:border-box}
+.demo-app .container{width:min(1000px,calc(100% - 2rem)); margin:0 auto}
+.demo-app .navbar{color:#fff; background:linear-gradient(120deg,var(--d-navy),var(--d-blue-dark))}
+.demo-app .nav-links{display:flex; align-items:center; gap:1.1rem; padding:.9rem 0}
+.demo-app .brand{font-weight:700; margin-right:auto}
+.demo-app .navbar a{color:#fff; text-decoration:none; font-weight:600}
+.demo-app .card{margin:1.4rem 0; padding:1.5rem; background:rgb(255 255 255 / 94%); border-radius:1rem; box-shadow:var(--d-shadow)}
+.demo-app .page-heading{display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:1rem}
+.demo-app h1{color:var(--d-navy); font-size:1.35rem; margin:0}
+.demo-app p{font-size:.95rem; color:var(--d-muted)}
+.demo-app .btn{display:inline-block; padding:.6rem 1rem; border:0; border-radius:.55rem; font:inherit; font-size:.9rem; font-weight:700; cursor:pointer}
+.demo-app .btn-primary{color:#fff; background:var(--d-blue)}
+.demo-app .btn-secondary{color:var(--d-text); background:#e8eef5}
+.demo-app .btn-danger{color:#fff; background:#c0392b}
+.demo-app .btn-primary:hover:not(:disabled){background:#125e94}
+.demo-app .btn-secondary:hover:not(:disabled){background:#dbe5f0}
+.demo-app .btn-danger:hover:not(:disabled){background:#a93226}
+.demo-app .table-wrap{overflow-x:auto; border:1px solid var(--d-line); border-radius:.75rem}
+.demo-app table{width:100%; border-collapse:collapse; background:var(--d-surface)}
+.demo-app th,.demo-app td{padding:.8rem 1rem; text-align:left; border-bottom:1px solid var(--d-line)}
+.demo-app thead th{background:#eef4fa; color:var(--d-navy)}
+.demo-app .form-group{margin-bottom:1rem}
+.demo-app label{display:block; font-weight:600; margin-bottom:.35rem}
+.demo-app input,.demo-app select{width:100%; min-height:2.7rem; padding:.6rem .7rem; border:1px solid #bcccdc; border-radius:.5rem; font:inherit}
+.demo-app .form-actions{display:flex; gap:.6rem; margin-top:1.25rem}
+.demo-app .inline-form{display:inline-block; margin:0}
+.demo-app .inline-form+.inline-form{margin-left:.4rem}
+
+.quiz{margin-top:.4rem}
+.quiz-q{font-weight:600; color:var(--ink); font-size:1.05rem; margin:.2rem 0 1rem}
+.quiz-options{display:grid; gap:.6rem}
+.quiz-option{
+    text-align:left; background:#fff; color:var(--ink); border:1px solid var(--ring);
+    border-radius:.55rem; padding:.7rem .9rem; font:inherit; font-size:.98rem; font-weight:500;
+    cursor:pointer; transition:background .15s ease, border-color .15s ease, transform .15s ease;
+}
+.quiz-option:hover:not(:disabled){background:var(--blue-light); border-color:var(--blue); transform:translateX(2px)}
+.quiz-option.correct{background:#e3fcef; border-color:#147d64; color:#0f5132; font-weight:700}
+.quiz-option.wrong{background:#fff0f0; border-color:#b42318; color:#842029}
+.quiz-option:disabled{cursor:default}
+.quiz-feedback{border-radius:.6rem; padding:.85rem 1rem; font-size:.95rem; margin-top:1rem}
+.quiz-feedback.ok{background:#e3fcef; color:#0f5132; border-left:4px solid #147d64}
+.quiz-feedback.no{background:#fff0f0; color:#842029; border-left:4px solid #b42318}
+
+.lesson {
+    background: #fff8e6;
+    border-left: 4px solid #e2a400;
+    border-radius: .5rem;
+    margin-top: 1.5rem;
+    padding: .8rem 1.05rem;
+    display:flex; gap:.6rem; align-items:flex-start;
+}
+.lesson strong { color: #8a6100; }
+
+.cols { display: grid; gap: 1.1rem; grid-template-columns: repeat(auto-fit, minmax(225px, 1fr)); margin-top:.5rem }
+.box{
+    background:var(--blue-light); border-radius:.65rem; padding:1rem 1.1rem; border:1px solid var(--ring);
+    transition:transform .2s ease, box-shadow .2s ease;
+}
+.box:hover{transform:translateY(-3px); box-shadow:0 10px 22px rgba(23,105,170,.15)}
+.box p{font-size:.95rem; color:var(--muted)}
+
+.bg-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:1.6rem; align-items:center; margin-top:.4rem}
+.bg-grid p{margin-bottom:.6rem}
+.bg-figure{margin:0}
+.bg-figure img{
+    width:100%; height:100%; max-height:44vh; object-fit:cover; display:block;
+    border-radius:.75rem; box-shadow:0 14px 30px rgba(15,30,56,.22);
+}
+.bg-figure figcaption{font-size:.78rem; color:var(--muted); margin-top:.5rem; text-align:right}
+.bg-figure figcaption a{color:var(--blue); text-decoration:none}
+.bg-figure figcaption a:hover{text-decoration:underline}
+
+.hero { display:none; text-align: center; z-index:1; position:relative }
+.hero.active{display:flex; flex-direction:column; align-items:center; justify-content:center}
+.hero p { color: #4b5563; margin: .35rem 0; }
+
+.toc{display:grid; gap:.5rem; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); margin:.75rem 0}
+.toc-link{
+    display:flex; align-items:center; gap:.6rem;
+    background:#fff; border:1px solid var(--ring); border-radius:.55rem;
+    color:var(--ink); font-size:.95rem; font-weight:500; text-decoration:none;
+    padding:.55rem .7rem;
+    transition:background .15s ease, border-color .15s ease, transform .15s ease;
+}
+.toc-link:hover{background:var(--blue-light); border-color:var(--blue); transform:translateX(2px)}
+.toc-num{
+    display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;
+    min-width:1.7rem; height:1.7rem; padding:0 .3rem; border-radius:.45rem;
+    background:var(--blue-light); color:var(--navy-2);
+    font-size:.78rem; font-weight:700;
+}
+
+.navbar {
+    position:fixed; bottom:0; left:0; width:100%; z-index:15;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background:linear-gradient(0deg, rgba(15,30,56,.95), rgba(15,30,56,0));
+}
+
+button {
+    background: #1769aa;
+    border: 0;
+    border-radius: .5rem;
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-weight:600;
+    padding: .6rem 1.2rem;
+    transition: background .2s, transform .15s;
+}
+button:hover:not(:disabled){background:#125e94; transform:translateY(-1px)}
+button:disabled { background: #3f5b80; cursor: not-allowed; opacity:.6 }
+#counter { min-width: 7ch; text-align: center; color: #cdd8e6; font-variant-numeric: tabular-nums }
+
+@media (max-width: 640px) {
+    .slide { padding: 1.6rem; }
+    h1 { font-size: 1.7rem; }
+    .bg-grid { grid-template-columns: 1fr; }
+    .bg-figure img { max-height: 30vh; }
+    .code-slide pre { max-height: 48vh; font-size: .68rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress-track"><div id="progress-bar"></div></div>
+<div id="particles-bg" aria-hidden="true"></div>
+
+<main id="deck">
+
+    <section class="slide active hero">
+        <span class="icon-badge" style="width:3.2rem;height:3.2rem;font-size:1.7rem;margin-bottom:1rem">📗</span>
+        <p class="kicker">Simple CRUD Guide</p>
+        <h1>Simple CRUD Guide Mini Project</h1>
+        <p>Laravel 8 &bull; Blade &bull; MySQL &bull; XAMPP</p>
+        <p>Satu Tabel &mdash; Data <strong>Siswa</strong></p>
+        <p>Mini Project Workshop &mdash; SMKN 2 Tabanan</p>
+        <p>Tekan tombol <strong>Selanjutnya</strong> atau panah keyboard untuk pindah slide.</p>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">📑</span><p class="kicker">Daftar Isi</p></div>
+        <h2>Daftar Isi Materi</h2>
+        <p>Klik salah satu materi untuk langsung melompat ke slide-nya.</p>
+        <nav class="toc">
+            <a class="toc-link" href="#latar-belakang" data-target="Latar Belakang"><span class="toc-num">★</span> Latar Belakang</a>
+            <a class="toc-link" href="#step-1" data-target="Step 1"><span class="toc-num">1</span> Kebutuhan Project</a>
+            <a class="toc-link" href="#step-2" data-target="Step 2"><span class="toc-num">2</span> Siapkan Tools</a>
+            <a class="toc-link" href="#step-3" data-target="Step 3"><span class="toc-num">3</span> Setup Project Laravel</a>
+            <a class="toc-link" href="#step-4" data-target="Step 4"><span class="toc-num">4</span> Konfigurasi Database</a>
+            <a class="toc-link" href="#step-5" data-target="Step 5"><span class="toc-num">5</span> Rancang Tabel Siswa</a>
+            <a class="toc-link" href="#step-6" data-target="Step 6"><span class="toc-num">6</span> Migration Tabel Siswa</a>
+            <a class="toc-link" href="#step-7" data-target="Step 7"><span class="toc-num">7</span> Model Siswa</a>
+            <a class="toc-link" href="#step-8" data-target="Step 8"><span class="toc-num">8</span> SiswaController</a>
+            <a class="toc-link" href="#step-9" data-target="Step 9"><span class="toc-num">9</span> Daftarkan Route</a>
+            <a class="toc-link" href="#step-10" data-target="Step 10"><span class="toc-num">10</span> Layout Blade</a>
+            <a class="toc-link" href="#step-11" data-target="Step 11"><span class="toc-num">11</span> View Siswa (CRUD)</a>
+            <a class="toc-link" href="#step-12" data-target="Step 12"><span class="toc-num">12</span> Styling Halaman</a>
+            <a class="toc-link" href="#step-13" data-target="Step 13"><span class="toc-num">13</span> Pengujian Otomatis</a>
+            <a class="toc-link" href="#step-14" data-target="Step 14"><span class="toc-num">14</span> Jalankan Project</a>
+            <a class="toc-link" href="#step-15" data-target="Step 15"><span class="toc-num">15</span> Pemeriksaan Akhir</a>
+        </nav>
+        <div class="lesson"><span>💡</span><div><strong>Fokus:</strong> satu tabel saja &mdash; <code>siswa</code>. Semua langkah CRUD (Create, Read, Update, Delete) dibuat dari tabel tunggal ini.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">📌</span><p class="kicker">Latar Belakang</p></div>
+        <h2>Latar Belakang Project</h2>
+        <div class="bg-grid">
+            <div class="bg-text">
+                <p>Data siswa masih dicatat manual di buku atau spreadsheet terpisah. Cara ini lambat, mudah duplikat, dan sulit dipakai saat menyusun laporan.</p>
+                <p>Karena semua informasi siswa cukup ditampung dalam satu tabel, kita tidak perlu relasi antar tabel. Fokusnya adalah melatih alur CRUD dari awal sampai akhir.</p>
+                <p>Karena itu dibuat aplikasi web sederhana berbasis <strong>Laravel</strong> untuk mengelola data siswa secara terpusat, sesuai kebutuhan PRD dan kompetensi yang dipelajari.</p>
+            </div>
+            <figure class="bg-figure">
+                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=900&q=80" alt="Suasana kelas dengan siswa yang sedang belajar" loading="lazy">
+                <figcaption>Ilustrasi: <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a></figcaption>
+            </figure>
+        </div>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Sebelum menulis kode, pahami dulu masalah nyata dan alasan project ini dibuat.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🎯</span><p class="kicker">Step 1</p></div>
+        <h2>Pahami Kebutuhan Project</h2>
+        <ul>
+            <li>Kelola data <code>siswa</code> pada <strong>satu tabel</strong> saja.</li>
+            <li>Menerapkan CRUD: Create, Read, Update, Delete.</li>
+            <li>Tanpa relasi antar tabel, tanpa login.</li>
+            <li>Dibatasi satu tabel sesuai PRD.</li>
+        </ul>
+        <div class="cols">
+            <div class="box">
+                <p><strong>Fitur wajib</strong></p>
+                <ul>
+                    <li>Tambah, lihat, edit, hapus siswa.</li>
+                    <li>Daftar siswa berisi semua data.</li>
+                    <li>NIS unik, nama &amp; kelas wajib.</li>
+                </ul>
+            </div>
+            <div class="box">
+                <p><strong>Belum dibuat</strong></p>
+                <ul>
+                    <li>Login.</li>
+                    <li>Tabel kelas (relasi).</li>
+                    <li>Nilai &amp; absensi.</li>
+                    <li>Upload foto.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> PRD membatasi pekerjaan. Jangan langsung menambah fitur di luar kebutuhan.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 1</p></div>
+        <h2>Kebutuhan Project</h2>
+        <div class="quiz" data-explain="Sesuai PRD, project ini dibatasi satu tabel saja: tabel siswa. Karena hanya satu tabel, tidak ada foreign key maupun relasi antar tabel.">
+            <p class="quiz-q">Sesuai PRD, berapa tabel yang dipakai pada project ini?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="true">Satu tabel: siswa</button>
+                <button class="quiz-option" type="button" data-correct="false">Dua tabel: kelas dan siswa</button>
+                <button class="quiz-option" type="button" data-correct="false">Tiga tabel: kelas, siswa, dan nilai</button>
+                <button class="quiz-option" type="button" data-correct="false">Empat tabel termasuk absensi</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🧰</span><p class="kicker">Step 2</p></div>
+        <h2>Siapkan Tools</h2>
+        <ul>
+            <li>XAMPP 8.2.x (Apache, MySQL, PHP 8.2.x).</li>
+            <li>PHP minimum 7.3.</li>
+            <li>Composer 2.x.</li>
+            <li>Node.js dan npm.</li>
+            <li>Editor kode, Git (opsional).</li>
+        </ul>
+        <pre data-line-copy><code>php --version
+composer --version
+node --version
+npm --version</code></pre>
+        <p>Start <strong>Apache</strong> dan <strong>MySQL</strong> lewat XAMPP Control Panel.</p>
+        <div class="download">
+            <span class="download-icon">⬇️</span>
+            <div class="download-text">
+                <strong>Download Kode Project</strong>
+                <p>Ambil source code lengkap dari repository GitHub di bawah ini.</p>
+            </div>
+            <a class="download-btn" href="https://github.com/AdiSan103/trainning-workshop-smkn2-14-sept/tree/project" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+                Buka di GitHub
+            </a>
+        </div>
+        <pre><code>git clone -b project https://github.com/AdiSan103/trainning-workshop-smkn2-14-sept.git</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Pastikan tools siap sebelum debugging kode.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 2</p></div>
+        <h2>Tools yang Harus Aktif</h2>
+        <div class="quiz" data-explain="Sebelum menjalankan project, dua service XAMPP yang harus aktif adalah Apache (web server) dan MySQL (database).">
+            <p class="quiz-q">Dua service pada XAMPP yang harus dijalankan sebelum project berjalan adalah?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="true">Apache dan MySQL</button>
+                <button class="quiz-option" type="button" data-correct="false">MySQL dan Redis</button>
+                <button class="quiz-option" type="button" data-correct="false">Apache dan Node.js</button>
+                <button class="quiz-option" type="button" data-correct="false">PHP dan Composer</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">📦</span><p class="kicker">Step 3</p></div>
+        <h2>Siapkan Project Laravel</h2>
+        <pre data-line-copy><code>cd project
+composer install
+copy .env.example .env
+php artisan key:generate
+npm install</code></pre>
+        <ul>
+            <li><code>composer.json</code> mengatur dependency PHP.</li>
+            <li><code>package.json</code> mengatur dependency frontend.</li>
+            <li><code>.env</code> menyimpan konfigurasi lokal.</li>
+        </ul>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> File konfigurasi environment tidak boleh dibagikan sembarangan.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 3</p></div>
+        <h2>Setup Project Laravel</h2>
+        <div class="quiz" data-explain="Perintah php artisan key:generate membuat APP_KEY yang dipakai Laravel untuk enkripsi, termasuk session dan cookie.">
+            <p class="quiz-q">Perintah apa yang dipakai untuk membuat application key Laravel?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false"><code>composer install</code></button>
+                <button class="quiz-option" type="button" data-correct="true"><code>php artisan key:generate</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>npm install</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>copy .env.example .env</code></button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🗄️</span><p class="kicker">Step 4</p></div>
+        <h2>Konfigurasi Database</h2>
+        <p>Buat database bernama <code>laravel_workshop</code> lewat phpMyAdmin, lalu cek <code>.env</code>:</p>
+        <pre><code>DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel_workshop
+DB_USERNAME=root
+DB_PASSWORD=</code></pre>
+        <div class="lesson"><span>🔒</span><div><strong>Pelajaran:</strong> Jangan simpan password database asli di Git.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 4</p></div>
+        <h2>Konfigurasi Database</h2>
+        <div class="quiz" data-explain="File .env menyimpan konfigurasi lokal seperti koneksi database (DB_DATABASE, DB_USERNAME, DB_PASSWORD). File ini tidak boleh di-commit ke Git.">
+            <p class="quiz-q">Di file mana konfigurasi koneksi database project ini disimpan?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false"><code>composer.json</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>package.json</code></button>
+                <button class="quiz-option" type="button" data-correct="true"><code>.env</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>routes/web.php</code></button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🧩</span><p class="kicker">Step 5</p></div>
+        <h2>Rancang Tabel Siswa</h2>
+        <div class="mermaid-wrap">
+            <pre class="mermaid">
+erDiagram
+    SISWA {
+        int id PK
+        string nis
+        string nama
+        string kelas
+        string jenis_kelamin
+    }
+            </pre>
+        </div>
+        <div class="cols">
+            <div class="box">
+                <p><strong>Kolom tabel siswa</strong></p>
+                <ul>
+                    <li><code>id</code> &mdash; primary key otomatis.</li>
+                    <li><code>nis</code> &mdash; unique, tidak boleh kembar.</li>
+                    <li><code>nama</code> &mdash; wajib diisi.</li>
+                </ul>
+            </div>
+            <div class="box">
+                <p><strong>Kolom lanjutan</strong></p>
+                <ul>
+                    <li><code>kelas</code> &mdash; teks, bukan tabel terpisah.</li>
+                    <li><code>jenis_kelamin</code> L/P, nullable.</li>
+                    <li><code>created_at</code>, <code>updated_at</code>.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Karena hanya satu tabel, kolom <code>kelas</code> cukup berupa teks &mdash; tidak perlu tabel relasi.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 5</p></div>
+        <h2>Kolom Unik</h2>
+        <div class="quiz" data-explain="Kolom nis diberi aturan unique agar tidak ada nomor induk siswa yang duplikat. Satu NIS mewakili satu siswa, jadi datanya tidak boleh kembar.">
+            <p class="quiz-q">Mengapa kolom <code>nis</code> diberi aturan <strong>unique</strong>?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Supaya kolom wajib diisi</button>
+                <button class="quiz-option" type="button" data-correct="true">Supaya tidak ada nomor induk siswa yang duplikat</button>
+                <button class="quiz-option" type="button" data-correct="false">Supaya kolom terhubung ke tabel lain</button>
+                <button class="quiz-option" type="button" data-correct="false">Supaya kolom memiliki nilai bawaan otomatis</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🧱</span><p class="kicker">Step 6 &middot; Tabel Siswa</p></div>
+        <h2>Migration: Tabel Siswa</h2>
+        <p>Buat file migration lalu isi schema tabel <code>siswa</code>.</p>
+        <p class="copy-note">Setiap blok code bisa disalin lewat tombol clipboard di pojok kanan.</p>
+
+        <p><strong>1. Generate file migration</strong></p>
+        <pre><code>php artisan make:migration create_siswa_table</code></pre>
+
+        <p><strong>2. Copy schema tabel siswa</strong> &mdash; <code>database/migrations/2026_09_08_000001_create_siswa_table.php</code></p>
+        <pre><code>&lt;?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up()
+    {
+        Schema::create('siswa', function (Blueprint $table) {
+            $table-&gt;id();
+            $table-&gt;string('nis')-&gt;unique();
+            $table-&gt;string('nama');
+            $table-&gt;string('kelas');
+            $table-&gt;enum('jenis_kelamin', ['L', 'P'])-&gt;nullable();
+            $table-&gt;timestamps();
+        });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('siswa');
+    }
+};</code></pre>
+
+        <p><strong>3. Jalankan migration</strong></p>
+        <pre><code>php artisan migrate
+php artisan migrate:fresh   # hapus &amp; buat ulang semua tabel (development)</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Migration adalah version control untuk struktur database.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 6</p></div>
+        <h2>Fungsi Migration</h2>
+        <div class="quiz" data-explain="Migration berfungsi sebagai version control untuk struktur database. Struktur tabel dibuat dan diubah lewat kode secara terurut, bukan diubah manual di phpMyAdmin.">
+            <p class="quiz-q">Apa fungsi utama migration pada Laravel?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Menyimpan data siswa</button>
+                <button class="quiz-option" type="button" data-correct="true">Menjadi version control untuk struktur database</button>
+                <button class="quiz-option" type="button" data-correct="false">Mengatur tampilan halaman</button>
+                <button class="quiz-option" type="button" data-correct="false">Menghubungkan URL dengan controller</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🔗</span><p class="kicker">Step 7 &middot; Model Siswa</p></div>
+        <h2>Model Siswa</h2>
+        <p>Model <code>Siswa</code> menerjemahkan tabel <code>siswa</code> menjadi object PHP. Karena hanya satu tabel, tidak ada relasi yang perlu ditulis.</p>
+        <p class="copy-note">Setiap blok code bisa disalin lewat tombol clipboard di pojok kanan.</p>
+
+        <p><strong>1. Generate file model</strong></p>
+        <pre><code>php artisan make:model Siswa</code></pre>
+
+        <p><strong>2. Copy code model Siswa</strong> &mdash; <code>app/Models/Siswa.php</code></p>
+        <pre><code>&lt;?php
+namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
+
+class Siswa extends Model
+{
+    protected $table = 'siswa';
+    protected $fillable = ['nis', 'nama', 'kelas', 'jenis_kelamin'];
+}</code></pre>
+
+        <p><strong>3. Pakai modelnya</strong></p>
+        <pre><code>$siswa = Siswa::orderBy('nama')-&gt;get();
+$siswa-&gt;nama;</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Model menerjemahkan tabel menjadi object PHP. Tanpa relasi, model ini cukup berisi <code>$table</code> dan <code>$fillable</code>.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 7</p></div>
+        <h2>Properti <code>$fillable</code></h2>
+        <div class="quiz" data-explain="Kolom di dalam $fillable boleh diisi lewat mass assignment, misalnya Siswa::create([...]) atau $model->update([...]). Kolom di luar daftar itu akan diabaikan.">
+            <p class="quiz-q">Apa fungsi <code>protected $fillable = ['nis', 'nama', 'kelas', 'jenis_kelamin'];</code>?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="true">Menentukan kolom yang boleh diisi massal lewat create() dan update()</button>
+                <button class="quiz-option" type="button" data-correct="false">Menentukan nama tabel</button>
+                <button class="quiz-option" type="button" data-correct="false">Menyembunyikan kolom dari output JSON</button>
+                <button class="quiz-option" type="button" data-correct="false">Menentukan aturan validasi input</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Step 8 &middot; SiswaController</p></div>
+        <h2>Generate &amp; Deklarasi</h2>
+        <p>Buat controller, lalu salin deklarasi dan import di bagian atas file.</p>
+
+        <p><strong>1. Generate controller</strong></p>
+        <pre><code>php artisan make:controller SiswaController</code></pre>
+
+        <p><strong>2. Deklarasi &amp; import</strong> &mdash; <code>app/Http/Controllers/SiswaController.php</code></p>
+        <pre><code>&lt;?php
+namespace App\Http\Controllers;
+
+use App\Models\Siswa;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+
+class SiswaController extends Controller
+{</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Semua method berikut ditulis di dalam kurung kurawal class ini.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Step 8 &middot; index()</p></div>
+        <h2>index() &mdash; Daftar Siswa</h2>
+        <p>Menampilkan semua siswa terurut berdasarkan nama.</p>
+        <pre><code>public function index()
+{
+    $siswa = Siswa::orderBy('nama')-&gt;get();
+    return view('siswa.index', compact('siswa'));
+}</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Step 8 &middot; create()</p></div>
+        <h2>create() &mdash; Form Tambah</h2>
+        <p>Menampilkan form tambah siswa.</p>
+        <pre><code>public function create()
+{
+    return view('siswa.create');
+}</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Step 8 &middot; store()</p></div>
+        <h2>store() &mdash; Simpan Siswa</h2>
+        <p>Menyimpan siswa baru setelah lolos validasi, lalu kembali ke daftar dengan pesan sukses.</p>
+        <pre><code>public function store(Request $request)
+{
+    Siswa::create($this-&gt;validated($request));
+    return redirect()-&gt;route('siswa.index')-&gt;with('success', 'Data siswa berhasil ditambahkan.');
+}</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Step 8 &middot; show()</p></div>
+        <h2>show() &mdash; Detail Siswa</h2>
+        <p>Menampilkan detail satu siswa lewat route model binding.</p>
+        <pre><code>public function show(Siswa $siswa)
+{
+    return view('siswa.show', compact('siswa'));
+}</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Step 8 &middot; edit()</p></div>
+        <h2>edit() &mdash; Form Edit</h2>
+        <p>Menampilkan form edit yang sudah terisi data siswa lewat route model binding.</p>
+        <pre><code>public function edit(Siswa $siswa)
+{
+    return view('siswa.edit', compact('siswa'));
+}</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Step 8 &middot; update()</p></div>
+        <h2>update() &mdash; Perbarui Siswa</h2>
+        <p>Memperbarui data siswa; aturan unik NIS mengabaikan baris yang sedang diedit.</p>
+        <pre><code>public function update(Request $request, Siswa $siswa)
+{
+    $siswa-&gt;update($this-&gt;validated($request, $siswa));
+    return redirect()-&gt;route('siswa.index')-&gt;with('success', 'Data siswa berhasil diperbarui.');
+}</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Step 8 &middot; destroy()</p></div>
+        <h2>destroy() &mdash; Hapus Siswa</h2>
+        <p>Menghapus data siswa, lalu kembali ke daftar dengan pesan sukses.</p>
+        <pre><code>public function destroy(Siswa $siswa)
+{
+    $siswa-&gt;delete();
+    return redirect()-&gt;route('siswa.index')-&gt;with('success', 'Data siswa berhasil dihapus.');
+}</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🎓</span><p class="kicker">Step 8 &middot; validated()</p></div>
+        <h2>validated() &mdash; Aturan Validasi</h2>
+        <p>Aturan validasi bersama untuk <code>store()</code> dan <code>update()</code>. Baris terakhir menutup class.</p>
+        <pre><code>private function validated(Request $request, ?Siswa $siswa = null)
+{
+    return $request-&gt;validate([
+        'nis' =&gt; ['required', 'string', 'max:50', Rule::unique('siswa', 'nis')-&gt;ignore($siswa)],
+        'nama' =&gt; ['required', 'string', 'max:255'],
+        'kelas' =&gt; ['required', 'string', 'max:100'],
+        'jenis_kelamin' =&gt; ['nullable', Rule::in(['L', 'P'])],
+    ]);
+}
+}</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> <code>Rule::unique(...)-&gt;ignore($siswa)</code> membuat NIS tetap unik tanpa menolak data miliknya sendiri saat diedit.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 8</p></div>
+        <h2>Validasi Unik Saat Edit</h2>
+        <div class="quiz" data-explain="Saat update, baris yang sedang diedit harus dikecualikan dari pengecekan unik. Karena itu dipakai Rule::unique('siswa', 'nis')->ignore($siswa), supaya NIS milik baris itu sendiri tidak dianggap duplikat.">
+            <p class="quiz-q">Mengapa aturan unik NIS memakai <code>-&gt;ignore($siswa)</code> pada <code>update()</code>?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Agar validasi dilewati sepenuhnya saat update</button>
+                <button class="quiz-option" type="button" data-correct="true">Agar baris yang sedang diedit dikecualikan dari pengecekan unik</button>
+                <button class="quiz-option" type="button" data-correct="false">Agar NIS boleh dikosongkan saat update</button>
+                <button class="quiz-option" type="button" data-correct="false">Agar NIS otomatis diubah menjadi huruf kapital</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🛣️</span><p class="kicker">Step 9 &middot; Daftarkan Route</p></div>
+        <h2>Daftar URL &amp; Setup</h2>
+        <p>Route menghubungkan URL dengan controller action. Daftar URL yang dipakai:</p>
+        <pre><code>/                    redirect ke daftar siswa
+/siswa               daftar siswa
+/siswa/create        form tambah siswa
+/siswa/{siswa}       detail siswa
+/siswa/{siswa}/edit  form edit siswa</code></pre>
+        <p class="copy-note">Setiap blok code bisa disalin lewat tombol clipboard di pojok kanan.</p>
+
+        <p><strong>Siapkan file</strong> &mdash; <code>routes/web.php</code></p>
+        <pre><code>&lt;?php
+
+use App\Http\Controllers\SiswaController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return redirect()-&gt;route('siswa.index');
+});</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Route menghubungkan URL dengan controller action.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🛣️</span><p class="kicker">Step 9 &middot; Route Siswa</p></div>
+        <h2>Route Siswa</h2>
+        <p>Tujuh route CRUD data siswa: daftar, form tambah, simpan, detail, form edit, perbarui, dan hapus.</p>
+        <pre><code>Route::get('siswa', [SiswaController::class, 'index'])-&gt;name('siswa.index');
+Route::get('siswa/create', [SiswaController::class, 'create'])-&gt;name('siswa.create');
+Route::post('siswa', [SiswaController::class, 'store'])-&gt;name('siswa.store');
+Route::get('siswa/{siswa}', [SiswaController::class, 'show'])-&gt;name('siswa.show');
+Route::get('siswa/{siswa}/edit', [SiswaController::class, 'edit'])-&gt;name('siswa.edit');
+Route::put('siswa/{siswa}', [SiswaController::class, 'update'])-&gt;name('siswa.update');
+Route::delete('siswa/{siswa}', [SiswaController::class, 'destroy'])-&gt;name('siswa.destroy');</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🛣️</span><p class="kicker">Step 9 &middot; Cek Route</p></div>
+        <h2>Cek Daftar Route</h2>
+        <p>Pastikan semua route sudah terdaftar dengan benar.</p>
+        <pre><code>php artisan route:list</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Biasakan cek route setelah menambah atau mengubahnya.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 9</p></div>
+        <h2>HTTP Method pada Route</h2>
+        <div class="quiz" data-explain="Route::put dipakai untuk memperbarui data yang sudah ada (update). GET menampilkan halaman, POST menyimpan data baru, dan DELETE menghapus data.">
+            <p class="quiz-q"><code>Route::put('siswa/{siswa}', ...)</code> dipakai untuk action apa?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Menampilkan daftar siswa</button>
+                <button class="quiz-option" type="button" data-correct="false">Menyimpan siswa baru</button>
+                <button class="quiz-option" type="button" data-correct="true">Memperbarui data siswa</button>
+                <button class="quiz-option" type="button" data-correct="false">Menghapus data siswa</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🖼️</span><p class="kicker">Step 10</p></div>
+        <h2>Buat Layout Blade</h2>
+        <p><code>resources/views/layouts/app.blade.php</code> berisi navigation, flash message, error validasi, dan <code>@yield('content')</code>.</p>
+        <p class="copy-note">Setiap blok code bisa disalin lewat tombol clipboard di pojok kanan.</p>
+
+        <div class="method">
+            <div class="method-head"><code class="method-name">Directive Blade</code><span class="method-desc">Escaping output, proteksi form, dan method spoofing.</span></div>
+            <pre><code>{{ $value }}        // escaping output
+@csrf               // proteksi form
+@method('PUT')      // method spoofing
+@method('DELETE')</code></pre>
+        </div>
+
+        <div class="method">
+            <div class="method-head"><code class="method-name">layouts/app.blade.php</code><span class="method-desc">Layout utama: navigation, flash message, error validasi, dan tempat isi halaman.</span></div>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="id"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;title&gt;@yield('title', 'Data Siswa')&lt;/title&gt;
+    &lt;link rel="stylesheet" href="{{ asset('css/app.css') }}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;nav class="navbar"&gt;
+        &lt;div class="container nav-links"&gt;
+            &lt;span class="brand"&gt;SMKN 2 Tabanan&lt;/span&gt;
+            &lt;a href="{{ route('siswa.index') }}"&gt;Data Siswa&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/nav&gt;
+    &lt;main class="container"&gt;
+        @if (session('success'))&lt;div class="alert alert-success"&gt;{{ session('success') }}&lt;/div&gt;@endif
+        @if (session('error'))&lt;div class="alert alert-error"&gt;{{ session('error') }}&lt;/div&gt;@endif
+        @if ($errors-&gt;any())
+            &lt;ul class="errors"&gt;@foreach ($errors-&gt;all() as $error)&lt;li&gt;{{ $error }}&lt;/li&gt;@endforeach&lt;/ul&gt;
+        @endif
+        @yield('content')
+    &lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Layout mengurangi HTML berulang. <code>@csrf</code> wajib di setiap form.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 10</p></div>
+        <h2>Proteksi Form</h2>
+        <div class="quiz" data-explain="@csrf menambahkan token CSRF ke dalam form. Token ini memastikan request benar-benar berasal dari aplikasi sendiri, sehingga wajib ditulis di setiap form.">
+            <p class="quiz-q">Directive Blade apa yang wajib ada di setiap form untuk proteksi CSRF?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false"><code>@yield</code></button>
+                <button class="quiz-option" type="button" data-correct="true"><code>@csrf</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>@extends</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>@section</code></button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">📋</span><p class="kicker">Step 11 &middot; Create</p></div>
+        <h2>Create &mdash; Tambah Siswa</h2>
+        <p>Halaman form tambah siswa &mdash; <code>siswa/create.blade.php</code>.</p>
+        <pre><code>@extends('layouts.app')
+@section('title', 'Tambah Siswa')
+@section('content')
+&lt;div class="card"&gt;
+    &lt;div class="page-heading"&gt;&lt;h1&gt;Tambah Siswa&lt;/h1&gt;&lt;/div&gt;
+    &lt;form method="POST" action="{{ route('siswa.store') }}"&gt;
+        @csrf
+        &lt;div class="form-group"&gt;
+            &lt;label for="nis"&gt;NIS&lt;/label&gt;
+            &lt;input id="nis" name="nis" type="text" value="{{ old('nis') }}" required&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label for="nama"&gt;Nama&lt;/label&gt;
+            &lt;input id="nama" name="nama" type="text" value="{{ old('nama') }}" required&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label for="kelas"&gt;Kelas&lt;/label&gt;
+            &lt;input id="kelas" name="kelas" type="text" value="{{ old('kelas') }}" required&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label for="jenis_kelamin"&gt;Jenis Kelamin&lt;/label&gt;
+            &lt;select id="jenis_kelamin" name="jenis_kelamin"&gt;
+                &lt;option value=""&gt;-- Tidak diisi --&lt;/option&gt;
+                &lt;option value="L" @selected(old('jenis_kelamin') === 'L')&gt;Laki-laki&lt;/option&gt;
+                &lt;option value="P" @selected(old('jenis_kelamin') === 'P')&gt;Perempuan&lt;/option&gt;
+            &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div class="form-actions"&gt;
+            &lt;button class="btn btn-primary" type="submit"&gt;Simpan&lt;/button&gt;
+            &lt;a class="btn btn-secondary" href="{{ route('siswa.index') }}"&gt;Batal&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+@endsection</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Form ditulis langsung di halamannya agar tiap file bisa berdiri sendiri dan mudah disalin.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">📋</span><p class="kicker">Step 11 &middot; Update</p></div>
+        <h2>Update &mdash; Edit Siswa</h2>
+        <p>Halaman edit siswa &mdash; <code>siswa/edit.blade.php</code>.</p>
+        <pre><code>@extends('layouts.app')
+@section('title', 'Edit Siswa')
+@section('content')
+&lt;div class="card"&gt;
+    &lt;div class="page-heading"&gt;&lt;h1&gt;Edit Siswa&lt;/h1&gt;&lt;/div&gt;
+    &lt;form method="POST" action="{{ route('siswa.update', $siswa) }}"&gt;
+        @csrf @method('PUT')
+        &lt;div class="form-group"&gt;
+            &lt;label for="nis"&gt;NIS&lt;/label&gt;
+            &lt;input id="nis" name="nis" type="text" value="{{ old('nis', $siswa-&gt;nis) }}" required&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label for="nama"&gt;Nama&lt;/label&gt;
+            &lt;input id="nama" name="nama" type="text" value="{{ old('nama', $siswa-&gt;nama) }}" required&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label for="kelas"&gt;Kelas&lt;/label&gt;
+            &lt;input id="kelas" name="kelas" type="text" value="{{ old('kelas', $siswa-&gt;kelas) }}" required&gt;
+        &lt;/div&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label for="jenis_kelamin"&gt;Jenis Kelamin&lt;/label&gt;
+            &lt;select id="jenis_kelamin" name="jenis_kelamin"&gt;
+                &lt;option value=""&gt;-- Tidak diisi --&lt;/option&gt;
+                &lt;option value="L" @selected(old('jenis_kelamin', $siswa-&gt;jenis_kelamin) === 'L')&gt;Laki-laki&lt;/option&gt;
+                &lt;option value="P" @selected(old('jenis_kelamin', $siswa-&gt;jenis_kelamin) === 'P')&gt;Perempuan&lt;/option&gt;
+            &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div class="form-actions"&gt;
+            &lt;button class="btn btn-primary" type="submit"&gt;Simpan&lt;/button&gt;
+            &lt;a class="btn btn-secondary" href="{{ route('siswa.index') }}"&gt;Batal&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+@endsection</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">📋</span><p class="kicker">Step 11 &middot; Detail</p></div>
+        <h2>Detail &mdash; Lihat Siswa</h2>
+        <p>Halaman detail siswa &mdash; <code>siswa/show.blade.php</code>.</p>
+        <pre><code>@extends('layouts.app')
+@section('title', 'Detail Siswa')
+@section('content')
+&lt;div class="card"&gt;
+    &lt;div class="page-heading"&gt;&lt;h1&gt;Detail Siswa&lt;/h1&gt;
+        &lt;a class="btn btn-secondary" href="{{ route('siswa.index') }}"&gt;Kembali&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;table&gt;
+        &lt;tbody&gt;
+            &lt;tr&gt;&lt;th&gt;NIS&lt;/th&gt;&lt;td&gt;{{ $siswa-&gt;nis }}&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;th&gt;Nama&lt;/th&gt;&lt;td&gt;{{ $siswa-&gt;nama }}&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;th&gt;Kelas&lt;/th&gt;&lt;td&gt;{{ $siswa-&gt;kelas }}&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;th&gt;Jenis Kelamin&lt;/th&gt;&lt;td&gt;{{ $siswa-&gt;jenis_kelamin ?? '-' }}&lt;/td&gt;&lt;/tr&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+&lt;/div&gt;
+@endsection</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">📋</span><p class="kicker">Step 11 &middot; Delete</p></div>
+        <h2>Delete &mdash; Hapus Siswa</h2>
+        <p>Form hapus dengan konfirmasi; dipakai pada kolom aksi di halaman index.</p>
+        <pre><code>&lt;form class="inline-form" method="POST" action="{{ route('siswa.destroy', $item) }}" onsubmit="return confirm('Hapus data siswa ini?')"&gt;
+    @csrf @method('DELETE')
+    &lt;button class="btn btn-danger" type="submit"&gt;Hapus&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">📋</span><p class="kicker">Step 11 &middot; Index</p></div>
+        <h2>Index &mdash; Daftar Siswa</h2>
+        <p>Halaman daftar siswa &mdash; <code>siswa/index.blade.php</code>.</p>
+        <pre><code>@extends('layouts.app')
+@section('title', 'Data Siswa')
+@section('content')
+&lt;div class="card"&gt;
+    &lt;div class="page-heading"&gt;&lt;h1&gt;Data Siswa&lt;/h1&gt;
+        &lt;a class="btn btn-primary" href="{{ route('siswa.create') }}"&gt;Tambah Siswa&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div class="table-wrap"&gt;&lt;table&gt;
+        &lt;thead&gt;&lt;tr&gt;&lt;th&gt;NIS&lt;/th&gt;&lt;th&gt;Nama&lt;/th&gt;&lt;th&gt;Kelas&lt;/th&gt;&lt;th&gt;Jenis Kelamin&lt;/th&gt;&lt;th&gt;Aksi&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+        &lt;tbody&gt;
+        @forelse ($siswa as $item)
+            &lt;tr&gt;&lt;td&gt;{{ $item-&gt;nis }}&lt;/td&gt;&lt;td&gt;{{ $item-&gt;nama }}&lt;/td&gt;
+            &lt;td&gt;{{ $item-&gt;kelas }}&lt;/td&gt;&lt;td&gt;{{ $item-&gt;jenis_kelamin ?? '-' }}&lt;/td&gt;
+            &lt;td&gt;&lt;a class="btn btn-secondary" href="{{ route('siswa.show', $item) }}"&gt;Detail&lt;/a&gt;
+                &lt;a class="btn btn-secondary" href="{{ route('siswa.edit', $item) }}"&gt;Edit&lt;/a&gt;
+                &lt;form class="inline-form" method="POST" action="{{ route('siswa.destroy', $item) }}" onsubmit="return confirm('Hapus data siswa ini?')"&gt;@csrf @method('DELETE')
+                    &lt;button class="btn btn-danger" type="submit"&gt;Hapus&lt;/button&gt;&lt;/form&gt;&lt;/td&gt;&lt;/tr&gt;
+        @empty
+            &lt;tr&gt;&lt;td class="empty" colspan="5"&gt;Belum ada data siswa.&lt;/td&gt;&lt;/tr&gt;
+        @endforelse
+        &lt;/tbody&gt;
+    &lt;/table&gt;&lt;/div&gt;
+&lt;/div&gt;
+@endsection</code></pre>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 11</p></div>
+        <h2>Mengisi Ulang Form</h2>
+        <div class="quiz" data-explain="Helper old('nis') mengembalikan nilai input sebelumnya saat validasi gagal, sehingga user tidak perlu mengetik ulang dan tinggal memperbaiki bagian yang salah.">
+            <p class="quiz-q">Helper apa yang membuat input form tetap terisi setelah validasi gagal?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false"><code>session()</code></button>
+                <button class="quiz-option" type="button" data-correct="true"><code>old()</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>route()</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>asset()</code></button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🎨</span><p class="kicker">Step 12</p></div>
+        <h2>Tambahkan CSS</h2>
+        <p><code>resources/css/app.css</code> mengatur container, navbar, card, table, button, form, alert, dan tampilan mobile lewat design token di <code>:root</code>.</p>
+        <pre><code>:root {
+    --navy: #102a43;
+    --blue: #1769aa;
+    --surface: #ffffff;
+    --shadow: 0 14px 35px rgb(16 42 67 / 10%);
+}</code></pre>
+        <ul>
+            <li>Aksesibilitas: <code>:focus-visible</code> beri outline pada button, input, select.</li>
+            <li>Responsive: media query <code>max-width: 640px</code> menumpuk navbar &amp; form, tombol full-width.</li>
+            <li><code>prefers-reduced-motion: reduce</code> matikan transisi untuk user sensitif gerakan.</li>
+        </ul>
+        <pre><code>npm run dev</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> HTML struktur, Blade isi data, CSS tampilan.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">🎨</span><p class="kicker">Styling &middot; Struktur</p></div>
+        <h2>CSS Terpisah per Halaman</h2>
+        <p>Satu file dasar <code>app.css</code> dipakai semua halaman, lalu setiap halaman punya file CSS sendiri: <code>index.css</code>, <code>create.css</code>, <code>edit.css</code>, dan <code>show.css</code>. File tidak menumpuk, mudah dicari, dan mudah dirawat.</p>
+        <p class="copy-note">Setiap blok code bisa disalin lewat tombol clipboard di pojok kanan.</p>
+
+        <div class="method">
+            <div class="method-head"><code class="method-name">Struktur folder</code><span class="method-desc">Dasar + satu file untuk tiap halaman.</span></div>
+            <pre><code>public/css/
+├── app.css            dasar: navbar, card, tombol, tabel, form
+└── siswa/
+    ├── index.css
+    ├── create.css
+    ├── edit.css
+    └── show.css</code></pre>
+        </div>
+
+        <div class="method">
+            <div class="method-head"><code class="method-name">siswa/index.css</code><span class="method-desc">Halaman daftar &mdash; aksen biru, tabel zebra, header tabel menempel.</span></div>
+            <pre><code>/* ---------- Kartu halaman ---------- */
+.card {
+    border-top: 4px solid #1769aa;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgb(16 42 67 / 8%);
+}
+
+/* ---------- Judul halaman ---------- */
+.page-heading h1 {
+    position: relative;
+    padding-left: .9rem;
+    letter-spacing: -.01em;
+}
+
+.page-heading h1::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: .15em;
+    bottom: .15em;
+    width: .32rem;
+    border-radius: 99px;
+    background: linear-gradient(180deg, #1769aa, #7c3aed);
+}
+
+/* ---------- Tombol tambah ---------- */
+.page-heading .btn-primary {
+    border-radius: 99px;
+    padding-inline: 1.2rem;
+    box-shadow: 0 8px 18px rgb(23 105 170 / 30%);
+    transition: transform .15s ease, box-shadow .2s ease;
+}
+
+.page-heading .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgb(23 105 170 / 38%);
+}
+
+/* ---------- Tabel ---------- */
+.table-wrap {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+thead th {
+    position: sticky;
+    top: 0;
+    background: #f2f7fc;
+    text-transform: none;
+    letter-spacing: 0;
+    border-bottom: 2px solid #dbe6f2;
+}
+
+tbody tr {
+    transition: background .2s ease, box-shadow .2s ease;
+}
+
+tbody tr:nth-child(even) {
+    background: #fafcff;
+}
+
+tbody tr:hover {
+    background: linear-gradient(90deg, #f1f7ff, #fff);
+    box-shadow: inset 3px 0 0 #1769aa;
+}
+
+/* ---------- Aksesibilitas &amp; mobile ---------- */
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid #1769aa;
+    outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+    .page-heading {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .6rem;
+    }
+}</code></pre>
+        </div>
+
+        <div class="method">
+            <div class="method-head"><code class="method-name">siswa/create.css</code><span class="method-desc">Form tambah &mdash; kartu ramping, aksen biru.</span></div>
+            <pre><code>/* ---------- Kartu form ---------- */
+.card {
+    max-width: 660px;
+    margin-inline: auto;
+    border-top: 4px solid #1769aa;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgb(16 42 67 / 8%);
+}
+
+/* ---------- Judul halaman ---------- */
+.page-heading h1 {
+    padding-left: .8rem;
+    border-left: .32rem solid #1769aa;
+    letter-spacing: -.01em;
+}
+
+/* ---------- Kolom input ---------- */
+input:focus,
+select:focus {
+    border-color: #1769aa;
+    box-shadow: 0 0 0 4px rgb(23 105 170 / 15%);
+    outline: none;
+}
+
+/* ---------- Tombol simpan ---------- */
+.btn-primary {
+    background: linear-gradient(120deg, #1769aa, #0f4c81);
+    border-radius: 99px;
+    padding-inline: 1.4rem;
+    transition: transform .15s ease, box-shadow .2s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgb(23 105 170 / 32%);
+}</code></pre>
+        </div>
+
+        <div class="method">
+            <div class="method-head"><code class="method-name">siswa/edit.css</code><span class="method-desc">Form edit &mdash; aksen amber, penanda mode ubah data.</span></div>
+            <pre><code>/* ---------- Kartu form ---------- */
+.card {
+    max-width: 660px;
+    margin-inline: auto;
+    border-top: 4px solid #e2a400;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgb(16 42 67 / 8%);
+}
+
+/* ---------- Judul halaman ---------- */
+.page-heading h1 {
+    padding-left: .8rem;
+    border-left: .32rem solid #e2a400;
+    color: #7a5a00;
+    letter-spacing: -.01em;
+}
+
+/* ---------- Kolom input ---------- */
+input:focus,
+select:focus {
+    border-color: #e2a400;
+    box-shadow: 0 0 0 4px rgb(226 164 0 / 18%);
+    outline: none;
+}
+
+/* ---------- Tombol simpan ---------- */
+.btn-primary {
+    background: linear-gradient(120deg, #e2a400, #b98200);
+    border-radius: 99px;
+    padding-inline: 1.4rem;
+    transition: transform .15s ease, box-shadow .2s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgb(226 164 0 / 32%);
+}</code></pre>
+        </div>
+
+        <div class="method">
+            <div class="method-head"><code class="method-name">siswa/show.css</code><span class="method-desc">Halaman detail &mdash; aksen ungu, tabel label&ndash;nilai.</span></div>
+            <pre><code>/* ---------- Kartu detail ---------- */
+.card {
+    max-width: 680px;
+    margin-inline: auto;
+    border-top: 4px solid #7c3aed;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgb(16 42 67 / 8%);
+}
+
+/* ---------- Judul halaman ---------- */
+.page-heading h1 {
+    padding-left: .8rem;
+    border-left: .32rem solid #7c3aed;
+    letter-spacing: -.01em;
+}
+
+/* ---------- Tabel label-nilai ---------- */
+table th {
+    width: 38%;
+    background: #f5f3ff;
+    color: #4c1d95;
+    text-transform: none;
+    letter-spacing: 0;
+    white-space: normal;
+}
+
+table td {
+    color: #102a43;
+    font-weight: 600;
+}
+
+tbody tr:hover {
+    background: #faf8ff;
+}</code></pre>
+        </div>
+
+        <div class="method">
+            <div class="method-head"><code class="method-name">Menghubungkan</code><span class="method-desc">Slot <code>@stack</code> di layout, diisi <code>@push</code> dari tiap halaman.</span></div>
+            <pre><code>{{-- layouts/app.blade.php --}}
+&lt;link rel="stylesheet" href="{{ asset('css/app.css') }}"&gt;
+@stack('styles')
+
+{{-- siswa/index.blade.php --}}
+@push('styles')
+    &lt;link rel="stylesheet" href="{{ asset('css/siswa/index.css') }}"&gt;
+@endpush</code></pre>
+        </div>
+
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> <code>@stack('styles')</code> menyiapkan tempat di layout, <code>@push('styles')</code> mengisi tempat itu dari tiap halaman.</div></div>
+    </section>
+
+    <section class="slide code-slide">
+        <div class="kicker-row"><span class="icon-badge">📋</span><p class="kicker">Styling &middot; Siswa Index</p></div>
+        <h2>CSS: Daftar Siswa</h2>
+        <p>File <code>public/css/siswa/index.css</code> &mdash; dihubungkan dari <code>siswa/index.blade.php</code> lewat <code>@push('styles')</code>.</p>
+        <pre data-line-copy><code>/* ---------- Kartu halaman ---------- */
+.card {
+    border-top: 4px solid #1769aa;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgb(16 42 67 / 8%);
+}
+
+/* ---------- Judul halaman ---------- */
+.page-heading h1 {
+    position: relative;
+    padding-left: .9rem;
+    letter-spacing: -.01em;
+}
+
+.page-heading h1::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: .15em;
+    bottom: .15em;
+    width: .32rem;
+    border-radius: 99px;
+    background: linear-gradient(180deg, #1769aa, #7c3aed);
+}
+
+/* ---------- Tombol tambah ---------- */
+.page-heading .btn-primary {
+    border-radius: 99px;
+    padding-inline: 1.2rem;
+    box-shadow: 0 8px 18px rgb(23 105 170 / 30%);
+    transition: transform .15s ease, box-shadow .2s ease;
+}
+
+.page-heading .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgb(23 105 170 / 38%);
+}
+
+/* ---------- Tabel ---------- */
+.table-wrap {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+thead th {
+    position: sticky;
+    top: 0;
+    background: #f2f7fc;
+    text-transform: none;
+    letter-spacing: 0;
+    border-bottom: 2px solid #dbe6f2;
+}
+
+tbody tr {
+    transition: background .2s ease, box-shadow .2s ease;
+}
+
+tbody tr:nth-child(even) {
+    background: #fafcff;
+}
+
+tbody tr:hover {
+    background: linear-gradient(90deg, #f1f7ff, #fff);
+    box-shadow: inset 3px 0 0 #1769aa;
+}
+
+/* ---------- Aksesibilitas &amp; mobile ---------- */
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid #1769aa;
+    outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+    .page-heading {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .6rem;
+    }
+}</code></pre>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Satu file CSS bisa menimpa (override) gaya dasar untuk satu halaman saja.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🔍</span><p class="kicker">Fungsi &middot; Siswa Index</p></div>
+        <h2>Fungsi Tiap Aturan</h2>
+        <ul>
+            <li><code>.card</code> &mdash; garis atas biru sebagai penanda identitas halaman, plus <code>border-radius</code> &amp; <code>box-shadow</code> agar kartu tampak lebih modern.</li>
+            <li><code>.page-heading h1::before</code> &mdash; garis aksen gradien biru&rarr;ungu di kiri judul.</li>
+            <li><code>letter-spacing: -.01em</code> &mdash; judul sedikit lebih rapat dan rapi.</li>
+            <li><code>border-radius: 99px</code> &mdash; mengubah tombol tambah menjadi bentuk pil.</li>
+            <li><code>.btn-primary:hover</code> &mdash; tombol terangkat halus (<code>translateY</code>) saat diarahkan kursor.</li>
+            <li><code>thead th</code> &mdash; header tabel menempel saat daftar di-scroll, dengan latar lebih tegas.</li>
+            <li><code>tbody tr:nth-child(even)</code> &mdash; baris genap diberi warna beda (zebra) agar mudah dibaca.</li>
+            <li><code>tbody tr:hover</code> &mdash; menyorot baris tabel saat kursor mendekat.</li>
+            <li><code>:focus-visible</code> &mdash; outline biru untuk pengguna keyboard, sekaligus aksesibilitas.</li>
+            <li><code>@media (max-width: 640px)</code> &mdash; judul dan tombol menumpuk rapi di layar kecil.</li>
+        </ul>
+        <div class="cols">
+            <div class="box"><p><strong>Warna</strong></p><p>Biru <code>#1769aa</code> dan ungu <code>#7c3aed</code> dipakai konsisten lewat gradien.</p></div>
+            <div class="box"><p><strong>Interaksi</strong></p><p>Efek <code>:hover</code> dan <code>:focus-visible</code> memberi umpan balik visual pada tabel dan tombol.</p></div>
+        </div>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> File CSS terpisah membuat perubahan satu halaman tidak mengganggu halaman lain.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 12</p></div>
+        <h2>Tampilan Responsive</h2>
+        <div class="quiz" data-explain="Media query max-width: 640px membuat tampilan menyesuaikan layar kecil, misalnya navbar dan form menumpuk serta tombol menjadi full-width.">
+            <p class="quiz-q">Untuk apa media query <code>max-width: 640px</code> pada <code>app.css</code>?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Menambah animasi pada tombol</button>
+                <button class="quiz-option" type="button" data-correct="true">Mengatur tampilan agar rapi di layar kecil/mobile</button>
+                <button class="quiz-option" type="button" data-correct="false">Menyembunyikan tabel data siswa</button>
+                <button class="quiz-option" type="button" data-correct="false">Mengubah seluruh warna halaman</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">🧪</span><p class="kicker">Step 13</p></div>
+        <h2>Buat Pengujian Otomatis</h2>
+        <ul>
+            <li>Buat &amp; lihat siswa.</li>
+            <li>NIS harus unik.</li>
+            <li>Edit siswa menyimpan perubahan.</li>
+            <li>Hapus siswa menghilangkan barisnya.</li>
+            <li>Route <code>/</code> redirect ke daftar siswa.</li>
+        </ul>
+        <pre><code>php artisan test   # target: semua test passed</code></pre>
+        <p>PHPUnit memakai SQLite in-memory sehingga test tidak menyentuh database MySQL development.</p>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Test menangkap regresi setelah perubahan kode.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 13</p></div>
+        <h2>Database untuk Test</h2>
+        <div class="quiz" data-explain="PHPUnit dikonfigurasi memakai SQLite in-memory, sehingga test berjalan di database sementara dan tidak menyentuh database MySQL development.">
+            <p class="quiz-q">Database apa yang dipakai saat menjalankan <code>php artisan test</code>?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">MySQL <code>laravel_workshop</code></button>
+                <button class="quiz-option" type="button" data-correct="true">SQLite in-memory</button>
+                <button class="quiz-option" type="button" data-correct="false">PostgreSQL</button>
+                <button class="quiz-option" type="button" data-correct="false">MongoDB</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">▶️</span><p class="kicker">Step 14</p></div>
+        <h2>Jalankan Project</h2>
+        <pre><code>cd project
+php artisan serve
+# buka http://127.0.0.1:8000</code></pre>
+        <p>Uji alur manual: tambah siswa, lihat daftar, edit data, NIS duplikat ditolak, lalu hapus siswa.</p>
+        <div class="lesson"><span>💡</span><div><strong>Pelajaran:</strong> Test manual memeriksa pengalaman user, bukan hanya kode backend.</div></div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 14</p></div>
+        <h2>Menjalankan Server</h2>
+        <div class="quiz" data-explain="php artisan serve menjalankan server pengembangan Laravel. Project lalu dibuka di browser melalui alamat http://127.0.0.1:8000.">
+            <p class="quiz-q">Perintah apa untuk menjalankan server Laravel di komputer?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false"><code>php artisan migrate</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>php artisan test</code></button>
+                <button class="quiz-option" type="button" data-correct="true"><code>php artisan serve</code></button>
+                <button class="quiz-option" type="button" data-correct="false"><code>php artisan route:list</code></button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">✅</span><p class="kicker">Step 15</p></div>
+        <h2>Pemeriksaan Akhir</h2>
+        <pre><code>php artisan route:list
+php artisan test
+git diff --check</code></pre>
+        <ul>
+            <li>Tidak ada error di log saat pemakaian normal.</li>
+            <li>Semua input punya label, semua form pakai CSRF.</li>
+            <li>Output Blade di-escape, NIS tidak duplikat.</li>
+            <li>Perubahan tercatat di development log.</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <div class="kicker-row"><span class="icon-badge">❓</span><p class="kicker">Quiz Step 15</p></div>
+        <h2>Pemeriksaan Akhir</h2>
+        <div class="quiz" data-explain="git diff --check memeriksa masalah whitespace atau penanda konflik pada perubahan yang belum di-commit, dipakai sebagai pemeriksaan akhir sebelum kode dianggap beres.">
+            <p class="quiz-q">Apa fungsi <code>git diff --check</code> pada pemeriksaan akhir?</p>
+            <div class="quiz-options">
+                <button class="quiz-option" type="button" data-correct="false">Menghapus file yang tidak dipakai</button>
+                <button class="quiz-option" type="button" data-correct="true">Memeriksa masalah whitespace/konflik pada perubahan</button>
+                <button class="quiz-option" type="button" data-correct="false">Menjalankan seluruh test otomatis</button>
+                <button class="quiz-option" type="button" data-correct="false">Mendaftar semua route yang aktif</button>
+            </div>
+            <div class="quiz-feedback" hidden></div>
+        </div>
+    </section>
+
+    <section class="slide hero">
+        <span class="icon-badge" style="width:3.2rem;height:3.2rem;font-size:1.7rem;margin-bottom:1rem">🎉</span>
+        <p class="kicker">Selesai</p>
+        <h1>Project Selesai</h1>
+        <p>CRUD siswa pada satu tabel berfungsi, tervalidasi, dan teruji.</p>
+        <p>Lanjutkan dengan mengisi <strong>Log Perubahan</strong> setiap kali ada pekerjaan baru.</p>
+    </section>
+
+</main>
+
+<div id="demo-modal" class="demo-modal" aria-hidden="true">
+    <div class="demo-modal-inner">
+        <div class="demo-bar">
+            <span>Tampilan Demo</span>
+            <button class="demo-close" type="button" aria-label="Tutup">&times;</button>
+        </div>
+        <div class="demo-body" id="demo-body"></div>
+    </div>
+</div>
+
+<div id="demo-templates" hidden>
+    <template id="demo-siswa-create">
+        <div class="card">
+            <div class="page-heading"><h1>Tambah Siswa</h1></div>
+            <form onsubmit="return false">
+                <div class="form-group"><label for="dc-nis">NIS</label><input id="dc-nis" type="text" placeholder="contoh: 2024.01.001"></div>
+                <div class="form-group"><label for="dc-nama">Nama</label><input id="dc-nama" type="text" placeholder="Nama siswa"></div>
+                <div class="form-group"><label for="dc-kelas">Kelas</label><input id="dc-kelas" type="text" placeholder="contoh: XI RPL 1"></div>
+                <div class="form-group"><label for="dc-jk">Jenis Kelamin</label>
+                    <select id="dc-jk">
+                        <option value="">-- Tidak diisi --</option>
+                        <option>Laki-laki</option><option>Perempuan</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="button">Simpan</button>
+                    <button class="btn btn-secondary" type="button">Batal</button>
+                </div>
+            </form>
+        </div>
+    </template>
+
+    <template id="demo-siswa-update">
+        <div class="card">
+            <div class="page-heading"><h1>Edit Siswa</h1></div>
+            <form onsubmit="return false">
+                <div class="form-group"><label for="du-nis">NIS</label><input id="du-nis" type="text" value="2024.01.001"></div>
+                <div class="form-group"><label for="du-nama">Nama</label><input id="du-nama" type="text" value="Ahmad Fauzi"></div>
+                <div class="form-group"><label for="du-kelas">Kelas</label><input id="du-kelas" type="text" value="XI RPL 1"></div>
+                <div class="form-group"><label for="du-jk">Jenis Kelamin</label>
+                    <select id="du-jk">
+                        <option value="">-- Tidak diisi --</option>
+                        <option selected>Laki-laki</option><option>Perempuan</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="button">Simpan</button>
+                    <button class="btn btn-secondary" type="button">Batal</button>
+                </div>
+            </form>
+        </div>
+    </template>
+
+    <template id="demo-siswa-detail">
+        <div class="card">
+            <div class="page-heading"><h1>Detail Siswa</h1><button class="btn btn-secondary" type="button">Kembali</button></div>
+            <table>
+                <tbody>
+                    <tr><th>NIS</th><td>2024.01.001</td></tr>
+                    <tr><th>Nama</th><td>Ahmad Fauzi</td></tr>
+                    <tr><th>Kelas</th><td>XI RPL 1</td></tr>
+                    <tr><th>Jenis Kelamin</th><td>L</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </template>
+
+    <template id="demo-siswa-delete">
+        <div class="card">
+            <div class="page-heading"><h1>Hapus Siswa</h1></div>
+            <p>Tombol hapus dipakai pada kolom Aksi di halaman index. Saat diklik akan muncul konfirmasi.</p>
+            <form class="inline-form" onsubmit="return false">
+                <button class="btn btn-danger" type="button">Hapus</button>
+            </form>
+        </div>
+    </template>
+
+    <template id="demo-siswa-index">
+        <div class="card">
+            <div class="page-heading"><h1>Data Siswa</h1><button class="btn btn-primary" type="button">Tambah Siswa</button></div>
+            <div class="table-wrap"><table>
+                <thead><tr><th>NIS</th><th>Nama</th><th>Kelas</th><th>Jenis Kelamin</th><th>Aksi</th></tr></thead>
+                <tbody>
+                    <tr><td>2024.01.001</td><td>Ahmad Fauzi</td><td>XI RPL 1</td><td>L</td>
+                        <td><span class="btn btn-secondary">Detail</span> <span class="btn btn-secondary">Edit</span> <span class="btn btn-danger">Hapus</span></td></tr>
+                    <tr><td>2024.01.002</td><td>Bella Saraswati</td><td>XI RPL 2</td><td>P</td>
+                        <td><span class="btn btn-secondary">Detail</span> <span class="btn btn-secondary">Edit</span> <span class="btn btn-danger">Hapus</span></td></tr>
+                    <tr><td>2024.01.003</td><td>Candra Wijaya</td><td>X RPL 1</td><td>L</td>
+                        <td><span class="btn btn-secondary">Detail</span> <span class="btn btn-secondary">Edit</span> <span class="btn btn-danger">Hapus</span></td></tr>
+                </tbody>
+            </table></div>
+        </div>
+    </template>
+</div>
+
+<nav class="navbar">
+    <button id="toc" type="button">Daftar Isi</button>
+    <button id="prev" type="button">&larr; Sebelumnya</button>
+    <span id="counter"></span>
+    <button id="next" type="button">Selanjutnya &rarr;</button>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script>
+if (window.particlesJS) {
+    particlesJS('particles-bg', {
+        particles: {
+            number: { value: 55, density: { enable: true, value_area: 900 } },
+            color: { value: ['#1769aa', '#7c3aed', '#0891b2'] },
+            opacity: { value: 0.62, random: true },
+            size: { value: 2.5, random: true },
+            line_linked: { enable: true, distance: 145, color: '#1769aa', opacity: 0.35, width: 1.2 },
+            move: { enable: true, speed: 1.2, direction: 'none', out_mode: 'out' }
+        },
+        interactivity: {
+            detect_on: 'canvas',
+            events: { onhover: { enable: true, mode: 'grab' }, resize: true },
+            modes: { grab: { distance: 150, line_linked: { opacity: 0.45 } } }
+        },
+        retina_detect: true
+    });
+}
+
+if (window.mermaid) {
+    mermaid.initialize({
+        startOnLoad: false,
+        theme: 'base',
+        themeVariables: {
+            primaryColor: '#eaf3fb',
+            primaryTextColor: '#0f2440',
+            primaryBorderColor: '#1769aa',
+            lineColor: '#1769aa',
+            fontFamily: 'Inter, Arial, sans-serif',
+            fontSize: '14px'
+        },
+        er: { useMaxWidth: true }
+    });
+}
+
+function renderMermaid(slide) {
+    if (!window.mermaid || !slide) return;
+    var nodes = slide.querySelectorAll('.mermaid:not([data-processed])');
+    if (nodes.length) {
+        mermaid.run({ nodes: Array.prototype.slice.call(nodes), suppressErrors: true });
+    }
+}
+
+function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function (resolve, reject) {
+        var area = document.createElement('textarea');
+        area.value = text;
+        area.setAttribute('readonly', '');
+        area.style.position = 'fixed';
+        area.style.top = '-1000px';
+        document.body.appendChild(area);
+        area.select();
+        try {
+            document.execCommand('copy') ? resolve() : reject(new Error('copy failed'));
+        } catch (error) {
+            reject(error);
+        }
+        document.body.removeChild(area);
+    });
+}
+
+var clipboardIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>';
+var checkIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+
+document.querySelectorAll('pre[data-line-copy]').forEach(function (pre) {
+    var code = pre.querySelector('code');
+    if (!code) return;
+    var lines = code.textContent.replace(/\n+$/, '').split('\n');
+    var wrap = document.createElement('div');
+    wrap.className = 'code-wrap';
+    var box = document.createElement('div');
+    box.className = 'code-lines';
+    lines.forEach(function (text) {
+        var row = document.createElement('div');
+        row.className = 'code-line';
+        var lineCode = document.createElement('code');
+        lineCode.textContent = text;
+        var lineBtn = document.createElement('button');
+        lineBtn.className = 'line-copy';
+        lineBtn.type = 'button';
+        lineBtn.setAttribute('aria-label', 'Salin baris ini');
+        lineBtn.title = 'Salin baris ini';
+        lineBtn.innerHTML = clipboardIcon;
+        row.appendChild(lineCode);
+        row.appendChild(lineBtn);
+        box.appendChild(row);
+    });
+    wrap.insertAdjacentHTML('afterbegin', '<button class="copy-btn" type="button" aria-label="Salin kode" title="Salin kode">' + clipboardIcon + '</button>');
+    wrap.appendChild(box);
+    pre.parentNode.replaceChild(wrap, pre);
+});
+
+document.querySelectorAll('pre').forEach(function (pre) {
+    if (!pre.querySelector('code')) return;
+    if (pre.parentElement && pre.parentElement.classList.contains('code-wrap')) return;
+    var wrap = document.createElement('div');
+    wrap.className = 'code-wrap';
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+    wrap.insertAdjacentHTML('afterbegin', '<button class="copy-btn" type="button" aria-label="Salin kode" title="Salin kode">' + clipboardIcon + '</button>');
+});
+
+function copyTarget(btn) {
+    var line = btn.closest('.code-line');
+    if (line) {
+        var lineCode = line.querySelector('code');
+        return lineCode ? lineCode.textContent : '';
+    }
+    var wrap = btn.closest('.code-wrap');
+    if (!wrap) return '';
+    var lines = wrap.querySelectorAll('.code-line code');
+    if (lines.length) {
+        return Array.prototype.map.call(lines, function (item) {
+            return item.textContent;
+        }).join('\n');
+    }
+    var code = wrap.querySelector('code');
+    return code ? code.textContent : '';
+}
+
+document.querySelectorAll('.copy-btn, .line-copy').forEach(function (btn) {
+    var original = btn.innerHTML;
+    var timer;
+    btn.addEventListener('click', function () {
+        var text = copyTarget(btn).trim();
+        if (!text) return;
+        copyText(text).then(function () {
+            btn.classList.add('copied');
+            btn.innerHTML = checkIcon;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                btn.classList.remove('copied');
+                btn.innerHTML = original;
+            }, 1600);
+        }).catch(function () {
+            btn.title = 'Gagal menyalin, silakan salin manual';
+        });
+    });
+});
+
+var demoModal = document.getElementById('demo-modal');
+var demoBody = document.getElementById('demo-body');
+var demoNav = '<nav class="navbar"><div class="container nav-links"><span class="brand">SMKN 2 Tabanan</span><a>Data Siswa</a></div></nav>';
+var demoKeys = {
+    step11create: 'siswa-create', step11update: 'siswa-update', step11detail: 'siswa-detail', step11delete: 'siswa-delete', step11index: 'siswa-index'
+};
+
+function demoKeyOf(text) {
+    return text.toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+document.querySelectorAll('.slide').forEach(function (slide) {
+    var kicker = slide.querySelector('.kicker');
+    if (!kicker) return;
+    var id = demoKeys[demoKeyOf(kicker.textContent)];
+    if (!id) return;
+    var anchor = null;
+    Array.prototype.forEach.call(slide.children, function (el) {
+        if (!anchor && el.tagName === 'P' && !el.classList.contains('copy-note')) anchor = el;
+    });
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'demo-btn';
+    btn.setAttribute('data-demo', id);
+    btn.innerHTML = '&#9654; DEMO';
+    if (anchor) anchor.insertAdjacentElement('afterend', btn);
+    else slide.appendChild(btn);
+});
+
+function openDemo(id) {
+    var tpl = document.getElementById('demo-' + id);
+    if (!tpl) return;
+    demoBody.innerHTML = '<div class="demo-app">' + demoNav + '<div class="container">' + tpl.innerHTML + '</div></div>';
+    demoModal.classList.add('open');
+    demoModal.setAttribute('aria-hidden', 'false');
+}
+
+function closeDemo() {
+    demoModal.classList.remove('open');
+    demoModal.setAttribute('aria-hidden', 'true');
+    demoBody.innerHTML = '';
+}
+
+document.addEventListener('click', function (event) {
+    var btn = event.target.closest ? event.target.closest('.demo-btn') : null;
+    if (btn) {
+        openDemo(btn.getAttribute('data-demo'));
+        return;
+    }
+    if (event.target === demoModal) closeDemo();
+});
+
+document.querySelector('.demo-close').addEventListener('click', closeDemo);
+
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && demoModal.classList.contains('open')) closeDemo();
+});
+
+document.querySelectorAll('.quiz').forEach(function (quiz) {
+    var options = quiz.querySelectorAll('.quiz-option');
+    var feedback = quiz.querySelector('.quiz-feedback');
+    var explain = quiz.getAttribute('data-explain') || '';
+
+    options.forEach(function (opt) {
+        opt.addEventListener('click', function () {
+            if (quiz.classList.contains('answered')) return;
+            quiz.classList.add('answered');
+
+            var correctOpt = quiz.querySelector('.quiz-option[data-correct="true"]');
+            options.forEach(function (o) {
+                o.disabled = true;
+                if (o === correctOpt) o.classList.add('correct');
+            });
+
+            var isCorrect = opt === correctOpt;
+            if (!isCorrect) opt.classList.add('wrong');
+
+            feedback.hidden = false;
+            feedback.className = 'quiz-feedback ' + (isCorrect ? 'ok' : 'no');
+            feedback.innerHTML = isCorrect
+                ? '<strong>Benar!</strong> ' + explain
+                : '<strong>Belum tepat.</strong> Jawaban yang benar: <em>' + correctOpt.textContent.trim() + '</em>. ' + explain;
+        });
+    });
+});
+
+var slides = document.querySelectorAll('.slide');
+var current = 0;
+
+function show(index) {
+    current = Math.max(0, Math.min(slides.length - 1, index));
+    slides.forEach(function (slide, i) {
+        if (i === current) {
+            slide.classList.remove('active');
+            void slide.offsetWidth;
+            slide.classList.add('active');
+        } else {
+            slide.classList.remove('active');
+        }
+    });
+    document.getElementById('counter').textContent = (current + 1) + ' / ' + slides.length;
+    document.getElementById('prev').disabled = current === 0;
+    document.getElementById('next').disabled = current === slides.length - 1;
+    document.getElementById('progress-bar').style.width = ((current + 1) / slides.length * 100) + '%';
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    renderMermaid(slides[current]);
+}
+
+document.getElementById('prev').addEventListener('click', function () { show(current - 1); });
+document.getElementById('next').addEventListener('click', function () { show(current + 1); });
+
+function slideIndexByKicker(target) {
+    var index = -1;
+    Array.prototype.some.call(slides, function (slide, i) {
+        var kicker = slide.querySelector('.kicker');
+        if (!kicker) return false;
+        var text = kicker.textContent.trim();
+        if (text === target || text.indexOf(target + ' ') === 0) {
+            index = i;
+            return true;
+        }
+        return false;
+    });
+    return index;
+}
+
+document.getElementById('toc').addEventListener('click', function () {
+    var index = slideIndexByKicker('Daftar Isi');
+    if (index >= 0) show(index);
+});
+
+document.addEventListener('keydown', function (event) {
+    if (demoModal.classList.contains('open')) return;
+    if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') show(current + 1);
+    if (event.key === 'ArrowLeft' || event.key === 'PageUp') show(current - 1);
+    if (event.key === 'Home') show(0);
+    if (event.key === 'End') show(slides.length - 1);
+});
+
+show(0);
+
+document.querySelectorAll('.toc-link').forEach(function (link) {
+    link.addEventListener('click', function (event) {
+        event.preventDefault();
+        var index = slideIndexByKicker(link.getAttribute('data-target'));
+        if (index >= 0) show(index);
+    });
+});
+</script>
+
+</body>
+</html>
